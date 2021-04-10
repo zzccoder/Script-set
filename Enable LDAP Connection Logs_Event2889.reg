@@ -1,0 +1,1 @@
+reg add HKLM\SYSTEM\CurrentControlSet\Services\NTDS\Diagnostics /v "16 LDAP Interface Events" /d 2 /t reg_dword /f
