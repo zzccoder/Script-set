@@ -1,0 +1,304 @@
+原理：
+1)	客户端PXE网卡启动  
+2)	从DHCP服务器获得IP  
+3)	从TFTP服务器上下载pxelinux.0、default 
+4)	根据配置文件default指定的vmlinuz、initrd.img启动系统内核,并通过FTP下载指定的ks.cfg文件  
+5)	根据ks.cfg去FTP服务器下载RPM包并安装系统
+6)	完成安装
+
+[root@pxeserver ~]# ls /iso/
+RHEL_6.4x86_64.iso
+[root@pxeserver ~]# mount -o loop /iso/RHEL_6.4x86_64.iso /mnt
+
+---------------------------------------------
+
+[root@pxeserver ~]# df
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/mapper/vg_pxeserver-lv_root
+                      51606140  22051060  26933640  46% /
+tmpfs                  2020836        72   2020764   1% /dev/shm
+/dev/sda1               495844     38095    432149   9% /boot
+/dev/mapper/vg_pxeserver-lv_home
+                      84398592    188176  79923136   1% /home
+/iso/RHEL_6.4x86_64.iso
+                       3632776   3632776         0 100% /mnt
+
+---------------------------------------------
+
+[root@pxeserver ~]# vi /etc/yum.repos.d/redhat64.repo 
+[rhel-64]
+name=Red Hat 6.4
+baseurl=file:///mnt/Server
+enabled=1
+gpgcheck=0
+
+---------------------------------------------
+
+[root@pxeserver ~]# yum clean all 
+[root@pxeserver ~]# yum install dhcp
+[root@pxeserver ~]# yum install tftpd
+[root@pxeserver ~]# yum install ftp
+[root@pxeserver ~]# yum install syslinux
+[root@pxeserver ~]# yum install system-config-kickstart
+[root@pxeserver ~]# vi /etc/dhcp/dhcpd.conf 
+[root@pxeserver ~]# /etc/init.d/dhcpd restart
+[root@pxeserver ~]# chkconfig dhcpd on
+[root@pxeserver ~]# service iptables status
+[root@pxeserver ~]# service iptables stop
+[root@pxeserver ~]# chkconfig iptables off
+[root@pxeserver ~]# /usr/sbin/sestatus -v
+[root@pxeserver ~]# setenforce 0
+[root@pxeserver ~]# mkdir -p /tftpboot/pxelinux.cfg/
+[root@pxeserver ~]# cp /usr/share/syslinux/pxelinux.0 /tftpboot/
+[root@pxeserver ~]# cp /var/ftp/rhel6.4/isolinux/isolinux.cfg /tftpboot/pxelinux.cfg/default
+[root@pxeserver ~]# vi /tftpboot/pxelinux.cfg/default
+[root@pxeserver ~]# cp /mnt/isolinux/vmlinuz /tftpboot/
+[root@pxeserver ~]# cp /mnt/isolinux/initrd.img /tftpboot/ 
+[root@pxeserver ~]# cp -r /mnt /var/ftp/rhel6.4
+[root@pxeserver ~]# vi /etc/xinetd.d/tftp 
+[root@pxeserver ~]# vi /var/ftp/kickstart/ks64.cfg 
+
+---------------------------------------------
+
+[root@pxeserver ~]# cat /etc/dhcp/dhcpd.conf 
+#
+# DHCP Server Configuration file.
+#   see /usr/share/doc/dhcp*/dhcpd.conf.sample
+#   see 'man 5 dhcpd.conf'
+#
+ddns-update-style interim;
+subnet 192.168.1.0 netmask 255.255.255.0 {
+        range 192.168.1.120 192.168.1.199;
+        option routers 192.168.1.254;
+        option subnet-mask 255.255.255.0;
+        option domain-name "pxeinstall";
+        option domain-name-servers 192.168.1.115;
+        option broadcast-address 192.168.1.255;
+        default-lease-time 86400;
+        max-lease-time 172800;
+        host pxeserver {
+                hardware ethernet 00:24:E8:7B:B5:57;
+                fixed-address 192.168.1.115;
+        }
+filename="pxelinux.0";
+}
+
+---------------------------------------------
+
+[root@pxeserver ~]# cat /etc/xinetd.d/tftp 
+# default: off
+# description: The tftp server serves files using the trivial file transfer \
+#	protocol.  The tftp protocol is often used to boot diskless \
+#	workstations, download configuration files to network-aware printers, \
+#	and to start the installation process for some operating systems.
+service tftp
+{
+	socket_type		= dgram
+	protocol		= udp
+	wait			= yes
+	user			= root
+	server			= /usr/sbin/in.tftpd
+	server_args		= -s /tftpboot
+	disable			= no
+	per_source		= 11
+	cps			= 100 2
+	flags			= IPv4
+}
+
+---------------------------------------------
+
+[root@pxeserver ~]# cat /tftpboot/pxelinux.cfg/default 
+default linux
+#prompt 1
+timeout 600
+
+display boot.msg
+
+menu background splash.jpg
+menu title Welcome to Red Hat Enterprise Linux 6.4!
+menu color border 0 #ffffffff #00000000
+menu color sel 7 #ffffffff #ff000000
+menu color title 0 #ffffffff #00000000
+menu color tabmsg 0 #ffffffff #00000000
+menu color unsel 0 #ffffffff #00000000
+menu color hotsel 0 #ff000000 #ffffffff
+menu color hotkey 7 #ffffffff #ff000000
+menu color scrollbar 0 #ffffffff #00000000
+
+label linux
+  menu label ^Install or upgrade an existing system
+  menu default
+  kernel vmlinuz
+  append ksdevice=em1 load_ramdisk=1 initrd=initrd.img network ks=ftp://192.168.1.115/kickstart/ks64.cfg
+label vesa
+  menu label Install system with ^basic video driver
+  kernel vmlinuz
+  append initrd=initrd.img xdriver=vesa nomodeset
+label rescue
+  menu label ^Rescue installed system
+  kernel vmlinuz
+  append initrd=initrd.img rescue
+label local
+  menu label Boot from ^local drive
+  localboot 0xffff
+label memtest86
+  menu label ^Memory test
+  kernel memtest
+  append -
+
+
+---------------------------------------------
+
+[root@pxeserver ~]# ls /tftpboot/
+initrd.img  pxelinux.0  pxelinux.cfg  vmlinuz
+[root@pxeserver ~]# ls /tftpboot/pxelinux.cfg/
+default
+[root@pxeserver ~]# 
+[root@pxeserver ~]# ls /var/ftp/
+kickstart pub  rhel6.4
+[root@pxeserver ~]# ls /var/ftp/kickstart/
+ks64.cfg
+[root@pxeserver ~]# cat /var/ftp/kickstart/ks64.cfg 
+#platform=x86, AMD64, or Intel EM64T
+#version=DEVEL
+# Firewall configuration
+firewall --disabled
+# Install OS instead of upgrade
+install
+# Use network installation
+url --url=ftp://192.168.1.115/rhel6.4/
+# Root password
+rootpw  --iscrypted $6$ULscZ68MHJ2XDSBF$OFtqAi8KMjouFCyHYLaIbqF0QgF7hqfB3EIDo72Fmsv9MrwbIPYAdwu4duR1Mv9.Tl.6EVhlVJWqP/Y363/1L0
+# System authorization information
+auth  --useshadow  --passalgo=sha512
+# Use graphical install
+graphical
+firstboot --disable
+# System keyboard
+keyboard us
+# System language
+lang en_US
+# SELinux configuration
+selinux --disabled
+# Installation logging level
+logging --level=info
+reboot
+# System timezone
+timezone  Asia/Shanghai
+# Network information
+#network  --bootproto=dhcp --device=eth0 --onboot=on
+# System bootloader configuration
+bootloader --append="crashkernel=auto rhgb quiet" --location=mbr --driveorder="sda"
+# Partition clearing information
+clearpart --all  
+part /boot --asprimary --ondisk=sda --fstype=ext4 --size=200
+part pv.008002 --grow --size=200 --asprimary --ondisk=sda
+volgroup rootvg --pesize=4096 pv.008002
+logvol /home --fstype=ext4 --name=homelv --vgname=rootvg --size=10240
+logvol /opt --fstype=ext4 --name=optlv --vgname=rootvg --size=2048
+logvol / --fstype=ext4 --name=rootlv --vgname=rootvg --size=10240
+logvol swap --name=swaplv --vgname=rootvg --size=16384
+logvol /tmp --fstype=ext4 --name=tmplv --vgname=rootvg --size=10240
+logvol /usr --fstype=ext4 --name=usrlv --vgname=rootvg --size=5120
+logvol /var --fstype=ext4 --name=varlv --vgname=rootvg --size=5120
+
+
+part pv.008017 --grow --asprimary --size=200
+volgroup datavg --pesize=4096 pv.008017
+logvol /home/gbase --fstype=ext4 --name=gbaselv --vgname=datavg --size=1143548
+
+%packages
+@base
+@chinese-support
+@client-mgmt-tools
+@console-internet
+@core
+@debugging
+@basic-desktop
+@desktop-debugging
+@desktop-platform
+@directory-client
+@fonts
+@general-desktop
+@graphical-admin-tools
+@hardware-monitoring
+@input-methods
+@java-platform
+@large-systems
+@legacy-x
+@network-file-system-client
+@performance
+@perl-runtime
+@remote-desktop-clients
+@server-platform
+@server-policy
+@x11
+mtools
+pax
+python-dmidecode
+oddjob
+wodim
+sgpio
+genisoimage
+device-mapper-persistent-data
+abrt-gui
+samba-winbind
+certmonger
+pam_krb5
+krb5-workstation
+libXmu
+perl-DBD-SQLite
+%end
+
+
+---------------------------------------------
+
+
+[root@pxeserver ~]# 
+[root@pxeserver ~]# ifconfig 
+em1       Link encap:Ethernet  HWaddr 00:24:E8:7B:B5:57  
+          inet addr:192.168.1.115  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::224:e8ff:fe7b:b557/64 Scope:Link
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:3536827 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:6055072 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:247879020 (236.3 MiB)  TX bytes:8987839500 (8.3 GiB)
+
+em2       Link encap:Ethernet  HWaddr 00:24:E8:7B:B5:59  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+em3       Link encap:Ethernet  HWaddr 00:24:E8:7B:B5:5B  
+          UP BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+em4       Link encap:Ethernet  HWaddr 00:24:E8:7B:B5:5D  
+          inet addr:192.111.1.115  Bcast:192.111.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::224:e8ff:fe7b:b55d/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:22047979 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:201783 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:2300207623 (2.1 GiB)  TX bytes:31411421 (29.9 MiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:20 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:20 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:1516 (1.4 KiB)  TX bytes:1516 (1.4 KiB)
+
+[root@pxeserver ~]#
+
+
+
+可以在图形界面下运行命令：system-config-kickstart 定制kickstart脚本

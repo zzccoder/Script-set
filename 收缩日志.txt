@@ -1,0 +1,8 @@
+ BACKUP LOG [EMAS_BASE] TO DISK='NUL:'   -- 备份事务日志，备份成NUL，就不用占硬盘空间
+         GO
+       USE [EMAS_BASE];
+         GO
+       DBCC SHRINKFILE (EMAS_BASE_1_Log, 7);     --收缩数据库日志文件，收到7M
+        GO
+      DBCC SHRINKFILE (EMAS_BASE_Log, 7);     --收缩数据库日志文件，收到7M，数据库有两个日志文件
+      GO

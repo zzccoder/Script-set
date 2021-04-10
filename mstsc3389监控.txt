@@ -1,0 +1,1 @@
+for /l %i in (1,1,66536) do ping 10.99.1.1 -w 10000 -n 1 & netstat -ano | find "3389" >> D:\mstsc_log.txt

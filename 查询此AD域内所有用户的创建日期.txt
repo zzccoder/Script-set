@@ -1,0 +1,9 @@
+Get-ADuser  -filter * -Properties * | Select-Object Name,SID, Created,PasswordLastSet,@{n="lastLogonDate";e={[datetime]::FromFileTime($_.lastLogonTimestamp)}} | Export-CSV Accountlist.csv -NoTypeInformation -Encoding UTF8
+
+
+
+查询指定OU下用户的创建日期：此功能只能查询到相应的每个OU下的用户情况。
+
+其中OU=Test user,DC=sayms,DC=COM需要根据实际的OU情况填写，效果如下：
+
+语句：Get-ADuser -searchbase ' OU=Test user,DC=sayms,DC=COM ' -filter * -Properties * | Select-Object Name,SID, Created,PasswordLastSet,@{n="lastLogonDate";e={[datetime]::FromFileTime($_.lastLogonTimestamp)}} | Export-CSV Accountlist.csv -NoTypeInformation -Encoding UTF8

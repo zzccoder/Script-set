@@ -1,0 +1,190 @@
+﻿#=======================================================================
+#      Microsoft provides programming examples for illustration only, 
+#      without warranty either expressed or implied, including, but 
+#      not limited to, the implied warranties of merchantability 
+#      and/or fitness for a particular purpose. It is assumed 
+#      that you are familiar with the programming language being 
+#      demonstrated and the tools used to create and debug procedures. 
+#      Microsoft support professionals can help explain the functionality 
+#      of a particular procedure, but they will not modify these examples 
+#      to provide added functionality or construct procedures to meet your 
+#      specific needs. If you have limited programming experience, you may 
+#      want to contact a Microsoft Certified Partner or the Microsoft fee-based 
+#      consulting line at (800) 936-5200. For more information about Microsoft 
+#      Certified Partners, please visit the following Microsoft Web site: 
+#      http://www.microsoft.com/partner/referral/
+#
+#========================= Start of the script =========================
+Import-module ActiveDirectory
+
+#Get Schema and right infomation
+cd ad:
+$rootdse = Get-ADRootDSE
+$domain = Get-ADDomain
+
+$guidmap = @{}
+$GuidMapParams = @{
+ SearchBase = ($rootdse.SchemaNamingContext)
+ LDAPFilter = "(schemaidguid=*)"
+ Properties = ("lDAPDisplayName","schemaIDGUID")}
+Get-ADObject @GuidMapParams | 
+foreach {$guidmap[$_.lDAPDisplayName]=[System.GUID]$_.schemaIDGUID} 
+
+$extendedrightsmap = @{}
+$ExtendedMapParams = @{
+ SearchBase = ($rootdse.ConfigurationNamingContext)
+ #LDAPFilter = "(&(objectclass=controlAccessRight)(rightsguid=*))"
+ LDAPFilter = "(rightsguid=*)"
+ Properties = ("displayName","rightsGuid")}
+Get-ADObject @ExtendedMapParams | 
+foreach {$extendedrightsmap[$_.displayName]=[System.GUID]$_.rightsGuid}
+
+#Get current ACL list
+$Source_Configfile= "C:\temp\GrantPermission\Test.csv";
+$Source_Backup= "C:\temp\GrantPermission\TestBackup.csv";
+$output_file= "C:\temp1\outsettings.csv";
+
+if(-Not(test-path c:\temp))
+{
+  New-Item c:\temp
+}
+
+$tempObjs =@()
+#$Sourcelist = Import-Csv $Source_Configfile
+$TempList = Import-Csv $Source_Configfile
+#$TempList=@()
+
+#for($i=0;$i -lt $Sourcelist.Length;$i++)
+#{
+#   $temp = $Sourcelist | Where-Object {$_.name -eq $Sourcelist[$i].Name}
+   
+#
+#   if(($TempList | Where-Object {$_.name -eq $temp[0].Name}).Count -eq 0)
+#   {
+#        $TempList += $temp[0]         
+#   } 
+#}
+
+#$TempList | Export-Csv $Source_Backup -Encoding UTF8 -NoTypeInformation
+
+if($TempList)
+{
+    foreach($config in $TempList)
+    {
+        $Name = $config.Name
+        $ManageBy = $config.Managedby
+        $GroupCategory = $config.GroupCategory
+        $GroupScope = $config.GroupScope
+        $Path = $config.Path
+        $Description = $config.Description
+        $TargetOU = $config.TargetPath
+        
+        $acl = get-acl $TargetOU
+        $group = Get-ADGroup $Path
+        $IdentityReference = [System.Security.Principal.NTAccount]$group.Name
+        [System.Collections.ArrayList]$ADAR = @{}
+
+        try
+        {
+            $Success = $true
+            switch -Wildcard ($Name)
+                                                                                                                                                                                    
+            {
+                '*JOinDomain' 
+                {
+                    $rights = @("CreateChild, DeleteChild")
+                    foreach($right in $rights)
+                    {
+                        $ADAR += New-Object System.DirectoryServices.ActiveDirectoryAccessRule ($IdentityReference,$right,'Allow','bf967a86-0de6-11d0-a285-00aa003049e2','All',[guid]::Empty)                    
+                    }
+                }
+                '*UnlockUser' 
+                {
+                    $rights = @("ReadProperty, WriteProperty")
+                    foreach($right in $rights)
+                    {
+                        $ADAR += New-Object System.DirectoryServices.ActiveDirectoryAccessRule ($IdentityReference,$right,'Allow',([GUID]("28630ebf-41d5-11d1-a9c1-0000f80367c1")).guid,"Descendents",([GUID]("bf967aba-0de6-11d0-a285-00aa003049e2")).guid)                    
+                    }
+                }
+                '*PWDReset' 
+                {
+                    $rights = @("Reset Password")
+                    foreach($right in $rights)
+                    {
+                        $ADAR += New-Object System.DirectoryServices.ActiveDirectoryAccessRule ($IdentityReference,'ExtendedRight','Allow',$extendedrightsmap[$right],'Descendents',$guidmap["user"])                    
+                    }
+                }
+                '*OUMangt' 
+                {
+                    $rights = @("GenericAll")
+                    foreach($right in $rights)
+                    {
+                        $ADAR += New-Object System.DirectoryServices.ActiveDirectoryAccessRule ($IdentityReference,$right,'Allow','Descendents', $guidmap['user'])                    
+                    }
+                    $ADAR += New-Object System.DirectoryServices.ActiveDirectoryAccessRule ($IdentityReference,"CreateChild, DeleteChild",'Allow','bf967aa5-0de6-11d0-a285-00aa003049e2','All',[guid]::Empty)
+                   
+                }
+                '*GroupMangt' 
+                {
+                    $rights = @("GenericAll")
+                    foreach($right in $rights)
+                    {
+                        $ADAR += New-Object System.DirectoryServices.ActiveDirectoryAccessRule ($IdentityReference,$right,'Allow','Descendents', $guidmap['user'])                    
+                    }
+                    $ADAR += New-Object System.DirectoryServices.ActiveDirectoryAccessRule ($IdentityReference,$right,'Allow','BF967A9C-0DE6-11D0-A285-00AA003049E2','All',[guid]::Empty)
+                   
+                }
+                default
+                {
+                    $obj = New-Object -TypeName PSObject -Property @{
+                                            Name = $Name
+                                            TargetOU = $TargetOU
+                                            result = "Failed"
+                                            Message = "Switch to Default"
+                                    }
+                                    $tempObjs += $obj;
+                    $Success = $false
+
+                }
+
+            }
+            
+            $OUBase = New-Object System.DirectoryServices.DirectoryEntry "LDAP://$TargetOU"
+            foreach($ar in $ADAR)
+            { 
+                $OUBase.ObjectSecurity.AddAccessRule($ar)
+            }
+            $OUBase.CommitChanges()   
+            #set-acl -aclobject $acl -Path $TargetOU
+            if($Success)
+            {
+                $obj = New-Object -TypeName PSObject -Property @{
+                                                Name = $Name
+                                                TargetOU = $TargetOU
+                                                result = "Success"
+                                                Message = "Set permission successfully"
+                                        }
+                                        $tempObjs += $obj;
+            }
+        }
+        catch
+        {
+            $ErrorMessage = $_.Exception.Message
+            $FailedItem = $_.Exception.ItemName
+            $obj = New-Object -TypeName PSObject -Property @{
+                                            Name = $Name
+                                            TargetOU = $TargetOU
+                                            result = "Faield"
+                                            message = $ErrorMessage
+                                    }
+                                    $tempObjs += $obj;
+
+        }
+    }
+}
+
+Write-host $tempObjs
+if($tempObjs)
+{
+    $tempObjs | Export-Csv $output_file -Encoding UTF8 -NoTypeInformation
+}
