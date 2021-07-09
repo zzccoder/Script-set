@@ -1,8 +1,9 @@
-»ñÈ¡ËùÓĞÊı¾İ¿âÃû
+ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½ï¿½
 
 Select Name From Master..SysDatabases order By Name
 
-2.»ñÈ¡ËùÓĞ±íÃû 
-Select Name From SysObjects Where XType=¡¯U¡¯ order By Name XType=¡¯U':±íÊ¾ËùÓĞÓÃ»§±í; XType=¡¯S':±íÊ¾ËùÓĞÏµÍ³±í;
+2.ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½ï¿½ 
+Select Name From SysObjects Where XType=ï¿½ï¿½Uï¿½ï¿½ order By Name XType=ï¿½ï¿½U':ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½; XType=ï¿½ï¿½S':ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ÏµÍ³ï¿½ï¿½;
 
-3.»ñÈ¡ËùÓĞ×Ö¶ÎÃû Select Name From SysColumns Where id=Object_Id(¡®TableName¡¯)
+3.ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½ Select Name From SysColumns Where id=Object_Id(ï¿½ï¿½TableNameï¿½ï¿½)
+111ã€
