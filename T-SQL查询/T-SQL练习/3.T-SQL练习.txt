@@ -1,0 +1,282 @@
+--SQL课堂练习第一部分
+数需要三个元素：要替换的参数的名称、该参数的数据类型以及该参数的默认值
+--1.创建Tours 数据库
+
+CREATE DATABASE Tours
+ ON
+ (
+ NAME=Tours_data,    --逻辑文件名
+  FILENAME='d:/Tours/Tours_data.mdf',  --物理文件名
+  SIZE=20,     --初始大小
+  MAXSIZE=500,     --最大限制
+  FILEGROWTH=20%     --文件增长
+     
+ ),
+
+ (
+ NAME=Tours_data1,    --逻辑文件名
+  FILENAME='d:/Tours/Tours_data1.ndf',  --物理文件名
+  SIZE=10,     --初始大小
+  MAXSIZE=500,     --最大限制
+  FILEGROWTH=5     --文件增长
+ )
+LOG ON
+ (
+ NAME=Tours_log,     --逻辑文件名
+  FILENAME='d:/Tours/Tours_log.ldf',  --物理文件名
+  SIZE=5,      --初始大小
+ MAXSIZE=100,     --最大限制
+  FILEGROWTH=2     --文件增长
+ );
+
+ GO
+
+--2.创建数据库operator表
+
+USE Tours;
+GO
+CREATE TABLE operator
+(
+
+ oper_cd   INT  IDENTITY(1,1),   --旅行业务员代码
+ oper_nm  NVARCHAR(20) NOT NULL,   --名字
+ oper_add  NVARCHAR(100),     --地址
+ oper_telno CHAR(20),     --电话号码
+ oper_faxno CHAR(20),     --传真号码
+ oper_email VARCHAR(50),     --电子邮件地址
+CONSTRAINT PK_operator PRIMARY KEY (oper_cd),
+CONSTRAINT UQ_operator UNIQUE (oper_telno)
+
+); 
+GO
+
+--3.创建数据库cruise表
+CREATE TABLE cruise
+(
+ cruise_cd INT  IDENTITY(1,1),   --旅行代码
+ cruise_nm NVARCHAR(100) NOT NULL,   --旅行名称
+ oper_cd  INT,      --旅游业务员代码
+ des_city NVARCHAR(30),     --目的地城市
+ country_nm NVARCHAR(20),     --国家名称
+ duration INT,      --旅行时间(按天计)
+ price  MONEY,      --每位价格
+ airfare  NCHAR,       --票价含在价格中(Y–是,N–否)
+CONSTRAINT PK_cruise  PRIMARY KEY  (cruise_cd),
+CONSTRAINT CK_duration  CHECK  (duration>0),
+CONSTRAINT CK_price  CHECK  (price>0),
+CONSTRAINT CK_airfare  CHECK  (airfare='Y' OR airfare='N'),
+CONSTRAINT FK_cruise    FOREIGN KEY(oper_cd)  REFERENCES operator(oper_cd)
+);
+GO
+
+--4.创建数据库cruise_book表
+CREATE TABLE cruise_book
+(
+ cruise_cd INT,      --旅行代码
+ start_dt DATETIME,     --行程开始日期
+ tot_seats SMALLINT,     --座位总数
+ seats_avail SMALLINT,     --未预定座位数
+CONSTRAINT PK_cruise1  PRIMARY KEY  (cruise_cd,start_dt),
+CONSTRAINT CK_cruise  CHECK    (start_dt>GETDATE()),
+CONSTRAINT FK_cruise_book FOREIGN KEY(cruise_cd)  REFERENCES cruise(cruise_cd)
+);
+GO
+
+--5.创建数据库customer表
+CREATE TABLE customer
+(
+ cust_cd  INT  IDENTITY(1,1) ,   --客户代码
+ cust_nm  NVARCHAR(20),     --姓名
+ cust_add NVARCHAR(100),     --住址
+ tel_no  CHAR(20),     --电话号码
+ e_mail  VARCHAR(50),     --电子邮件地址
+ cruise_cd INT ,     --所预定旅行代码
+ start_dt DATETIME,     --所预定旅行开始日期
+ no_of_per INT  DEFAULT (1),   --预定人员数
+CONSTRAINT PK_customer  PRIMARY KEY (cust_cd),
+CONSTRAINT FK_customer  FOREIGN KEY(cruise_cd)  REFERENCES cruise(cruise_cd)
+);
+GO
+
+
+USE Tours;
+GO
+
+--6.向表operator中插入记录
+ 
+INSERT INTO operator VALUES('蒋文斌', '湖南省长沙市五一大道1108号',  '0731-6815888', '0731-6815888',  'hunanjiangwenbin@126.com')
+INSERT INTO operator VALUES('杨明',   '安徽省合肥市张洼路1218号',    '0551-4212777', '0551-4212777',  'yangming@sina.com')
+INSERT INTO operator VALUES('胡文',   '湖南省长沙市五一大道1108号',  '0731-6816999', '0731-6816999',  'huwen@sohu.com')
+INSERT INTO operator VALUES('黄兰惠', '广东省深圳市深南中路1028号',  '0755-86511118', '0755-86511118', 'huanglanhui@qq.com')
+INSERT INTO operator VALUES('李文斌', '湖南省长沙市五一大道1108号',  '0731-8813388', '0731-6815888',  'jiangwenbin@126.com')
+INSERT INTO operator VALUES('杨二明', '安徽省合肥市张洼路1218号',    '0551-4212227', '0551-4212777',  'yangming@sina.com')
+INSERT INTO operator VALUES('胡小文', '湖南省长沙市五一大道1108号',  '0731-6816699', '0731-6816999',  'huwen@sohu.com')
+INSERT INTO operator VALUES('黄小惠', '广东省深圳市深南中路1028号',  '0755-86511218', '0755-86511118', 'huanglanhui@qq.com')
+INSERT INTO operator VALUES('马斌',   '湖南省长沙市五一大道1108号',  '0731-68155588', '0731-6815888',  'hunanjiangwenbin@126.com')
+INSERT INTO operator VALUES('杨军',   '安徽省合肥市张洼路1218号',    '0551-42127117', '0551-4212777',  'yangming@sina.com')
+INSERT INTO operator VALUES('胡朋',   '湖南省长沙市五一大道1108号',  '0731-6816949', '0731-6816999',  'huwen@sohu.com')
+INSERT INTO operator VALUES('李兰惠', '广东省深圳市深南中路1028号',  '0755-86511108', '0755-86511118', 'huanglanhui@qq.com')
+INSERT INTO operator VALUES('曾文斌', '湖南省长沙市五一大道1108号',  '0731-6815848', '0731-6815888',  'hunanjiangwenbin@126.com')
+INSERT INTO operator VALUES('汤明',   '安徽省合肥市张洼路1218号',    '0551-4212747', '0551-4212777',  'yangming@sina.com')
+INSERT INTO operator VALUES('刘文',   '湖南省长沙市五一大道1108号',  '0731-6816996', '0731-6816999',  'liuwen@sohu.com')
+INSERT INTO operator VALUES('沈兰惠', '广东省深圳市深南中路1028号',  '0755-86511168', '0755-86511118', 'shenlanhui@qq.com')
+INSERT INTO operator VALUES('江斌',   '湖南省长沙市五一大道1108号',  '0731-6815886', '0731-6815888',  'jiangbin@126.com')
+INSERT INTO operator VALUES('杨兰',   '安徽省合肥市张洼路1218号',    '0551-4212788', '0551-4212777',  'yangnan@sina.com')
+INSERT INTO operator VALUES('陈文',   '湖南省长沙市五一大道1108号',  '0731-6816988', '0731-6816999',  'chenwen@sohu.com')
+INSERT INTO operator VALUES('黄惠军', '广东省深圳市深南中路1028号',  '0755-86511128', '0755-86511118', 'huanghuijun@qq.com')
+
+GO
+
+--7.向表cruise插入记录
+
+INSERT INTO cruise VALUES('新马泰七日游', 1, '曼谷', '泰国', 7, 12000, 'Y')
+INSERT INTO cruise VALUES('凤凰山一日游', 2,  '深圳', '中国', 1, 200, 'N')
+INSERT INTO cruise VALUES('欧洲七日游',   3, '巴黎', '法国', 10, 8000, 'Y')
+INSERT INTO cruise VALUES('梧桐山一日游', 4, '深圳', '中国', 1, 500, 'Y')
+INSERT INTO cruise VALUES('日韩10日游',   5, '东京', '日本', 12, 5000, 'Y')
+INSERT INTO cruise VALUES('黄山5日游',    6, '黄山', '安徽', 5, 1800, 'N')
+
+GO
+
+--8.向表cruise_book插入记录
+
+INSERT INTO cruise_book VALUES(1, '2008-12-28', 50, 2)
+INSERT INTO cruise_book VALUES(2, '2009-1-1', 100, 20)
+INSERT INTO cruise_book VALUES(3, '2009-2-28', 50, 2)
+INSERT INTO cruise_book VALUES(4, '2009-7-28', 50, 5)
+INSERT INTO cruise_book VALUES(5, '2009-2-28', 50, 2)
+INSERT INTO cruise_book VALUES(6, '2009-2-2', 100, 10)
+
+GO
+
+--9.向表customer插入记录
+
+INSERT INTO customer VALUES('汤明', '安徽省合肥市张洼路1218号', '0551-4212747', 'yangming@sina.com', 6, '2009-2-2', 100)
+INSERT INTO customer VALUES('江斌', '湖南省长沙市五一大道1108号', '0731-6815886', 'jiangbin@126.com', 5, '2009-2-28', 50)
+INSERT INTO customer VALUES('邓明', '广东省深圳市深南中路1028号', '0551-4212747', 'yangming@sina.com', 4, '2009-7-28', 50)
+INSERT INTO customer VALUES('江斌', '湖南省长沙市五一大道1108号', '0731-6815886', 'jiangbin@126.com', 3, '2009-2-28', 50)
+INSERT INTO customer VALUES('江明', '广东省深圳市深南中路1028号', '0551-4212747', 'yangming@sina.com', 2, '2009-1-1', 100)
+INSERT INTO customer VALUES('陈斌', '湖南省长沙市五一大道1108号', '0731-6815886', 'jiangbin@126.com', 1, '2008-12-28', 50)
+INSERT INTO customer VALUES('汤明', '安徽省合肥市张洼路1218号', '0551-4212747', 'yangming@sina.com', 6, '2008-7-2', 100)
+INSERT INTO customer VALUES('江斌', '湖南省长沙市五一大道1108号', '0731-6815886', 'jiangbin@126.com', 5, '2008-8-28', 50)
+INSERT INTO customer VALUES('邓明', '广东省深圳市深南中路1028号', '0551-4212747', 'yangming@sina.com', 4, '2008-7-28', 50)
+INSERT INTO customer VALUES('江斌', '湖南省长沙市五一大道1108号', '0731-6815886', 'jiangbin@126.com', 3, '2008-7-28', 50)
+INSERT INTO customer VALUES('江明', '广东省深圳市深南中路1028号', '0551-4212747', 'yangming@sina.com', 2, '2008-8-8', 100)
+INSERT INTO customer VALUES('陈斌', '湖南省长沙市五一大道1108号', '0731-6815886', 'jiangbin@126.com', 1, '2008-8-18', 50)
+GO
+
+ 
+
+
+--SQL课堂练习第二部分
+
+USE Tours;
+GO
+
+--1. 显示当年七月到八月预约的顾客姓名
+
+SELECT cust_nm FROM customer WHERE start_dt>='2008-7-1'  AND  start_dt<'2008-9-1'
+
+--2. 创建非聚集,在cruise表duration字段上创建名为 ndx_duration的非聚集索引,确保填充因子为20 %
+
+CREATE NONCLUSTERED INDEX ndx_duration ON cruise(duration)
+ WITH FILLFACTOR=20 --填充因子
+
+
+--3. 在cruise表上创建名为long_cruise的视图,这个视图应显示行程大于8天的旅游线的代码、名称、目的城市、行程和价格
+
+CREATE VIEW v_long_cruise
+AS
+SELECT cruise_cd AS 旅行代码,cruise_nm AS 旅行名称,des_city AS 目的地城市,duration AS '旅行时间(按天计)',price AS 每位价格 FROM cruise
+ WHERE duration >8
+
+ 
+
+--4. 通过视图long_cruise 修改cruise表的数据。将所有线路的价格增加 15 % 。
+ 
+UPDATE  v_long_cruise SET 每位价格=每位价格 *1.15
+
+
+--5.1 创建登录,创建一个SQL Server的登录帐户：op1
+
+--sql server
+EXEC sp_addlogin 'op1','QQ1234567'
+
+--5.2 创建数据库用户,在Tours数据库中创建用户以允许op1访问该数据库
+
+EXEC sp_grantdbaccess 'op1'
+
+--5.3 创建数据库角色,在Tours数据库中创建一个角色：opers
+
+EXEC sp_addrole 'opers'
+
+--5.4 授权,授予角色opers对表Customer的select、insert权限
+
+GRANT SELECT,INSERT ON customer TO opers
+
+--5.5 将用户op1加入角色opers
+
+EXEC sp_addrolemember 'opers','op1'
+
+
+--SQL课堂练习第三部分
+
+/*创建一个存储过程 CountryCruise，这个过程接受国家名并显示旅途将要到达的国家名，
+日程，价格，开始时间及座位*/
+
+CREATE PROC up_CountryCruise
+
+@country_nm NVARCHAR(20)  
+
+AS
+ SELECT country_nm,duration,price,start_dt,tot_seats 
+FROM cruise INNER JOIN cruise_book ON cruise.cruise_cd=cruise_book.cruise_cd
+ WHERE @country_nm=country_nm;
+
+/*创建名为 CheckSeats 的触发器，它将检查在customer表中输入的每一个预定。
+它将检查旅游指定开始日期的座位是否够用*/
+USE Tours;
+GO
+CREATE TRIGGER updstartDt ON customer
+AFTER INSERT,UPDATE
+AS
+ DECLARE @cd int;
+ DECLARE @dt datetime;
+
+ SELECT @cd=cruise_cd,@dt=start_dt
+ FROM inserted
+ IF(NOT EXISTS(SELECT *FROM cruise_book WHERE cruise_cd=@cd
+  AND start_dt=@dt))
+ BEGIN
+  PRINT '没有这个团'
+  ROLLBACK TRAN
+ END
+GO
+
+/*创建一个名为UpdStartDt 的触发器，它将保证向Customer表中添加记录或修改start_dt的值时，
+所输入的start_dt必须是在 Cruise_book表中对应cruise_cd存在的start_dt*/
+
+CREATE TRIGGER checkseat ON customer
+AFTER INSERT,UPDATE
+AS
+ DECLARE @cd int;
+ DECLARE @dt datetime;
+ DECLARE @person int;
+ DECLARE @seats int;
+
+ SELECT @cd=cruise_cd,@dt=start_dt,@person=no_of_per
+ FROM inserted
+ SELECT @seats=seats_avail
+ FROM cruise_book
+ WHERE cruise_cd=@cd AND @dt=start_dt
+ IF(@seats<@person)
+ BEGIN
+  PRINT '座位数不够'
+  ROLLBACK TRAN
+ END
+ ELSE
+ BEGIN
+  UPDATE cruise_book SET seats_avail=seats_avail-@person
+  WHERE cruise_cd=@cd AND @dt=start_dt
+ END
+GO

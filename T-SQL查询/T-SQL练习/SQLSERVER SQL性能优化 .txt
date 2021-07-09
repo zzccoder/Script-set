@@ -1,0 +1,387 @@
+SQLSERVER SQL性能优化 
+
+1.选择最有效率的表名顺序(只在基于规则的优化器中有效)　　   
+　　 SQLSERVER的解析器按照从右到左的顺序处理FROM子句中的表名，因此FROM子句中写在最后的表（基础表driving table）将被最先处理，在FROM子句中包含多个表的情况下，必须选择记录条数最少的表作为基础表，当SQLSERVER处理多个表时，会运用排序及合并的方式连接它们，  
+
+　　 首先，扫描第一个表（FROM子句中最后的那个表)并对记录进行排序；然后扫描第二个表（FROM子句中最后第二个表)；最后将所有从第二个表中检索出的记录与第一个表中合适记录进行合并  
+
+　　 例如: 表 TAB1 16,384 条记录表 TAB2 5 条记录，选择TAB2作为基础表 (最好的方法) select count(*) from tab1,tab2 执行时间0.96秒，选择TAB2作为基础表 (不佳的方法) select count(*) from tab2,tab1 执行时间26.09秒；  
+
+如果有3个以上的表连接查询，那就需要选择交叉表（intersection table）作为基础表，交叉表是指那个被其他表所引用的表　　   
+　　 例如:  
+　　 EMP表描述了LOCATION表和CATEGORY表的交集  
+　　 SELECT *  
+　　 FROM LOCATION L,  
+　　 CATEGORY C,  
+　　 EMP E  
+　　 WHERE E.EMP_NO BETWEEN 1000 AND 2000  
+　　 AND E.CAT_NO = C.CAT_NO  
+　　 AND E.LOCN = L.LOCN  
+　　   
+　　 将比下列SQL更有效率  
+　　 SELECT *  
+　　 FROM EMP E ,  
+　　 LOCATION L ,  
+　　 CATEGORY C  
+　　 WHERE E.CAT_NO = C.CAT_NO  
+　　 AND E.LOCN = L.LOCN  
+　　 AND E.EMP_NO BETWEEN 1000 AND 2000  
+　　   
+　　 2.WHERE子句中的连接顺序　　   
+　　 SQLSERVER采用自下而上的顺序解析WHERE子句，根据这个原理，表之间的连接必须写在其他WHERE条件之前，那些可以过滤掉最大数量记录的条件必须写在WHERE子句的末尾　　   
+　　 例如：  
+　　 (低效,执行时间156.3秒)  
+　　 SELECT *  
+　　 FROM EMP E  
+　　 WHERE SAL > 50000  
+　　 AND JOB = ’MANAGER’  
+　　 AND 25 < (SELECT COUNT(*) FROM EMP WHERE MGR=E.EMPNO);　　   
+　　 (高效,执行时间10.6秒)  
+　　 SELECT *  
+　　 FROM EMP E  
+　　 WHERE 25 < (SELECT COUNT(*) FROM EMP WHERE MGR=E.EMPNO)  
+　　 AND SAL > 50000  
+　　 AND JOB = ’MANAGER’;  
+　　   
+　　 3.SELECT子句中避免使用’*’。当你想在SELECT子句中列出所有的COLUMN时，使用动态SQL列引用’*’是一个方便的方法，不幸的是，这是一个非常低效的方法。实际上，SQLSERVER在解析的过程中，会将’*’依次转换成所有的列名，这个工作是通过查询数据字典完成的，这意味着将耗费更多的时间  
+
+　　   
+　　 4.减少访问数据库的次数。当执行每条SQL语句时，SQLSERVER在内部执行了许多工作：解析SQL语句，估算索引的利用率，绑定变量，读数据块等等  
+　　 由此可见，减少访问数据库的次数，就能实际上减少SQLSERVER的工作量，例如：  
+　　 以下有三种方法可以检索出雇员号等于0342或0291的职员　　   
+　　 方法1 (最低效)  
+　　 SELECT EMP_NAME, SALARY, GRADE  
+　　 FROM EMP  
+　　 WHERE EMP_NO = 342;   
+　　 SELECT EMP_NAME, SALARY, GRADE  
+　　 FROM EMP  
+　　 WHERE EMP_NO = 291;  
+　　   
+　　 方法2 (次低效)  
+　　 DECLARE  
+　　 CURSOR C1 (E_NO NUMBER) IS  
+　　 SELECT EMP_NAME,SALARY,GRADE  
+　　 FROM EMP  
+　　 WHERE EMP_NO = E_NO;  
+　　 BEGIN  
+　　 OPEN C1(342);  
+　　 FETCH C1 INTO …,…,…;  
+　　 …  
+　　 OPEN C1(291);  
+　　 FETCH C1 INTO …,…,…;  
+　　 …  
+　　 CLOSE C1;  
+　　 END;  
+　　   
+　　 方法2 (高效)  
+　　 SELECT A.EMP_NAME, A.SALARY, A.GRADE,  
+　　 B.EMP_NAME, B.SALARY, B.GRADE  
+　　 FROM EMP A, EMP B  
+　　 WHERE A.EMP_NO = 342  
+　　 AND B.EMP_NO = 291;  
+　　   
+　　 5.使用DECODE函数来减少处理时间  
+
+　　   
+　　 使用DECODE函数可以避免重复扫描相同记录或重复连接相同的表  
+　　   
+　　 例如：  
+　　 SELECT COUNT(*), SUM(SAL)  
+　　 FROM EMP  
+　　 WHERE DEPT_NO = ’0020’  
+　　 AND ENAME LIKE ’SMITH%’;  
+　　   
+　　 SELECT COUNT(*), SUM(SAL)  
+　　 FROM EMP  
+　　 WHERE DEPT_NO = ’0030’  
+　　 AND ENAME LIKE ’SMITH%’;  
+　　   
+　　 你可以用DECODE函数高效地得到相同结果  
+　　 SELECT COUNT(DECODE(DEPT_NO, ’0020’, ’X’, NULL)) D0020_COUNT,  
+　　 COUNT(DECODE(DEPT_NO, ’0030’, ’X’, NULL)) D0030_COUNT,  
+　　 SUM(DECODE(DEPT_NO, ’0020’, SAL, NULL)) D0020_SAL,  
+　　 SUM(DECODE(DEPT_NO, 0030, SAL, NULL)) D0030_SAL  
+　　 FROM EMP  
+　　 WHERE ENAME LIKE ’SMITH%’;  
+　　   
+　　 ’X’表示任何一个字段  
+　　 类似的，DECODE函数也可以运用于GROUP BY和ORDER BY子句中  
+　　   
+　　 6.用Where子句替换HAVING子句  
+　　   
+　　 避免使用HAVING子句，HAVING只会在检索出所有记录之后才对结果集进行过滤，这个处理需要排序、统计等操作  
+　　   
+　　 如果能通过WHERE子句限制记录的数目，那就能减少这方面的开销  
+　　   
+　　 例如：  
+　　 低效  
+　　 SELECT REGION, AVG(LOG_SIZE)  
+　　 FROM LOCATION  
+　　 GROUP BY REGION  
+　　 HAVING REGION REGION != ’SYDNEY’  
+　　 AND REGION != ’PERTH’  
+　　   
+　　 高效  
+　　 SELECT REGION, AVG(LOG_SIZE)  
+　　 FROM LOCATION  
+　　 WHERE REGION REGION != ’SYDNEY’  
+　　 AND REGION != ’PERTH’  
+　　 GROUP BY REGION  
+　　   
+　　 7.减少对表的查询  
+　　   
+　　 在含有子查询的SQL语句中，要特别注意减少对表的查询　　   
+　　 例如：　　   
+　　 低效  
+　　 SELECT TAB_NAME  
+　　 FROM TABLES  
+　　 WHERE TAB_NAME = (SELECT TAB_NAME  
+　　 FROM TAB_COLUMNS  
+　　 WHERE VERSION = 604)  
+　　 AND DB_VER = (SELECT DB_VER  
+　　 FROM TAB_COLUMNS  
+　　 WHERE VERSION = 604)  
+　　   
+　　 高效  
+　　 SELECT TAB_NAME  
+　　 FROM TABLES  
+　　 WHERE (TAB_NAME, DB_VER) = (SELECT TAB_NAME, DB_VER  
+　　 FROM TAB_COLUMNS  
+　　 WHERE VERSION = 604)  
+
+　　   
+　　 Update多个Column例子：  
+　　 低效  
+　　 UPDATE EMP  
+　　 SET EMP_CAT = (SELECT MAX(CATEGORY)  
+　　 FROM EMP_CATEGORIES),  
+　　 SAL_RANGE = (SELECT MAX(SAL_RANGE)  
+　　 FROM EMP_CATEGORIES)  
+　　 WHERE EMP_DEPT = 0020;  
+　　   
+　　 高效  
+　　 UPDATE EMP  
+　　 SET (EMP_CAT, SAL_RANGE) = (SELECT MAX(CATEGORY), MAX(SAL_RANGE)  
+　　 FROM EMP_CATEGORIES)  
+　　 WHERE EMP_DEPT = 0020;  
+　　   
+　　 8.使用表的别名(Alias)，当在SQL语句中连接多个表时，请使用表的别名并把别名前缀于每个Column上，这样可以减少解析的时间并减少那些由Column歧义引起的语法错误  
+　　   
+　　 9.用EXISTS替代IN  
+　　   
+　　 在许多基于基础表的查询中，为了满足一个条件，往往需要对另一个表进行联接  
+　　   
+　　 在这种情况下，使用EXISTS(或NOT EXISTS)通常将提高查询的效率  
+　　   
+　　 低效  
+　　 SELECT *  
+　　 FROM EMP (基础表)  
+　　 WHERE EMPNO > 0  
+　　 AND DEPTNO IN (SELECT DEPTNO  
+　　 FROM DEPT  
+　　 WHERE LOC = ’MELB’)  
+　　   
+　　 高效  
+　　 SELECT *  
+　　 FROM EMP (基础表)  
+　　 WHERE EMPNO > 0  
+　　 AND EXISTS (SELECT ’X’  
+　　 FROM DEPT  
+　　 WHERE DEPT.DEPTNO = EMP.DEPTNO  
+　　 AND LOC = ’MELB’)  
+　　   
+　　 10.用NOT EXISTS替代NOT IN  
+　　   
+　　 在子查询中，NOT IN子句将执行一个内部的排序和合并  
+　　   
+　　 无论在哪种情况下，NOT IN都是最低效的，因为它对子查询中的表执行了一个全表遍历  
+　　   
+　　 为了避免使用NOT IN，我们可以把它改写成外连接(Outer Joins)或NOT EXISTS  
+　　   
+　　 例如：  
+　　 SELECT …  
+　　 FROM EMP  
+　　 WHERE DEPT_NO NOT IN (SELECT DEPT_NO  
+　　 FROM DEPT  
+　　 WHERE DEPT_CAT = ’A’);  
+　　   
+　　 为了提高效率改写为  
+　　 高效  
+　　 SELECT …  
+　　 FROM EMP A, DEPT B  
+　　 WHERE A.DEPT_NO = B.DEPT(+)  
+　　 AND B.DEPT_NO IS NULL  
+　　 AND B.DEPT_CAT(+) = ’A’  
+　　   
+　　 最高效  
+　　 SELECT …  
+　　 FROM EMP E  
+　　 WHERE NOT EXISTS (SELECT ’X’  
+　　 FROM DEPT D  
+　　 WHERE D.DEPT_NO = E.DEPT_NO  
+　　 AND DEPT_CAT = ’A’);  
+　　   
+　　 11.用表连接替换EXISTS  
+　　   
+　　 通常来说，采用表连接的方式比EXISTS更有效率  
+　　   
+　　 例如：  
+　　 SELECT ENAME  
+　　 FROM EMP E  
+　　 WHERE EXISTS (SELECT ’X’  
+　　 FROM DEPT  
+　　 WHERE DEPT_NO = E.DEPT_NO  
+　　 AND DEPT_CAT = ’A’);  
+　　   
+　　 更高效  
+　　 SELECT ENAME  
+　　 FROM DEPT D, EMP E  
+　　 WHERE E.DEPT_NO = D.DEPT_NO  
+　　 AND DEPT_CAT = ’A’;  
+　　   
+　　 12.用EXISTS替换DISTINCT  
+　　   
+　　 当提交一个包含多表信息（比如部门表和雇员表）的查询时，避免在SELECT子句中使用DISTINCT，一般可以考虑用EXIST替换  
+　　   
+　　 例如：  
+　　   
+　　 低效  
+　　 SELECT DISTINCT DEPT_NO, DEPT_NAME  
+　　 FROM DEPT D, EMP E  
+　　 WHERE D.DEPT_NO = E.DEPT_NO  
+　　   
+　　 高效  
+　　 SELECT DEPT_NO, DEPT_NAME  
+　　 FROM DEPT D  
+　　 WHERE EXISTS (SELECT ’X’  
+　　 FROM EMP E  
+　　 WHERE E.DEPT_NO = D.DEPT_NO);  
+　　   
+　　 EXISTS使查询更为迅速，因为RDBMS核心模块将在子查询的条件一旦满足后，立刻返回结果  
+　　   
+　　 13.用索引提高效率  
+　　   
+　　 索引是表的一个概念部分，用来提高检索数据的效率。实际上，SQLSERVER使用了一个复杂的自平衡B-tree结构  
+　　   
+　　 通常，通过索引查询数据比全表扫描要快。当SQLSERVER找出执行查询和Update语句的最佳路径时，SQLSERVER优化器将使用索引  
+　　   
+　　 同样，在联结多个表时使用索引也可以提高效率。另一个使用索引的好处是，它提供了主键（primary key）的唯一性验证  
+　　   
+　　 除了那些LONG或LONG RAW数据类型，你可以索引几乎所有的列  
+　　   
+　　 通常在大型表中使用索引特别有效，当然，在扫描小表时，使用索引同样能提高效率  
+　　   
+　　 虽然使用索引能得到查询效率的提高，但是我们也必须注意到它的代价  
+　　   
+　　 索引需要空间来存储，也需要定期维护，每当有记录在表中增减或索引列被修改时，索引本身也会被修改  
+　　   
+　　 这意味着每条记录的INSERT、DELETE、UPDATE将为此多付出4、5次的磁盘I/O  
+　　   
+　　 因为索引需要额外的存储空间和处理，那些不必要的索引反而会使查询反应时间变慢  
+　　   
+　　 SQLSERVER对索引有两种访问模式：  
+　　   
+　　 1).索引唯一扫描（INDEX UNIQUE SCAN）  
+　　   
+　　 大多数情况下, 优化器通过WHERE子句访问INDEX  
+　　   
+　　 例如：  
+　　 表LODGING有两个索引：建立在LODGING列上的唯一性索引LODGING_PK和建立在MANAGER列上的非唯一性索引LODGING$MANAGER  
+　　 SELECT *  
+　　 FROM LODGING  
+　　 WHERE LODGING = ’ROSE HILL’;  
+　　   
+　　 在内部，上述SQL将被分成两步执行：  
+　　   
+　　 首先，LODGING_PK索引将通过索引唯一扫描的方式被访问，获得相对应的ROWID；然后通过ROWID访问表的方式执行下一步检索  
+　　   
+　　 如果被检索返回的列包括在INDEX列中，SQLSERVER将不执行第二步的处理（通过ROWID访问表）  
+　　   
+　　 因为检索数据保存在索引中，单单访问索引就可以完全满足查询结果  
+　　   
+　　 2).索引范围查询(INDEX RANGE SCAN)  
+　　   
+　　 适用于两种情况:  
+　　   
+　　 1>.基于唯一性索引的一个范围的检索  
+　　   
+　　 2>.基于非唯一性索引的检索  
+　　   
+　　 例1  
+　　 SELECT LODGING  
+　　 FROM LODGING  
+　　 WHERE LODGING LIKE ’M%’;  
+　　   
+　　 WHERE子句条件包括一系列值，SQLSERVER将通过索引范围查询的方式查询LODGING_PK  
+　　   
+　　 由于索引范围查询将返回一组值，它的效率就要比索引唯一扫描低一些  
+　　   
+　　 例2  
+　　 SELECT LODGING  
+　　 FROM LODGING  
+　　 WHERE MANAGER = ’BILL GATES’;  
+　　   
+　　 这个SQL的执行分两步，LODGING$MANAGER的索引范围查询（得到所有符合条件记录的ROWID），通过ROWID访问表得到LODGING列的值  
+　　   
+　　 由于LODGING$MANAGER是一个非唯一性的索引，数据库不能对它执行索引唯一扫描  
+　　   
+　　 WHERE子句中，如果索引列所对应的值的第一个字符由通配符（WILDCARD）开始，索引将不被采用  
+　　 SELECT LODGING  
+　　 FROM LODGING  
+　　 WHERE MANAGER LIKE ’％HANMAN’;  
+　　   
+　　 在这种情况下，SQLSERVER将使用全表扫描  
+　　   
+　　 14.避免在索引列上使用计算  
+　　   
+　　 WHERE子句中，如果索引列是函数的一部分，优化器将不使用索引而使用全表扫描  
+　　   
+　　 例如：  
+　　   
+　　 低效  
+　　 SELECT …  
+　　 FROM DEPT  
+　　 WHERE SAL * 12 > 25000;  
+　　   
+　　 高效  
+　　 SELECT …  
+　　 FROM DEPT  
+　　 WHERE SAL > 25000/12;  
+　　   
+　　 请务必注意，检索中不要对索引列进行处理，如：TRIM，TO_DATE，类型转换等操作，破坏索引，使用全表扫描，影响SQL执行效率  
+　　   
+　　 15.避免在索引列上使用IS NULL和IS NOT NULL  
+　　   
+　　 避免在索引中使用任何可以为空的列，SQLSERVER将无法使用该索引  
+　　   
+　　 对于单列索引，如果列包含空值，索引中将不存在此记录；  
+　　   
+　　 对于复合索引，如果每个列都为空，索引中同样不存在此记录。如果至少有一个列不为空，则记录存在于索引中  
+　　   
+　　 如果唯一性索引建立在表的A列和B列上，并且表中存在一条记录的A,B值为(123,null)，  
+　　   
+　　 SQLSERVER将不接受下一条具有相同A,B值（123,null）的记录插入  
+　　   
+　　 如果所有的索引列都为空，SQLSERVER将认为整个键值为空，而空不可能等于空，因此你可以插入1000条具有相同键值的记录，当然它们都是空！  
+　　   
+　　 因为空值不存在于索引列中，所以WHERE子句中对索引列进行空值比较将使SQLSERVER停用该索引  
+　　   
+　　 低效（索引失效）  
+　　 SELECT …  
+　　 FROM DEPARTMENT  
+　　 WHERE DEPT_CODE IS NOT NULL  
+　　   
+　　 16.使用UNION-ALL和UNION  
+　　   
+　　 当SQL语句需要UNION两个查询结果集合时，这两个结果集合会以UNION-ALL的方式被合并，然后在输出最终结果前进行排序  
+　　   
+　　 如果用UNION ALL替代UNION，这样排序就不是必要了，效率就会因此得到提高  
+　　   
+　　 需要注意的是，UNION ALL将重复输出两个结果集合中相同记录，因此还是要从业务需求分析使用UNION ALL的可行性  
+　　   
+　　 关于索引下列经验请参考:  
+　　   
+　　 1).如果检索数据量超过30%的表中记录数，使用索引将没有显著的效率提高  
+　　   
+　　 2).在特定情况下，使用索引也许会比全表扫描慢，但这是同一个数量级上的差距；而通常情况下，使用索引比全表扫描要快几倍乃至几千倍！  
+

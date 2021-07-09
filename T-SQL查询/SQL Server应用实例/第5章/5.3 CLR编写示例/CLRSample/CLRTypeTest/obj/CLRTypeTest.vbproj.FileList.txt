@@ -1,0 +1,13 @@
+bin\Debug\CLRTypeTest.exe
+bin\Debug\CLRTypeTest.pdb
+bin\Debug\CLRTypeTest.xml
+bin\Debug\CLRSample.dll
+bin\Debug\CLRSample.pdb
+bin\Debug\CLRSample.xml
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\CLRTypeTest.Form1.resources
+obj\Debug\CLRTypeTest.Resources.resources
+obj\Debug\CLRTypeTest.vbproj.GenerateResource.Cache
+obj\Debug\CLRTypeTest.exe
+obj\Debug\CLRTypeTest.xml
+obj\Debug\CLRTypeTest.pdb

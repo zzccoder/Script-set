@@ -1,0 +1,150 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CLRSample
+</name>
+</assembly>
+<members>
+<member name="M:CLRSample.StoredProcedures.SplitStringToTable(System.Data.SqlTypes.SqlInt32@)">
+	<summary>
+ 输出参数
+ </summary>
+	<param name="sID"></param>
+	<returns>如果执行成功, 返回0, 否则返回 -1</returns>
+	<remarks></remarks>
+</member><member name="T:CLRSample.StoredProcedures">
+	<summary>
+ 存储过程示例
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRSample.Triggers.tb_UPDATE_DELETE">
+	<summary>
+ 针对表 tb 的触发器, 触发器针对的是 INSERT 和 DELETE 事件
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRSample.Triggers.DDLEventDataInfo">
+	<summary>
+ 返回 DDL 事件信息的触发器
+ </summary>
+	<remarks></remarks>
+</member><member name="T:CLRSample.Triggers">
+	<summary>
+ 触发器示例
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRSample.UserDefinedFunctions.F_Format(System.DateTime,System.String)">
+	<summary>
+ 使用指定格式，将datetime类型的值转换成其等效的字符串表示
+ </summary>
+	<param name="sDate">datetime类型的值</param>
+	<param name="sFormat">格式</param>
+	<returns>根据指定格式转换后datetime类型值的字符串表示</returns>
+	<remarks></remarks>
+</member><member name="M:CLRSample.UserDefinedFunctions.SplitString(System.Data.SqlTypes.SqlString,System.Data.SqlTypes.SqlString)">
+	<summary>
+ 表值函数示例
+ 根据指定的分隔符拆分一个字符串
+ </summary>
+	<param name="sExpression">待拆分的字符串</param>
+	<param name="sDelimiters">分隔符</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CLRSample.UserDefinedFunctions.FillSplitRow(System.Object,System.String@)">
+	<summary>
+ 字符串拆分函数的迭代函数
+ 用于返回表值函数的每一条记录的值(字符串拆分后的每一个值)
+ </summary>
+	<param name="sRow">被拆分出的每一个字符串</param>
+	<param name="sValue">返回值</param>
+	<remarks></remarks>
+</member><member name="T:CLRSample.UserDefinedFunctions">
+	<summary>
+ 用户定义函数示例
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRSample.ConcatString.Init">
+	<summary>
+ 初始化, 每个正在聚合的组会调用
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRSample.ConcatString.Accumulate(System.Data.SqlTypes.SqlString)">
+	<summary>
+ 正在聚合的组中的每个值会调用一次Accumulate方法，该方法更新实例的状态，以反映传入的参数值的累积
+ </summary>
+	<param name="value"></param>
+	<remarks></remarks>
+</member><member name="M:CLRSample.ConcatString.Merge(CLRSample.ConcatString)">
+	<summary>
+ 将此聚合类的另一个实例与当前实例合并在一起
+ </summary>
+	<param name="value"></param>
+	<remarks></remarks>
+</member><member name="M:CLRSample.ConcatString.Terminate">
+	<summary>
+ 完成聚合计算并返回聚合的结果
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CLRSample.ConcatString.Read(System.IO.BinaryReader)">
+	<summary>
+ 从媒介(磁盘,网络)中读取各属性值
+ </summary>
+	<param name="r"></param>
+	<remarks></remarks>
+</member><member name="M:CLRSample.ConcatString.Write(System.IO.BinaryWriter)">
+	<summary>
+ 将各属性值写入媒介(磁盘,网络)
+ </summary>
+	<param name="w"></param>
+	<remarks></remarks>
+</member><member name="T:CLRSample.ConcatString">
+	<summary>
+ 聚合函数示例
+ 聚合字符串, 各值之间用逗号(,)分隔
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRSample.TypeSample.ToString">
+	<summary>
+ 将实例转换为字符串
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CLRSample.TypeSample.Parse(System.Data.SqlTypes.SqlString)">
+	<summary>
+ 将字符串转换为实例
+ </summary>
+	<param name="s"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CLRSample.TypeSample.ConnectionString">
+	<summary>
+ 生成连接字符串
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CLRSample.TypeSample.SetValue(System.String,System.String,System.String,System.String,System.Data.SqlTypes.SqlInt32)">
+	<summary>
+ 设置服务器各项信息的值
+ </summary>
+	<param name="sInstance"></param>
+	<param name="sLogin"></param>
+	<param name="sPassword"></param>
+	<param name="sDefaultDatabase"></param>
+	<param name="sConnectimeOut"></param>
+	<remarks></remarks>
+</member><member name="M:CLRSample.TypeSample.Read(System.IO.BinaryReader)">
+	<summary>
+ 从媒介(磁盘,网络)中读取各属性值
+ </summary>
+	<param name="r"></param>
+	<remarks></remarks>
+</member><member name="M:CLRSample.TypeSample.Write(System.IO.BinaryWriter)">
+	<summary>
+ 将各属性值写入媒介(磁盘,网络)
+ </summary>
+	<param name="w"></param>
+	<remarks></remarks>
+</member>
+</members>
+</doc>

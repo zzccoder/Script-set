@@ -1,0 +1,184 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0066)http://www.cnblogs.com/garden-blog/archive/2011/04/20/2022307.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=9.0000" 
+http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type">
+<TITLE>sql事务和存储过程 - 勇气 - 博客园</TITLE><LINK rel="stylesheet" type="text/css" href="sql事务和存储过程%20-%20勇气%20-%20博客园_files/common.css">
+<LINK id="MainCss" rel="stylesheet" type="text/css" href="sql事务和存储过程%20-%20勇气%20-%20博客园_files/style.css">
+<LINK rel="stylesheet" type="text/css" href="sql事务和存储过程%20-%20勇气%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="sql事务和存储过程%20-%20勇气%20-%20博客园_files/shStyle.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/Garden-blog/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/Garden-blog/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/Garden-blog/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="sql事务和存储过程%20-%20勇气%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'Garden-blog';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="sql事务和存储过程%20-%20勇气%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="sql事务和存储过程%20-%20勇气%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="sql事务和存储过程%20-%20勇气%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A><!--done-->
+<DIV id="home">
+<DIV id="header">
+<DIV id="blogTitle"><A id="lnkBlogLogo" href="http://www.cnblogs.com/Garden-blog/"><IMG 
+id="blogLogo" alt="返回主页" src="sql事务和存储过程%20-%20勇气%20-%20博客园_files/logo.gif"></A><!--done-->
+<H1><A id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/Garden-blog/">勇气</A></H1>
+<H2></H2></DIV><!--end: blogTitle 博客的标题和副标题 -->
+<DIV id="navigator">
+<UL id="navList">
+  <LI><A id="MyLinks1_HomeLink" class="menu" 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/Garden-blog/">首页</A></LI>
+  <LI><A href="http://news.cnblogs.com/">新闻</A></LI>
+  <LI><A id="MyLinks1_NewPostLink" class="menu" href="http://www.cnblogs.com/Garden-blog/admin/EditPosts.aspx?opt=1" 
+  rel="nofollow">新随笔</A></LI>
+  <LI><A accessKey="9" id="MyLinks1_ContactLink" class="menu" href="http://space.cnblogs.com/msg/send/%e5%8b%87%e6%b0%94" 
+  rel="nofollow">联系</A></LI>
+  <LI><A id="MyLinks1_Admin" class="menu" href="http://www.cnblogs.com/Garden-blog/admin/EditPosts.aspx" 
+  rel="nofollow">管理</A></LI>
+  <LI><A id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/Garden-blog/rss">订阅</A><A 
+  id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/Garden-blog/rss"><IMG 
+  alt="订阅" src="sql事务和存储过程%20-%20勇气%20-%20博客园_files/rss.gif"></A></LI></UL>
+<DIV class="blogStats"><!--done-->随笔- 92&nbsp;文章- 0&nbsp;评论- 4&nbsp;					</DIV><!--end: blogStats --></DIV><!--end: navigator 博客导航栏 -->
+</DIV><!--end: header 头部 -->
+<DIV id="main">
+<DIV id="mainContent">
+<DIV class="forFlow"><!--done-->
+<DIV id="topics">
+<DIV class="post">
+<H1 class="postTitle"><A id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/Garden-blog/archive/2011/04/20/2022307.html">sql事务和存储过程</A></H1>
+<DIV class="clear"></DIV>
+<DIV class="postBody">
+<DIV id="cnblogs_post_body">
+<P><BR>一、sql事务</P>
+<P>1.什么是事务：事务是一个不可分割的工作逻辑单元，在数据库系统上执行并发操作时事务是做为最小的控制单元来使用的。他包含的所有数据库操作命令作为一个整体一起向系提交或撤消，这一组数据库操作命令要么都执行，要么都不执行。</P>
+<P>2.事务的语句<BR>开始事物：BEGIN TRANSACTION<BR>提交事物：COMMIT TRANSACTION<BR>回滚事务：ROLLBACK 
+TRANSACTION</P>
+<P>3.事务的4个特性<BR>&nbsp; 
+①原子性(Atomicity)：事务中的所有元素作为一个整体提交或回滚，是不可折分的，事务是一个完整的操作。<BR>&nbsp; 
+②一致性(Consistemcy)：事物完成时，数据必须是一致的，也就是说，和事物开始之前，数据存储中的数据处于一致状态。保证数据的无损。<BR>&nbsp; 
+③隔离性(Isolation)：对数据进行修改的多个事务是彼此隔离的。这表明事务必须是独立的，不应该以任何方式来影响其他事务。<BR>&nbsp; 
+④持久性(Durability)：事务完成之后，它对于系统的影响是永久的，该修改即使出现系统故障也将一直保留，真实的修改了数据库</P>
+<P>4.事务的分类.<BR>按事务的启动与执行方式，可以将事务分为3类:<BR>&nbsp; ①显示事务 
+：也称之为用户定义或用户指定的事务，即可以显式地定义启动和结束的事务。分布式事务属于显示事务<BR>&nbsp; 
+②自动提交事务：默认事务管理模式。如果一个语句成功地完成，则提交该语句；如果遇到错误，则回滚该语句。<BR>&nbsp; 
+③隐性事务：当连接以此模式进行操作时，sql将在提交或回滚当前事务后自动启动新事务。无须描述事务的开始，只需提交或回滚每个事务。它生成连续的事务链。</P>
+<P>5.实例<BR>BEGIN TRANSACTION--开始事务</P>
+<P>DECLARE @errorSun INT --定义错误计数器<BR>SET @errorSun=0 --没错为0</P>
+<P>UPDATE a SET id=232 WHERE a=1 --事务操作SQL语句<BR>SET @errorSun=@errorSun+@@ERROR 
+--累计是否有错</P>
+<P>UPDATE aa SET id=2 WHERE a=1 --事务操作SQL语句<BR>SET @errorSun=@errorSun+@@ERROR 
+--累计是否有错</P>
+<P>IF @errorSun&lt;&gt;0<BR>BEGIN<BR>PRINT '有错误，回滚'<BR>ROLLBACK 
+TRANSACTION--事务回滚语句<BR>END<BR>ELSE<BR>BEGIN<BR>PRINT '成功，提交'<BR>COMMIT 
+TRANSACTION--事务提交语句<BR>END</P>
+<P><BR>6、不能用于事务的操作<BR>创建数据库 create database<BR>修改数据库 alter database<BR>删除数据库 
+drop database<BR>恢复数据库 restore database<BR>加载数据库 load database<BR>备份日志文件 backup 
+log<BR>恢复日志文件 restore log<BR>更新统计数据 update 
+statitics<BR>授权操作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+grant<BR>复制事务日志 dump 
+tran<BR>磁盘初始化&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; disk 
+init<BR>更新使用sp_configure后的系统配置&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+reconfigure</P>
+<P><BR>二、存储过程</P>
+<P>1．存储过程的优势<BR>(1) 
+能实现模块化程序设计。存储过程是根据实际功能的需要创建的一个程序模块，并被存储在数据库中。以后用户要完成该功能，只要在程序中直接调用该存储过程即可，而无需再编写重复的程序代码。存储过程可由数据库编程方面的专门人员创建，并可独立于程序源代码而进行修改和扩展。<BR>(2) 
+使用存储过程可以提高执行效率。当客户程序需要访问服务器上的数据时，一般要经过5个步骤：<BR>&nbsp;● 查询语句被发送到服务器；<BR>&nbsp;● 
+服务器编译T-SQL语句；<BR>&nbsp;● 优化产生查询执行计划；<BR>&nbsp;● 数据库引擎执行查询；<BR>&nbsp;● 
+执行结果发回客户程序。<BR>如果执行存储在客户端本地的T-SQL程序，那么每次执行该程序时，对于程序中的每一条语句都要经过以上5个步骤。而存储过程在创建时就被编译和优化，当存储过程第一次被执行时，SQL 
+Server为其产生查询计划并将其保存在内存中，这样以后在调用该存储过程时就不必再进行编译，即以上5个步骤中的第2步和第3步就被省略了，这能大大改善系统的性能。 
+<BR>(3) 
+减少网络流量。一个需要数百行T-SQL代码的操作，如果将其创建成存储过程，那么使用一条调用存储过程的语句就可完成该操作。这样就可避免在网络上发送数百行代码，从而减少了网络负荷。<BR>(4) 
+可作为安全机制使用。管理员可以不授予用户访问存储过程中涉及的表的权限，而只授予执行存储过程的权限。这样，既可以保证用户通过存储过程操纵数据库中的数据，又可以保证用户不能直接访问存储过程中涉及的表。用户通过存储过程来访问表，所能进行的操作是有限制的，从而保证了表中数据的安全性。</P>
+<P>2．存储过程的类型<BR>(1) 系统存储过程<BR>在SQL 
+Server中的许多管理工作是通过执行系统存储过程来完成的。系统存储过程创建和保存在master数据库中，都以sp_为名称的前缀。系统存储过程是SQL 
+Server系统自带的，具有执行系统存储过程权限的用户，可在master数据库之外直接调用。一般情况下，系统存储过程执行成功返回0值，若有错误发生返回非0值。<BR>(2) 
+扩展存储过程<BR>扩展存储过程是以动态链接库(dll)形式存在的外部程序。SQL 
+Server自身带了大量的扩展存储过程安装在master数据库中，扩展存储过程与普通存储过程执行方法相同。 
+<BR>若扩展存储过程的前缀为sp_，则该扩展存储过程在master数据库之外也可直接调用；否则，必须在扩展存储过程前面加上“master.dbo.”前缀。开发人员可以使用其他编程语言来创建扩展存储过程，编写好扩展存储过程后，可由sysadmin服务器角色的成员在 
+SQL Server 中注册该扩展存储过程，然后授予其他用户执行该过程的权限。扩展存储过程只能添加到 master 数据库中，利用扩展存储过程可以扩展SQL 
+Server的功能。<BR>(3) 用户存储过程<BR>用户存储过程是由用户根据实际问题的需要所创建的存储过程。固定服务器角色sysadmin 
+的成员可根据实际需要在master数据库中创建用户存储过程，若使用sp_做存储过程的前缀，则该存储过程在任何位置均可直接调用，否则，必须在该存储过程前面加上“master.dbo.”前缀。对于在用户数据库中创建的存储过程，最好不要使用sp_作为其名称的前缀，否则如果该存储过程与系统存储过程同名，则该存储过程永远不会被执行。并且若在该用户数据库之外调用该存储过程，也必须在存储过程名的前面加上“用户数据库名.所有者名.”前缀才能找着、执行该存储过程。</P>
+<P><BR>&nbsp;</P></DIV>
+<DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 84108;
+var cb_entryId = 2022307;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "5edb30df-8e3e-e011-ac81-842b2b196315";
+var cb_entryCreatedDate = '2011/4/20 14:52:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV id="blog_post_info_block">
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+</DIV>
+<DIV class="postDesc">posted @ <SPAN id="post-date">2011-04-20 14:52</SPAN> <A 
+href="http://www.cnblogs.com/Garden-blog/">勇气</A> 阅读(2478) 评论(<SPAN id="post-comment-count">2</SPAN>) 
+ <A href="http://www.cnblogs.com/Garden-blog/admin/EditPosts.aspx?postid=2022307" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(2022307);return false;" href="http://www.cnblogs.com/garden-blog/archive/2011/04/20/2022307.html#">收藏</A></DIV></DIV><IMG 
+alt="" src="sql事务和存储过程%20-%20勇气%20-%20博客园_files/2022307.jpg" width="1" height="1"></DIV><!--end: topics 文章、评论容器-->
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+
+<DIV id="comment_form" class="commentform">
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/garden-blog/archive/2011/04/20/2022307.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/garden-blog/archive/2011/04/20/2022307.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="ad_under_post_holder"></DIV>
+<DIV id="HistoryToday" class="c_ad_block"></DIV>
+</DIV></DIV><!--end: forFlow --></DIV><!--end: mainContent 主体内容容器-->
+<DIV id="sideBar">
+<DIV id="sideBarMain"><!--done-->
+<DIV class="newsItem">
+<H3 class="catListTitle">公告</H3>
+<DIV id="blog-news"></DIV></DIV>
+<DIV id="calendar">
+<DIV style="displya: none;" id="blog-calendar"></DIV></DIV>
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV></DIV></DIV><!--end: sideBarMain --></DIV><!--end: sideBar 侧边栏容器 -->
+<DIV class="clear"></DIV></DIV><!--end: main -->
+<DIV class="clear"></DIV>
+<DIV id="footer"><!--done--> Copyright ©2012 勇气	</DIV><!--end: footer --></DIV><!--end: home 自定义的最大容器 -->
+<SCRIPT type="text/javascript" src="sql事务和存储过程%20-%20勇气%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

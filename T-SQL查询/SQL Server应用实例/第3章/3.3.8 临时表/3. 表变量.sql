@@ -1,0 +1,10 @@
+DECLARE @tb TABLE(
+	id int UNIQUE)
+
+BEGIN TRAN
+	INSERT @tb(
+		id)
+	VALUES(
+		1)
+ROLLBACK TRAN
+SELECT * FROM @tb

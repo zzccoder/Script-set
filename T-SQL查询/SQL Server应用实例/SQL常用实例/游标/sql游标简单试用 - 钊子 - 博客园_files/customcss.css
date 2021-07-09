@@ -1,0 +1,394 @@
+#EntryTag {
+	font-size: 9pt;
+}
+#divRefreshComments {
+	text-align: right; font-size: 9pt; margin-right: 10px; margin-bottom: 5px;
+}
+.topicListFooter {
+	text-align: right; margin-top: 10px; margin-right: 10px;
+}
+* {
+	margin: 0px; padding: 0px;
+}
+body {
+	margin: 0px; padding: 0px; color: rgb(51, 51, 51); line-height: 1.5; font-family: "Î¢ÈíÑÅºÚ",verdana,arial; font-size: 12px; background-color: rgb(234, 234, 234);
+}
+img {
+	border: 0px currentColor;
+}
+li {
+	list-style: none;
+}
+input {
+	border: 1px solid rgb(187, 187, 187);
+}
+textarea {
+	border: 1px solid rgb(187, 187, 187);
+}
+h1 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+h2 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+h3 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+h4 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+h5 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+h6 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+th {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+a {
+	color: rgb(51, 51, 51); text-decoration: none;
+}
+a:hover {
+	color: rgb(255, 102, 0);
+}
+#cnliu_header {
+	
+}
+.cnliu_ad_sidebar {
+	width: 300px; height: 0px; overflow: hidden; margin-top: 10px; margin-bottom: 10px;
+}
+#cnliu_footer {
+	width: 725px; text-align: left; line-height: 150%; padding-left: 35px; font-size: 12px; margin-left: 30px;
+}
+#cnliu_footer a {
+	color: rgb(187, 187, 187);
+}
+#mainContent {
+	width: 760px; padding-top: 25px; padding-bottom: 30px; margin-left: 15px; border-right-color: rgb(221, 221, 221); border-bottom-color: rgb(221, 221, 221); border-left-color: rgb(221, 221, 221); border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; float: left; background-color: rgb(255, 255, 255);
+}
+#sideBar {
+	padding: 0px 0px 20px 10px; width: 270px; overflow: hidden; border-top-width: 0px;
+}
+.forFlow {
+	margin: 0px 20px;
+}
+#footer {
+	text-align: left; padding-bottom: 5px; padding-left: 35px; margin-top: 30px; margin-left: 30px; display: none;
+}
+#lnkBlogLogo {
+	display: none;
+}
+#blogTitle {
+	padding: 16px 20px;
+}
+#blogTitle h1 {
+	font-size: 24px;
+}
+#blogTitle h2 {
+	color: rgb(153, 153, 153); font-size: 10.5pt;
+}
+#blogTitle .title {
+	font-size: 24px;
+}
+#blogTitle .subtitle {
+	color: rgb(153, 153, 153); font-size: 10.5pt;
+}
+#navigator {
+	background: rgb(246, 246, 246); border: 1px solid rgb(221, 221, 221); width: 975px; height: 30px; color: rgb(153, 153, 153); line-height: 30px; padding-top: 2px; padding-right: 35px; padding-left: 30px; margin-left: 15px;
+}
+#navigator img {
+	display: none;
+}
+.blogStats {
+	color: rgb(153, 153, 153); float: right;
+}
+#navList li {
+	font-size: 10.5pt; font-weight: bold; margin-right: 20px; float: left;
+}
+#sideBar li {
+	text-indent: -1.5em; margin-left: 1.5em;
+}
+.divRecentCommentAticle {
+	text-indent: -1.5em; margin-left: 1.5em;
+}
+#sideBar h3 {
+	margin: 16px 0px 0px; text-align: left; font-size: 14px;
+}
+#MyIng .ing_title {
+	margin: 16px 0px 0px; text-align: left; font-size: 14px;
+}
+#calendar {
+	text-align: center; margin-top: 16px;
+}
+#calendar table {
+	margin: 0px auto; width: 90%;
+}
+#calendar .CalOtherMonthDay {
+	color: rgb(153, 153, 153);
+}
+#sideBar .divRecentComment {
+	margin: 0px 0px 8px 8px; color: rgb(102, 102, 102);
+}
+#sideBar .recent_comment_body {
+	margin: 5px 0px 8px 18px; color: rgb(102, 102, 102); text-indent: 0px;
+}
+#sideBar a {
+	color: rgb(0, 102, 204);
+}
+#sideBar a:hover {
+	color: rgb(23, 168, 250);
+}
+.ing_title a:link {
+	font-weight: bold;
+}
+.ing_title a:visited {
+	font-weight: bold;
+}
+.ing_title a:hover {
+	font-weight: bold;
+}
+.ing_title a:active {
+	font-weight: bold;
+}
+div.commentform textarea {
+	width: 450px; height: 300px; ont-size: 13px;
+}
+.dayTitle {
+	display: none;
+}
+.entrylistTitle {
+	text-align: left; font-size: 14px; font-weight: bold; margin-top: 20px;
+}
+.thumbTitle {
+	text-align: left; font-size: 14px; font-weight: bold; margin-top: 20px;
+}
+.PostListTitle {
+	text-align: left; font-size: 14px; font-weight: bold; margin-top: 20px;
+}
+.forFlow h3 div {
+	text-align: left; font-size: 14px; font-weight: bold; margin-top: 20px;
+}
+.galleryTitle {
+	text-align: left; font-size: 14px; font-weight: bold; margin-top: 20px;
+}
+.entrylistDescription {
+	margin-left: 16px;
+}
+.thumbDescription {
+	margin-left: 16px;
+}
+.postTitle {
+	margin: 20px 0px 10px; font-family: "ËÎÌå","Î¢ÈíÑÅºÚ"; font-size: 14px; font-weight: bold; border-bottom-color: rgb(221, 221, 221); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.entrylistPosttitle {
+	margin: 20px 0px 10px; font-family: "ËÎÌå","Î¢ÈíÑÅºÚ"; font-size: 14px; font-weight: bold; border-bottom-color: rgb(221, 221, 221); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.feedback_area_title {
+	margin: 20px 0px 10px; font-family: "ËÎÌå","Î¢ÈíÑÅºÚ"; font-size: 14px; font-weight: bold; border-bottom-color: rgb(221, 221, 221); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.postBody {
+	color: rgb(17, 17, 17); line-height: 170%; font-size: 13px;
+}
+.postBody span {
+	color: rgb(17, 17, 17); line-height: 1.5; font-size: 13px;
+}
+.postBody h5 {
+	font-size: 10pt;
+}
+.postBody p {
+	margin: 12px auto;
+}
+.postCon p {
+	margin: 12px auto;
+}
+.postCon {
+	overflow: hidden; font-size: 13px;
+}
+.c_b_p_desc {
+	line-height: 170%;
+}
+.postCon a {
+	color: rgb(0, 102, 204); text-decoration: underline;
+}
+.postBody a {
+	color: rgb(0, 102, 204); text-decoration: underline;
+}
+.feedbackCon a {
+	color: rgb(0, 102, 204); text-decoration: underline;
+}
+.postCon a:hover {
+	border-color: rgb(153, 153, 153);
+}
+.postBody a:hover {
+	border-color: rgb(153, 153, 153);
+}
+.feedbackCon a:hover {
+	border-color: rgb(153, 153, 153);
+}
+.postDesc {
+	text-align: right; color: rgb(102, 102, 102); padding-bottom: 5px; vertical-align: middle; border-bottom-color: rgb(153, 153, 153); border-bottom-width: 0px; border-bottom-style: dotted;
+}
+.entrylistItemPostDesc {
+	text-align: right; color: rgb(102, 102, 102); padding-bottom: 5px; vertical-align: middle; border-bottom-color: rgb(153, 153, 153); border-bottom-width: 0px; border-bottom-style: dotted;
+}
+.postDesc a:link {
+	color: rgb(102, 102, 102); text-decoration: none;
+}
+.postDesc a:active {
+	color: rgb(102, 102, 102); text-decoration: none;
+}
+.postDesc a:visited {
+	color: rgb(102, 102, 102); text-decoration: none;
+}
+.postDesc a:hover {
+	text-decoration: underline;
+}
+.PostList {
+	margin: auto; padding: 6px 0px; width: 96%; text-align: right; overflow: hidden; clear: both; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: dotted; float: none;
+}
+.postTitl2 {
+	float: left;
+}
+.postTitl2 a {
+	background-position: left; color: rgb(26, 100, 162); padding-left: 18px; background-image: url("http://kb.cnblogs.com/images/icons/arrow.png"); background-repeat: no-repeat;
+}
+.postTitl12 a:hover {
+	color: rgb(255, 102, 0);
+}
+.postDesc2 {
+	padding-left: 25px; margin-left: 20px;
+}
+.postText2 {
+	text-align: left; color: rgb(102, 102, 102);
+}
+.feedbackItem {
+	padding: 8px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: dotted;
+}
+.feedbackManage {
+	float: right;
+}
+.feedbackCon {
+	color: rgb(102, 102, 102); line-height: 1.5; margin-left: 1em;
+}
+.commentform td div span {
+	margin-left: 12px;
+}
+.gallery img {
+	margin: 8px;
+}
+#taglist {
+	margin: 20px auto;
+}
+.pfl_feedback_area_title {
+	margin: 16px 0px; font-size: 16px; font-weight: bold;
+}
+.pfl_feedback_area_title a {
+	color: rgb(153, 153, 153); font-size: 12px; font-weight: normal;
+}
+.pfl_feedbacksubtitle {
+	height: 30px;
+}
+.pfl_feedbackname {
+	margin: 10px 20px 0px 0px; float: left;
+}
+.pfl_feedbackManage {
+	margin: 10px 20px 0px 0px; float: left;
+}
+.pfl_feedbackCon {
+	clear: both; margin-left: 12px;
+}
+.pfl_feedbackAnswer {
+	clear: both; margin-left: 12px;
+}
+.btn_my_zzk {
+	border: 0px currentColor;
+}
+#sideBarMain {
+	padding-left: 0px;
+}
+#MyIng {
+	padding-left: 10px;
+}
+div#sideBar div#side_ing_block ul li {
+	text-indent: 0px; margin-left: 0px;
+}
+#side_ing_block {
+	line-height: 180%;
+}
+#EntryTag {
+	margin-top: 10px;
+}
+#blog_ad_google h3 {
+	margin-bottom: 10px;
+}
+#digg_block a:link {
+	color: rgb(1, 95, 182);
+}
+#digg_block a:visited {
+	color: rgb(1, 95, 182);
+}
+#digg_block a:active {
+	color: rgb(1, 95, 182);
+}
+#digg_block {
+	color: rgb(1, 95, 182);
+}
+span.diggnum {
+	color: rgb(1, 95, 182);
+}
+span.burynum {
+	color: rgb(1, 95, 182);
+}
+#sideBarMain {
+	border: 1px solid rgb(221, 221, 221); padding-bottom: 20px; padding-left: 5px; margin-top: -1px; background-color: rgb(247, 247, 247);
+}
+.post {
+	overflow: hidden;
+}
+.c_ad_block {
+	display: none;
+}
+.ad_text_commentbox {
+	display: none;
+}
+#site_nav_under {
+	display: none;
+}
+.zhaozifooter {
+	padding: 10px; border: 1px solid rgb(221, 221, 221); width: 1028px; height: auto; text-align: center; margin-top: 10px; margin-right: auto; margin-left: auto; background-color: rgb(255, 255, 255);
+}
+.postTitle a {
+	background-position: left; color: rgb(26, 100, 162); padding-left: 18px; background-image: url("http://kb.cnblogs.com/images/icons/arrow.png"); background-repeat: no-repeat;
+}
+.postTitle a:hover {
+	color: rgb(255, 102, 0);
+}
+.mySearch {
+	display: none;
+}
+#ad_under_google {
+	width: 0px; height: 0px; color: rgb(255, 255, 255); overflow: hidden; display: none;
+}
+.title {
+	font-weight: bold; filter: blur(direction=135,strength=8);
+}
+.subtitle {
+	filter: mask(color=#E1E4EC)
+shadow(color=#8C96B5,direction=135)chroma(color=#E1E4EC);
+}
+body {
+	text-align: center;
+}
+body * {
+	text-align: left;
+}
+#home {
+	width: 1080px; margin-right: auto; margin-left: auto;
+}
+.catListTitle {
+	background: url("http://images.cnblogs.com/cnblogs_com/zhaozi/356678/r_widgetsep.png") no-repeat top; line-height: 40px;
+}
+#catListLink ul li {
+	background: url("http://images.cnblogs.com/cnblogs_com/zhaozi/356678/r_ico1.gif") left;
+}

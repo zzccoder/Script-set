@@ -1,0 +1,120 @@
+body {
+	margin: 0px; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 0.9em; word-wrap: break-word;
+}
+a:visited {
+	color: rgb(0, 0, 255); text-decoration: none;
+}
+a:active {
+	color: rgb(0, 0, 255); text-decoration: none;
+}
+a:link {
+	color: rgb(0, 0, 255); text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+h1 {
+	margin: 0px; font-size: 1.5em;
+}
+h1 a:visited {
+	color: rgb(0, 0, 0);
+}
+h1 a:active {
+	color: rgb(0, 0, 0);
+}
+h1 a:link {
+	color: rgb(0, 0, 0);
+}
+h1 a:hover {
+	color: rgb(68, 119, 255); text-decoration: none;
+}
+h2 {
+	font-size: 1em; margin-top: 10px;
+}
+h5 {
+	margin: 0px; padding: 0px;
+}
+#top {
+	padding: 10px; color: rgb(0, 0, 0); border-bottom-color: rgb(68, 119, 255); border-bottom-width: 4px; border-bottom-style: solid; background-color: rgb(170, 221, 255);
+}
+#tagline {
+	margin: 0px; font-size: 0.8em;
+}
+p.date img {
+	vertical-align: middle;
+}
+p.date {
+	padding: 2px 0px; font-size: 0.9em; font-weight: bold; margin-bottom: 0px; border-bottom-color: rgb(170, 170, 170); border-bottom-width: 1px; border-bottom-style: solid;
+}
+blockquote {
+	font-style: italic;
+}
+p.postfoot {
+	font-size: 0.75em;
+}
+#leftmenu {
+	left: 10px; width: 180px; margin-top: 10px; position: absolute;
+}
+#leftmenu h3 {
+	margin: 0px; padding: 4px; font-size: 0.9em; border-bottom-color: currentColor; border-bottom-width: medium; border-bottom-style: none;
+}
+#leftmenu ul {
+	list-style: none; margin: 0px 0px 10px 5px; padding: 0px; font-size: 0.8em;
+}
+#main {
+	padding: 10px; margin-left: 200px; border-bottom-color: rgb(68, 119, 255); border-left-color: rgb(85, 85, 85); border-bottom-width: 4px; border-left-width: 1px; border-bottom-style: solid; border-left-style: solid; background-color: rgb(238, 238, 238);
+}
+#footer {
+	margin: 0px; text-align: center; padding-top: 5px; font-size: 0.7em;
+}
+input.text {
+	width: 300px;
+}
+textarea {
+	width: 300px; height: 200px;
+}
+#comments h4 span {
+	color: rgb(153, 153, 153);
+}
+#comments h4 {
+	margin: 0px; font-size: 0.9em;
+}
+p {
+	margin: 10px 0px;
+}
+h3 {
+	font-size: 1.2em; border-bottom-color: rgb(170, 170, 170); border-bottom-width: 1px; border-bottom-style: solid;
+}
+#relatedlinks ul {
+	list-style: none; padding: 0px; margin-left: 10px;
+}
+.Cal {
+	border: 1px solid rgb(153, 153, 153); width: 100%; height: 180px; font-family: Arial; font-size: 12px; margin-top: 10px; margin-bottom: 10px; background-color: rgb(238, 238, 238);
+}
+.CalTitle {
+	border-color: rgb(170, 221, 255); padding: 0px; height: 100%; color: rgb(0, 0, 0); font-family: Arial; font-size: 13px; font-weight: bold; margin-left: 0px; background-color: rgb(182, 182, 182);
+}
+.CalOtherMonthDay {
+	color: rgb(128, 128, 128);
+}
+.CalSelector {
+	
+}
+.CalNextPrev {
+	
+}
+.CalDayHeader {
+	background-color: rgb(204, 204, 204);
+}
+.CalSelectedDay {
+	
+}
+.CalWeekendDay {
+	
+}
+.CalTodayDay {
+	background-color: rgb(204, 204, 204);
+}
+p {
+	line-height: 150%;
+}

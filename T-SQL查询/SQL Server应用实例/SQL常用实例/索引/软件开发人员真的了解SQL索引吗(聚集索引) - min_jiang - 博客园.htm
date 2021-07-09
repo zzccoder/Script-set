@@ -1,0 +1,182 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0065)http://www.cnblogs.com/aspnet2008/archive/2010/12/18/1910147.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=9.0000" 
+http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type">
+<TITLE>软件开发人员真的了解SQL索引吗(聚集索引) - min.jiang - 博客园</TITLE><LINK rel="stylesheet" 
+type="text/css" href="软件开发人员真的了解SQL索引吗(聚集索引)%20-%20min_jiang%20-%20博客园_files/common.css">
+<LINK id="MainCss" rel="stylesheet" type="text/css" href="软件开发人员真的了解SQL索引吗(聚集索引)%20-%20min_jiang%20-%20博客园_files/style.css">
+<LINK rel="stylesheet" type="text/css" href="软件开发人员真的了解SQL索引吗(聚集索引)%20-%20min_jiang%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="软件开发人员真的了解SQL索引吗(聚集索引)%20-%20min_jiang%20-%20博客园_files/shStyle.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/ASPNET2008/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/ASPNET2008/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/ASPNET2008/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="软件开发人员真的了解SQL索引吗(聚集索引)%20-%20min_jiang%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'ASPNET2008';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="软件开发人员真的了解SQL索引吗(聚集索引)%20-%20min_jiang%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="软件开发人员真的了解SQL索引吗(聚集索引)%20-%20min_jiang%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="软件开发人员真的了解SQL索引吗(聚集索引)%20-%20min_jiang%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A><!--done-->
+<DIV id="header"><!--done-->
+<DIV class="header">
+<DIV class="headerText"><A id="Header1_HeaderTitle" class="headermaintitle" 
+href="http://www.cnblogs.com/ASPNET2008/">.NET</A><BR>架构师，我的梦想	</DIV>
+</DIV></DIV>
+<DIV id="mytopmenu">
+<DIV id="mylinks"><!--done--><A id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</A> 
+&nbsp;<A id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/ASPNET2008/">首页</A> 
+&nbsp;<A class="menu" href="http://q.cnblogs.com/">博问</A> &nbsp;<A class="menu" 
+href="http://home.cnblogs.com/ing/">闪存</A> &nbsp;<A id="MyLinks1_NewPostLink" 
+class="menu" href="http://www.cnblogs.com/ASPNET2008/admin/EditPosts.aspx?opt=1" 
+rel="nofollow">新随笔</A> &nbsp;<A id="MyLinks1_ContactLink" class="menu" href="http://space.cnblogs.com/msg/send/min.jiang" 
+rel="nofollow">联系</A> &nbsp;<A id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/ASPNET2008/rss">订阅</A><A 
+id="MyLinks1_XMLLink" href="http://www.cnblogs.com/ASPNET2008/rss"><IMG alt="订阅" 
+src="软件开发人员真的了解SQL索引吗(聚集索引)%20-%20min_jiang%20-%20博客园_files/xml.gif"></A>&nbsp;
+<A id="MyLinks1_Admin" class="menu" href="http://www.cnblogs.com/ASPNET2008/admin/EditPosts.aspx" 
+rel="nofollow">管理</A></DIV>
+<DIV id="mystats"><!--done-->随笔-210&nbsp;评论-2337&nbsp;文章-1&nbsp; trackbacks-63
+</DIV></DIV>
+<DIV id="centercontent">
+<DIV class="post">
+<H1 class="postTitle"><A id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/ASPNET2008/archive/2010/12/18/1910147.html">软件开发人员真的了解SQL索引吗(聚集索引)</A></H1>
+<DIV id="cnblogs_post_body">
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&nbsp;其实对于非专业的数据库操作人员来讲，例如软件开发人员，在很大程度上都搞不清楚数据库索引的一些基本知识，有些是知其一不知其二，或者是知其然不知其所以然。造成这种情况的主要原因我觉的是行业原因，有很多公司都有自己的DBA团队，他们会帮助你优化SQL，开发人员即使不懂优化问题也不大，所以开发人员对这方面也就不会下太多功夫去了解SQL优化，但如果公司没有这样的DBA呢，就只能靠程序员自己了。 
+最近突然想起前一阵和一朋友的聊天，当时他问我的问题是一个非常普通的问题：说说SQL聚集索引和非聚集索引的区别。<BR>&nbsp;&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+大家可能认为这个问题难度不大,认为太熟悉了，也许不会感兴趣，但你真能说清楚吗？其实要想说明白这两者的差别也不是三两句就说的清的，那天我也是觉的这问题太泛了，就随便说了其中的两个区别：</P>
+<P><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+第一：聚集索引一个表只能有一个，而非聚集索引一个表可以存在多个,这个跟没问题没差别，一般人都知道。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+第二：聚集索引存储记录是物理上连续存在，而非聚集索引是逻辑上的连续，物理存储并不连续，这个大家也都知道。</P>
+<P><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+上面的两点从大的方面讲都是讲的通的，后面我们继续探讨，举一个实际点的例子，一个学生表student，里面是学生号id,学生姓名，学生所在城市ID，学生成绩(总分)，<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+问：如果想按姓名查询，如何做优化？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+答：在姓名字段上建立索引。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+问：建立什么类型的索引？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+答：建立非聚集索引。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+问：如果想按学生的学分范围来查找呢，例如查找得分在60-90的？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+答：在学分字段上创建聚集索引？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+问：为什么？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+答：一般有范围查询的需求，可以考虑在此字段上创建聚集索引。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+问：学分有重复性，在学分字段上创建聚集索引能行吗？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+....沉思，不能创建吗？之前的项目好像真这样做过<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+答：应该可以吧。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+问：聚集索引的约束是什么？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+答：唯一性啊？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+问：既然是唯一性，那么学分字段上还能创建聚集索引吗？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+....再次沉思，应该可以啊，但索引的约束又怎么说呢？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+答：应该可以的，以前用过。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+我自认为是对数据库索引知识有一定研究的，但可能是有两年没实际接触SQL的原因，一时还真想不出具有说服力的解释，朋友们看到这能解答我的问题吗？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 其实上面的我们需要搞清楚以下几个问题：</P>
+<P><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+第一：聚集索引的约束是唯一性，是否要求字段也是唯一的呢？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+分析：如果认为是的朋友，可能是受系统默认设置的影响，一般我们指定一个表的主键，如果这个表之前没有聚集索引，同时建立主键时候没有强制指定使用非聚集索引,SQL会默认在此字段上创建一个聚集索引，而主键都是唯一的，所以理所当然的认为创建聚集索引的字段也需要唯一。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+结论：聚集索引可以创建在任何一列你想创建的字段上，这是从理论上讲，实际情况并不能随便指定，否则在性能上会是恶梦。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+第二：为什么聚集索引可以创建在任何一列上，如果此表没有主键约束，即有可能存在重复行数据呢？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+粗一看，这还真是和聚集索引的约束相背，但实际情况真可以创建聚集索引，分析其原因是：如果未使用 UNIQUE 属性创建聚集索引，数据库引擎将向表自动添加一个四字节 
+uniqueifier 列。必要时，数据库引擎 将向行自动添加一个 uniqueifier 
+值，使每个键唯一。此列和列值供内部使用，用户不能查看或访问。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+第三：是不是聚集索引就一定要比非聚集索引性能优呢？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+如果想查询学分在60-90之间的学生的学分以及姓名，在学分上创建聚集索引是否是最优的呢？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+答：否。既然只输出两列，我们可以在学分以及学生姓名上创建联合非聚集索引，此时的索引就形成了覆盖索引，即索引所存储的内容就是最终输出的数据，这种索引在比以学分为聚集索引做查询性能更好。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+第四：在数据库中通过什么描述聚集索引与非聚集索引的？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+索引是通过二叉树的形式进行描述的，我们可以这样区分聚集与非聚集索引的区别：聚集索引的叶节点就是最终的数据节点，而非聚集索引的叶节仍然是索引节点，但它有一个指向最终数据的指针。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+第五：在主键是创建聚集索引的表在数据插入上为什么比主键上创建非聚集索引表速度要慢？<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+有了上面第四点的认识，我们分析这个问题就有把握了，在有主键的表中插入数据行，由于有主键唯一性的约束，所以需要保证插入的数据没有重复。我们来比较下主键为聚集索引和非聚集索引的查找情况:聚集索引由于索引叶节点就是数据页，所以如果想检查主键的唯一性，需要遍历所有数据节点才行，但非聚集索引不同，由于非聚集索引上已经包含了主键值，所以查找主键唯一性，只需要遍历所有的索引页就行，这比遍历所有数据行减少了不少IO消耗。这就是为什么主键上创建非聚集索引比主键上创建聚集索引在插入数据时要快的真正原因。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+好了，讲这这些，不知道大家是否真的了解SQL的聚焦索引，我也是数据库新手(从使用时间上来讲也不算新了，哈哈)，不专业，有什么不对的地方，希望大家批评指正，下篇我会分析一些数据库访问索引的情况，有图的情况下，也许看的更加明白。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <STRONG 
+style="color: red;">文中修改：</STRONG>本文说的B树是指平衡树，由于本人对算法了解不够，所以不对之处望大家多多指正，谢谢两位朋友的指正。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</P>
+<DIV id="AllanboltSignatures">
+<P style='background: url("http://images.cnblogs.com/cnblogs_com/allanbolt/226222/o_users_two_warning_48.png") no-repeat 1% 50% rgb(229, 241, 244); padding: 10px 10px 10px 60px; border: 1px dashed rgb(224, 224, 224); font-family: 微软雅黑; font-size: 14px;' 
+id="PSignature"><BR>作者：<A href="http://www.cnblogs.com/aspnet2008/" target="_blank">姜敏</A> 
+<BR>出处：<A href="http://www.cnblogs.com/aspnet2008/" 
+target="_blank">http://www.cnblogs.com/aspnet2008/</A>&nbsp; </P>　</DIV>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+</P></DIV>
+<DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 20630;
+var cb_entryId = 1910147;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "d95c360b-63cf-dd11-9e4d-001cf0cd104b";
+var cb_entryCreatedDate = '2010/12/18 19:41:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV id="blog_post_info_block">
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+
+<DIV class="postDesc">posted on <SPAN id="post-date">2010-12-18 19:41</SPAN> <A 
+href="http://www.cnblogs.com/ASPNET2008/">min.jiang</A> 阅读(3118) 评论(<SPAN id="post-comment-count">8</SPAN>) 
+ <A href="http://www.cnblogs.com/ASPNET2008/admin/EditPosts.aspx?postid=1910147" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(1910147);return false;" href="http://www.cnblogs.com/aspnet2008/archive/2010/12/18/1910147.html#">收藏</A></DIV>
+</DIV><IMG alt="" src="软件开发人员真的了解SQL索引吗(聚集索引)%20-%20min_jiang%20-%20博客园_files/1910147.jpg" 
+width="1" height="1">
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+
+<DIV id="comment_form" class="commentform">
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/aspnet2008/archive/2010/12/18/1910147.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/aspnet2008/archive/2010/12/18/1910147.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="ad_under_post_holder"></DIV>
+<DIV id="HistoryToday" class="c_ad_block"></DIV></DIV></DIV>
+<DIV id="leftcontent">
+<DIV id="leftcontentcontainer"><!--done-->
+<DIV class="newsItem">
+<DIV id="blog-news"></DIV></DIV>
+<DIV style="display: none;" id="blog-calendar-block">
+<DIV id="blog-calendar"></DIV></DIV><BR>
+<DIV id="blog-sidecolumn"></DIV></DIV></DIV><!--done-->
+<DIV class="footer">	Powered by: <A 
+href="http://www.cnblogs.com/">博客园</A>	模板提供：<A 
+href="http://blog.hjenglish.com/">沪江博客</A>Copyright ©2012 min.jiang</DIV>
+<SCRIPT type="text/javascript" src="软件开发人员真的了解SQL索引吗(聚集索引)%20-%20min_jiang%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

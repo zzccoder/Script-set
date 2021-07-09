@@ -1,0 +1,195 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0061)http://www.cnblogs.com/zhaozi/archive/2012/04/21/2462482.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=9.0000" 
+http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type">
+<TITLE>sql游标简单试用 - 钊子 - 博客园</TITLE><LINK rel="stylesheet" type="text/css" href="sql游标简单试用%20-%20钊子%20-%20博客园_files/common.css">
+<LINK rel="stylesheet" type="text/css" href="sql游标简单试用%20-%20钊子%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="sql游标简单试用%20-%20钊子%20-%20博客园_files/shStyle.css">
+<LINK rel="stylesheet" type="text/css" href="sql游标简单试用%20-%20钊子%20-%20博客园_files/customcss.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/zhaozi/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/zhaozi/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/zhaozi/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="sql游标简单试用%20-%20钊子%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'zhaozi';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="sql游标简单试用%20-%20钊子%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="sql游标简单试用%20-%20钊子%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="sql游标简单试用%20-%20钊子%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A>
+<DIV id="home">
+<DIV id="header">
+<DIV id="blogTitle"><!--done-->
+<DIV class="title"><A id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/zhaozi/">钊子</A></DIV>
+<DIV class="subtitle">成功一定有方法，失败一定有原因</DIV></DIV><!--end: blogTitle 博客的标题和副标题 -->
+<DIV id="navigator">
+<UL id="navList">
+  <LI><A id="MyLinks1_HomeLink" class="menu" 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/zhaozi/">首页</A></LI>
+  <LI><A class="menu" href="http://q.cnblogs.com/">博问</A></LI>
+  <LI><A class="menu" href="http://home.cnblogs.com/ing/">闪存</A></LI>
+  <LI><A id="MyLinks1_NewPostLink" class="menu" href="http://www.cnblogs.com/zhaozi/admin/EditPosts.aspx?opt=1" 
+  rel="nofollow">新随笔</A></LI>
+  <LI><A id="MyLinks1_ContactLink" class="menu" href="http://space.cnblogs.com/msg/send/%e9%92%8a%e5%ad%90" 
+  rel="nofollow">联系</A></LI>
+  <LI><A id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/zhaozi/rss">订阅</A><!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/zhaozi/rss"><img src="/Skins/Custom/images/rss.gif" alt="订阅" /></a>--></LI>
+  <LI><A id="MyLinks1_Admin" class="menu" href="http://www.cnblogs.com/zhaozi/admin/EditPosts.aspx" 
+  rel="nofollow">管理</A></LI></UL>
+<DIV class="blogStats"><!--done-->随笔-140&nbsp;文章-0&nbsp;评论-25&nbsp;					</DIV><!--end: blogStats --></DIV><!--end: navigator 博客导航栏 -->
+</DIV><!--end: header 头部 -->
+<DIV id="main">
+<DIV id="mainContent">
+<DIV class="forFlow"><!--done-->
+<DIV id="topics">
+<DIV class="post">
+<H1 class="postTitle"><A id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/zhaozi/archive/2012/04/21/2462482.html">sql游标简单试用</A></H1>
+<DIV class="clear"></DIV>
+<DIV class="postBody">
+<DIV id="cnblogs_post_body">
+<P><SPAN style="color: rgb(0, 128, 0);"><STRONG>需求：</STRONG></SPAN><SPAN style="color: rgb(0, 128, 0);">现在有2张表，一张是gongzi表--工资表，有2个字段ID 
+员工号(int)、gongzi工资(money)；另一张表addgongzi表—加薪表。有2个字段，ID员工号、addgongzi增加工资。两张表的ID是一一对应的，现在求将加薪的工资+原来的工资=现在的工资，也就是gongzi=</SPAN>gongzi<SPAN 
+style="color: rgb(0, 128, 0);">+addgongzi,修改表gongzi的工资字段。</SPAN></P>
+<P><IMG alt="" 
+src="sql游标简单试用%20-%20钊子%20-%20博客园_files/2012042122255328.jpg"></P>
+<P>&nbsp;</P>
+<P><SPAN class="Apple-style-span">这个问题用程序来实现很简单，但是咱们今天不说程序，就说游标：</SPAN></P>
+<P><SPAN style="color: rgb(255, 0, 0);"><STRONG><SPAN 
+class="Apple-style-span">游标的好处：</SPAN></STRONG></SPAN></P>
+<P><SPAN class="Apple-style-span">1、允许定位在结果集的特定行</SPAN></P>
+<P><SPAN class="Apple-style-span">2、从结果集的当前位置检索一行或一部分行</SPAN></P>
+<P><SPAN class="Apple-style-span">3、支持对结果集总当前位置的行进行数据修改</SPAN></P>
+<P><SPAN 
+class="Apple-style-span">4、为由其他用户对显示在结果集中的数据库数据所做的更改提供不同级别的可见性支持</SPAN></P>
+<P><SPAN class="Apple-style-span">5、提供脚本储存过程和触发器中用于访问结果集数据的T-SQL语句</SPAN></P>
+<P><STRONG><SPAN style="color: rgb(255, 0, 0);" 
+class="Apple-style-span">游标的基本操作：</SPAN></STRONG></P>
+<P><SPAN class="Apple-style-span">1、声明游标</SPAN></P>
+<P><SPAN class="Apple-style-span">2、打开游标</SPAN></P>
+<P><SPAN class="Apple-style-span">3、读取游标</SPAN></P>
+<P><SPAN class="Apple-style-span">4、关闭游标</SPAN></P>
+<P><SPAN class="Apple-style-span">5、删除游标</SPAN></P>
+<P><SPAN class="Apple-style-span">本例解决方法，为执行方便，我使用了存储过程</SPAN></P>
+<DIV class="cnblogs_code"><PRE><SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">新建储存过程proc_addgongzi</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">create</SPAN> <SPAN style="color: rgb(0, 0, 255);">PROCEDURE</SPAN> proc_addgongzi <SPAN style="color: rgb(0, 0, 255);">AS</SPAN> 
+<SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">声明游标</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">DECLARE</SPAN> cur_addgongzi <SPAN style="color: rgb(0, 0, 255);">CURSOR</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">for</SPAN> 
+<SPAN style="color: rgb(0, 0, 255);">select</SPAN> <SPAN style="color: rgb(128, 128, 128);">*</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> addgongzi
+</SPAN><SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">声明变量</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">DECLARE</SPAN>  <SPAN style="color: rgb(0, 128, 0);">@ID</SPAN> <SPAN style="color: rgb(0, 0, 255);">int</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">DECLARE</SPAN>  <SPAN style="color: rgb(0, 128, 0);">@addgongzi</SPAN> <SPAN style="color: rgb(0, 0, 255);">money</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">打开游标</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">open</SPAN><SPAN style="color: rgb(0, 0, 0);"> cur_addgongzi
+</SPAN><SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">读取游标</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">fetch</SPAN> <SPAN style="color: rgb(0, 0, 255);">next</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN> cur_addgongzi <SPAN style="color: rgb(0, 0, 255);">into</SPAN> <SPAN style="color: rgb(0, 128, 0);">@ID</SPAN>,<SPAN style="color: rgb(0, 128, 0);">@addgongzi</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">while</SPAN> (<SPAN style="color: rgb(0, 128, 0); font-weight: bold;">@@fetch_status</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(128, 0, 0); font-weight: bold;">0</SPAN><SPAN style="color: rgb(0, 0, 0);">) 
+</SPAN><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> 
+<SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">修改数据</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">update</SPAN> gongzi <SPAN style="color: rgb(0, 0, 255);">set</SPAN> gongzi<SPAN style="color: rgb(128, 128, 128);">=</SPAN>gongzi<SPAN style="color: rgb(128, 128, 128);">+</SPAN><SPAN style="color: rgb(0, 128, 0);">@addgongzi</SPAN> <SPAN style="color: rgb(0, 0, 255);">where</SPAN> ID<SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(0, 128, 0);">@ID</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">修改完成后继续读取游标</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">fetch</SPAN> <SPAN style="color: rgb(0, 0, 255);">next</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN> cur_addgongzi <SPAN style="color: rgb(0, 0, 255);">into</SPAN> <SPAN style="color: rgb(0, 128, 0);">@ID</SPAN>,<SPAN style="color: rgb(0, 128, 0);">@addgongzi</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">end</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">关闭游标</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">close</SPAN><SPAN style="color: rgb(0, 0, 0);"> cur_addgongzi
+</SPAN><SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">删除游标</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">deallocate</SPAN> cur_addgongzi</PRE>
+</DIV>
+<P><SPAN class="Apple-style-span">执行结果：</SPAN></P>
+<P><IMG alt="" 
+src="sql游标简单试用%20-%20钊子%20-%20博客园_files/2012042122411347.jpg"></P>
+<P><IMG alt="" 
+src="sql游标简单试用%20-%20钊子%20-%20博客园_files/2012042122412996.jpg"></P>
+<P>over</P>
+<P><SPAN class="Apple-style-span"></SPAN>&nbsp;</P></DIV>
+<DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 93477;
+var cb_entryId = 2462482;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "538599d9-68b6-e011-8673-842b2b196315";
+var cb_entryCreatedDate = '2012/4/21 22:43:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV id="blog_post_info_block">
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+</DIV>
+<DIV class="postDesc">posted @ <SPAN id="post-date">2012-04-21 22:43</SPAN> <A 
+href="http://www.cnblogs.com/zhaozi/">钊子</A> 阅读(44) 评论(<SPAN id="post-comment-count">0</SPAN>) 
+ <A href="http://www.cnblogs.com/zhaozi/admin/EditPosts.aspx?postid=2462482" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(2462482);return false;" href="http://www.cnblogs.com/zhaozi/archive/2012/04/21/2462482.html#">收藏</A></DIV></DIV><IMG 
+alt="" src="sql游标简单试用%20-%20钊子%20-%20博客园_files/2462482.jpg" width="1" 
+height="1"></DIV><!--end: topics 文章、评论容器-->
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+
+<DIV id="comment_form" class="commentform">
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/zhaozi/archive/2012/04/21/2462482.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/zhaozi/archive/2012/04/21/2462482.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="ad_under_post_holder"></DIV>
+<DIV id="HistoryToday" class="c_ad_block"></DIV>
+</DIV></DIV><!--end: forFlow --></DIV><!--end: mainContent 主体内容容器-->
+<DIV id="sideBar">
+<DIV id="sideBarMain"><!--done-->
+<DIV class="newsItem">
+<H3 class="catListTitle">公告</H3>
+<DIV id="blog-news"></DIV></DIV>
+<DIV id="calendar">
+<DIV style="displya: none;" id="blog-calendar"></DIV></DIV>
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV></DIV></DIV><!--end: sideBarMain --></DIV><!--end: sideBar 侧边栏容器 -->
+<DIV class="clear"></DIV></DIV><!--end: main -->
+<DIV class="clear"></DIV>
+<DIV id="footer"><!--done--> Copyright ©2012 钊子	</DIV><!--end: footer --></DIV><!--end: home 自定义的最大容器 --><!--PageEndHtml Block Begin-->
+<DIV class="zhaozifooter">Copyright ©2008-2012 钊子 <BR><A href="http://space.cnblogs.com/msg/send/%e9%92%8a%e5%ad%90" 
+target="_blank"><IMG title="给钊子留言" border="0" alt="给钊子留言" src="sql游标简单试用%20-%20钊子%20-%20博客园_files/r_email1.bmp" 
+width="55" height="55"></A>&nbsp;&nbsp;&nbsp;&nbsp;<A href="http://www.cnblogs.com/zhaozi/rss" 
+target="_blank"><IMG title="订阅钊子的博客" border="0" alt="订阅钊子的博客" src="sql游标简单试用%20-%20钊子%20-%20博客园_files/r_rss3.bmp" 
+width="55" height="55"></A>&nbsp;&nbsp;&nbsp;&nbsp;<A href="tencent://message/?Menu=yes&amp;uin=524365501&amp;Site=80fans&amp;Service=300&amp;sigT=45a1e5847943b64c6ff3990f8a9e644d2b31356cb0b4ac6b24663a3c8dd0f8aa12a545b1714f9d45" 
+target="_blank"><IMG title="给钊子发消息" border="0" alt="给钊子发消息" src="sql游标简单试用%20-%20钊子%20-%20博客园_files/pa.gif"></A>
+</DIV><!--PageEndHtml Block End-->
+<SCRIPT type="text/javascript" src="sql游标简单试用%20-%20钊子%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

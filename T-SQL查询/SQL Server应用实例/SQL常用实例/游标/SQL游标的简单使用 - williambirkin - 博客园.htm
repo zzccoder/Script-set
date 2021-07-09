@@ -1,0 +1,255 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0067)http://www.cnblogs.com/williambirkin/archive/2007/06/29/800114.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><HTML><HEAD><META 
+content="IE=9.0000" http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type">
+<TITLE>SQL游标的简单使用 - williambirkin - 博客园</TITLE><LINK rel="stylesheet" type="text/css" 
+href="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/common.css"><LINK id="MainCss" 
+rel="stylesheet" type="text/css" href="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/style.css">
+<LINK rel="stylesheet" type="text/css" href="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/shStyle.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/williambirkin/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/williambirkin/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/williambirkin/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'williambirkin';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A>
+<DIV id="top">
+<DIV>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD class="HeaderTitles">
+      <H1 class="HeaderTitle"><A id="Header1_HeaderTitle" class="HeaderMainTitle" 
+      href="http://www.cnblogs.com/williambirkin/">williambirkin</A></H1>
+      <P id="tagline">恭喜发财！</P></TD></TR></TBODY></TABLE></DIV>
+<DIV class="HeaderBar">
+<TABLE id="HeaderBar" class="HeaderBar" cellSpacing="0" cellPadding="0">
+  <TBODY>
+  <TR>
+    <TD class="HeaderBarTab" noWrap="">&nbsp;<A id="Header1_MyLinks1_HomeLink" 
+      href="http://www.cnblogs.com/">博客园</A> ::<A id="Header1_MyLinks1_MyHomeLink" 
+      href="http://www.cnblogs.com/williambirkin/">首页</A> ::<A class="menu" 
+      href="http://q.cnblogs.com/">博问</A> ::<A class="menu" href="http://home.cnblogs.com/ing/">闪存</A> 
+      ::<A id="Header1_MyLinks1_NewPostLink" href="http://www.cnblogs.com/williambirkin/admin/EditPosts.aspx?opt=1" 
+      rel="nofollow">新随笔</A> ::<A accessKey="9" id="Header1_MyLinks1_ContactLink" 
+      href="http://space.cnblogs.com/msg/send/williambirkin" 
+      rel="nofollow">联系</A> ::<A id="Header1_MyLinks1_Syndication" href="http://www.cnblogs.com/williambirkin/rss">订阅</A>
+      <A id="Header1_MyLinks1_XMLLink" class="XMLLink" href="http://www.cnblogs.com/williambirkin/rss"><IMG 
+      alt="订阅" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/xml.gif"></A> 
+      ::<A id="Header1_MyLinks1_Admin" href="http://www.cnblogs.com/williambirkin/admin/EditPosts.aspx" 
+      rel="nofollow">管理</A> ::</TD>
+    <TD><IMG id="Header1_BlueTab" align="absmiddle" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/BlueTabRight.gif"></TD>
+    <TD class="HeaderBarTabBack" width="100%" noWrap="">
+      <DIV class="BlogStatsBar">
+      <TABLE class="BlogStatsBar">
+        <TBODY>
+        <TR>
+          <TD width="100%"></TD>
+          <TD class="BlogStatsBar" noWrap="">				&nbsp;				72 				随笔&nbsp;::
+            				0 文章				::				37 评论				::				2 引用			</TD></TR></TBODY></TABLE>
+  </DIV></TD></TR></TBODY></TABLE></DIV></DIV>
+<DIV id="leftmenu">
+<DIV style="display: none;" id="blog-calendar-block">
+<DIV id="blog-calendar"></DIV></DIV>
+<DIV id="blog-sidecolumn"></DIV></DIV>
+<DIV id="main">
+<DIV class="post">
+<DIV class="postTitle"><A id="cb_post_title_url" href="http://www.cnblogs.com/williambirkin/archive/2007/06/29/800114.html">SQL游标的简单使用</A></DIV>
+<DIV class="postText">
+<DIV id="cnblogs_post_body">
+<DIV style="padding: 4px 5px 4px 4px; border: 1px solid rgb(204, 204, 204); width: 98%; font-size: 13px; word-break: break-all; background-color: rgb(238, 238, 238);"><IMG 
+align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"><SPAN 
+style="color: rgb(0, 0, 255);">CREATE</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">PROCEDURE</SPAN><SPAN style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(255, 0, 0);">[</SPAN><SPAN 
+style="color: rgb(255, 0, 0);">dbo</SPAN><SPAN 
+style="color: rgb(255, 0, 0);">]</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">.</SPAN><SPAN 
+style="color: rgb(255, 0, 0);">[</SPAN><SPAN 
+style="color: rgb(255, 0, 0);">pro_CURSOR</SPAN><SPAN style="color: rgb(255, 0, 0);">]</SPAN><SPAN 
+style="color: rgb(0, 0, 0);"><BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">AS</SPAN><SPAN 
+style="color: rgb(0, 0, 0);"><BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">BEGIN</SPAN><SPAN 
+style="color: rgb(0, 0, 0);"><BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"><BR><IMG 
+align="top" 
+src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 128, 128);">--</SPAN><SPAN 
+style="color: rgb(0, 128, 128);">声明一个游标</SPAN><SPAN style="color: rgb(0, 128, 128);"><BR><IMG 
+align="top" 
+src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">DECLARE</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;MyCURSOR&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">CURSOR</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">FOR</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;<BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">SELECT</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;userid,depid&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">FROM</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;users<BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"><BR><IMG 
+align="top" 
+src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 128, 128);">--</SPAN><SPAN 
+style="color: rgb(0, 128, 128);">打开游标</SPAN><SPAN style="color: rgb(0, 128, 128);"><BR><IMG 
+align="top" 
+src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">open</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;MyCURSOR<BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"><BR><IMG 
+align="top" 
+src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 128, 128);">--</SPAN><SPAN 
+style="color: rgb(0, 128, 128);">声明两个变量</SPAN><SPAN style="color: rgb(0, 128, 128);"><BR><IMG 
+align="top" 
+src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">declare</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 128, 0);">@userid</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 0); font-weight: bold;">varchar</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">(</SPAN><SPAN style="color: rgb(128, 0, 0); font-weight: bold;">50</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">)<BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">declare</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 128, 0);">@depid</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 0); font-weight: bold;">varchar</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">(</SPAN><SPAN style="color: rgb(128, 0, 0); font-weight: bold;">50</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">)<BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"><BR><IMG 
+align="top" 
+src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 128, 128);">--</SPAN><SPAN 
+style="color: rgb(0, 128, 128);">循环移动</SPAN><SPAN style="color: rgb(0, 128, 128);"><BR><IMG 
+align="top" 
+src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">fetch</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">next</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">from</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;MyCURSOR&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">into</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 128, 0);">@userid</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">,</SPAN><SPAN 
+style="color: rgb(0, 128, 0);">@depid</SPAN><SPAN 
+style="color: rgb(0, 0, 0);"><BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">while</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">(</SPAN><SPAN style="color: rgb(0, 128, 0); font-weight: bold;">@@fetch_status</SPAN><SPAN 
+style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(128, 0, 0); font-weight: bold;">0</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">)<BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif">&nbsp;&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">begin</SPAN><SPAN 
+style="color: rgb(0, 0, 0);"><BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">update</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;users&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">set</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;description</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">(</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">select</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;dep_des&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;department&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">where</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;depid</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN 
+style="color: rgb(0, 128, 0);">@depid</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">)<BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">where</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;userid</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN 
+style="color: rgb(0, 128, 0);">@userid</SPAN><SPAN 
+style="color: rgb(0, 0, 0);"><BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif">&nbsp;&nbsp;&nbsp;&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">fetch</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">next</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">from</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;MyCURSOR&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">into</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 128, 0);">@userid</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">,</SPAN><SPAN 
+style="color: rgb(0, 128, 0);">@depid</SPAN><SPAN 
+style="color: rgb(0, 0, 0);"><BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif">&nbsp;&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">end</SPAN><SPAN 
+style="color: rgb(0, 0, 0);"><BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"><BR><IMG 
+align="top" 
+src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">close</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;MyCURSOR<BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">deallocate</SPAN><SPAN style="color: rgb(0, 0, 0);">&nbsp;MyCURSOR<BR><IMG 
+align="top" 
+src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"><BR><IMG align="top" 
+src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">END</SPAN><SPAN 
+style="color: rgb(0, 0, 0);"><BR><IMG align="top" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/None.gif"></SPAN></DIV>
+<BR></DIV>
+<DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 22308;
+var cb_entryId = 800114;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "6263360b-63cf-dd11-9e4d-001cf0cd104b";
+var cb_entryCreatedDate = '2007/6/29 13:46:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV id="blog_post_info_block">
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+</DIV>
+<DIV class="postfoot">		posted on <SPAN id="post-date">2007-06-29 13:46</SPAN> 
+<A href="http://www.cnblogs.com/williambirkin/">williambirkin</A> 阅读(2986) 
+评论(<SPAN id="post-comment-count">1</SPAN>)  <A href="http://www.cnblogs.com/williambirkin/admin/EditPosts.aspx?postid=800114" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(800114);return false;" href="http://www.cnblogs.com/williambirkin/archive/2007/06/29/800114.html#">收藏</A></DIV>
+</DIV><IMG alt="" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/800114.jpg" 
+width="1" height="1">
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+
+<DIV id="comment_form" class="commentform">
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/williambirkin/archive/2007/06/29/800114.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/williambirkin/archive/2007/06/29/800114.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="ad_under_post_holder"></DIV>
+<DIV id="HistoryToday" class="c_ad_block"></DIV></DIV></DIV>
+<DIV class="footer">
+<P id="footer">	Powered by: 	<BR><A style="font-family: Verdana; font-size: 12px;" 
+id="Footer1_Hyperlink3" href="http://www.cnblogs.com/" 
+name="Hyperlink1">博客园</A><BR>Copyright © williambirkin</P></DIV>
+<SCRIPT type="text/javascript" src="SQL游标的简单使用%20-%20williambirkin%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

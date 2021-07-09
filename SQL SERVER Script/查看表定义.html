@@ -1,0 +1,51 @@
+﻿<p style=";font-family:Calibri;font-size:10.5pt">SELECT</p><p style=";font-family:Calibri;font-size:10.5pt">DB_ID() AS
+DatabaseID,</p><p style=";font-family:Calibri;font-size:10.5pt">DB_NAME() AS
+DatabaseName,</p><p style=";font-family:Calibri;font-size:10.5pt">C.TABLE_SCHEMA,</p><p style=";font-family:Calibri;font-size:10.5pt">C.TABLE_NAME,</p><p style=";font-family:Calibri;font-size:10.5pt">c.COLUMN_NAME ,&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">CASE WHEN ( (
+CHARINDEX(&#39;char&#39;, c.DATA_TYPE) &gt; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">OR
+CHARINDEX(&#39;binary&#39;, c.DATA_TYPE) &gt; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">AND
+c.CHARACTER_MAXIMUM_LENGTH &lt;&gt; -1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+)&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">THEN c.DATA_TYPE +
+&#39;(&#39;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">+
+CAST(c.CHARACTER_MAXIMUM_LENGTH AS VARCHAR(4)) + &#39;)&#39;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">WHEN ( (
+CHARINDEX(&#39;CHAR&#39;, c.DATA_TYPE) &gt; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">OR
+CHARINDEX(&#39;binary&#39;, c.DATA_TYPE) &gt; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">AND
+c.CHARACTER_MAXIMUM_LENGTH = -1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )
+THEN c.DATA_TYPE + &#39;(max)&#39;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">WHEN (
+CHARINDEX(&#39;numeric&#39;, c.DATA_TYPE) &gt; 0 )&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">THEN c.DATA_TYPE +
+&#39;(&#39; + CAST(c.NUMERIC_PRECISION AS VARCHAR(4))&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">+ &#39;,&#39; +
+CAST(c.NUMERIC_SCALE AS VARCHAR(4)) + &#39;)&#39;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">ELSE
+c.DATA_TYPE&nbsp;&nbsp;&nbsp; END AS DATA_TYPE ,&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">ISNULL(c.COLUMN_DEFAULT,
+&#39;&#39;) AS COLUMN_DEFAULT ,&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">CASE WHEN
+c.IS_NULLABLE = &#39;YES&#39; THEN 1&nbsp;&nbsp;&nbsp;&nbsp; ELSE
+0&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">END IS_NULLABLE
+,&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">CASE WHEN
+tc.CONSTRAINT_TYPE = &#39;PRIMARY KEY&#39; THEN 1&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">ELSE 0&nbsp;&nbsp;&nbsp; END AS IS_PRIMARY_KEY ,&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">CASE WHEN
+tc.CONSTRAINT_TYPE = &#39;FOREIGN KEY&#39; THEN 1&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">ELSE 0&nbsp;&nbsp;&nbsp; END AS IS_FOREIGN_KEY ,&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">ISNULL(fkcu.COLUMN_NAME,
+&#39;&#39;) AS FOREIGN_KEY ,&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">ISNULL(fkcu.TABLE_NAME,
+&#39;&#39;) AS FOREIGN_TABLEFROM,</p><p style=";font-family:Calibri;font-size:10.5pt">ISNULL(CKC.CHECK_CLAUSE,&#39;&#39;)
+AS CHECK_CLAUSE</p><p style=";font-family:Calibri;font-size:10.5pt">FROM</p><p style=";font-family:Calibri;font-size:10.5pt">[INFORMATION_SCHEMA].[COLUMNS]
+c&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">LEFT JOIN
+[INFORMATION_SCHEMA].[KEY_COLUMN_USAGE]</p><p style=";font-family:Calibri;font-size:10.5pt">kcu ON
+kcu.TABLE_SCHEMA = c.TABLE_SCHEMA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">AND kcu.TABLE_NAME =
+c.TABLE_NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">AND kcu.COLUMN_NAME
+= c.COLUMN_NAME&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">LEFT JOIN
+[INFORMATION_SCHEMA].[TABLE_CONSTRAINTS] tc</p><p style=";font-family:Calibri;font-size:10.5pt">ON
+tc.CONSTRAINT_SCHEMA = kcu.CONSTRAINT_SCHEMA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">AND
+tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">LEFT JOIN
+[INFORMATION_SCHEMA].[REFERENTIAL_CONSTRAINTS] fc</p><p style=";font-family:Calibri;font-size:10.5pt">ON
+kcu.CONSTRAINT_SCHEMA = fc.CONSTRAINT_SCHEMA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">AND
+kcu.CONSTRAINT_NAME = fc.CONSTRAINT_NAME&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">LEFT JOIN
+[INFORMATION_SCHEMA].[KEY_COLUMN_USAGE] fkcu</p><p style=";font-family:Calibri;font-size:10.5pt">ON
+fkcu.CONSTRAINT_SCHEMA = fc.UNIQUE_CONSTRAINT_SCHEMA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><p style=";font-family:Calibri;font-size:10.5pt">AND
+fkcu.CONSTRAINT_NAME = fc.UNIQUE_CONSTRAINT_NAME</p><p style=";font-family:Calibri;font-size:10.5pt">LEFT JOIN
+[INFORMATION_SCHEMA].[CONSTRAINT_COLUMN_USAGE] AS CKCU</p><p style=";font-family:Calibri;font-size:10.5pt">ON
+CKCU.TABLE_CATALOG=C.TABLE_CATALOG</p><p style=";font-family:Calibri;font-size:10.5pt">AND
+CKCU.TABLE_SCHEMA=C.TABLE_SCHEMA</p><p style=";font-family:Calibri;font-size:10.5pt">AND
+CKCU.TABLE_NAME=C.TABLE_NAME</p><p style=";font-family:Calibri;font-size:10.5pt">AND
+CKCU.COLUMN_NAME=C.COLUMN_NAME</p><p style=";font-family:Calibri;font-size:10.5pt">LEFT JOIN
+[INFORMATION_SCHEMA].[CHECK_CONSTRAINTS] AS CKC</p><p style=";font-family:Calibri;font-size:10.5pt">ON
+CKCU.CONSTRAINT_CATALOG=CKC.CONSTRAINT_CATALOG</p><p style=";font-family:Calibri;font-size:10.5pt">AND
+CKCU.CONSTRAINT_SCHEMA=CKC.CONSTRAINT_SCHEMA</p><p style=";font-family:Calibri;font-size:10.5pt">AND
+CKCU.CONSTRAINT_NAME=CKC.CONSTRAINT_NAME</p><p><br/></p>

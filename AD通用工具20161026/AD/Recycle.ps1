@@ -1,0 +1,2 @@
+param($a,$b)
+Enable-ADOptionalFeature ¨CIdentity "CN=Recycle Bin Feature,CN=Optional Features,CN=Directory Service,CN=Windows NT,CN=Services,CN=Configuration, DC=$a,DC=$b"¨CScope ForestOrConfigurationSet ¨CTarget "$a.$b"

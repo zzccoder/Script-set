@@ -1,0 +1,58 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CLRTypeTest
+</name>
+</assembly>
+<members>
+<member name="M:CLRTypeTest.Form1.CLRSampConn">
+	<summary>
+ 对 CLRSample 库的连接对象
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CLRTypeTest.Form1.CreateServerInfo">
+	<summary>
+ 根据窗体控件输入的值建立 ServerInfo 对象
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:CLRTypeTest.Form1.CreateSampleTable">
+	<summary>
+ 建立演示表
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRTypeTest.Form1.DropSampleTable">
+	<summary>
+ 删除演示表
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRTypeTest.Form1.LoadData">
+	<summary>
+ 加载数据到DataGridView
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRTypeTest.Form1.SetServerInfo(CLRSample.TypeSample)">
+	<summary>
+ 根据窗体控件输入的值建立 ServerInfo 对象
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRTypeTest.Form1.SaveServerInfo">
+	<summary>
+ 根据窗体控件输入的值在数据库中记录新的 ServerInfo 对象
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRTypeTest.Form1.SaveServerInfo(System.Int32)">
+	<summary>
+ 根据窗体控件输入的值在数据库中更新 ServerInfo 对象
+ </summary>
+	<remarks></remarks>
+</member><member name="M:CLRTypeTest.Form1.ShowServerInfo(CLRSample.TypeSample)">
+	<summary>
+ 显示当前 ServerInfo 的服务器信息
+ </summary>
+	<remarks></remarks>
+</member>
+</members>
+</doc>

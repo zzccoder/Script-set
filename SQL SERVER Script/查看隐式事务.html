@@ -1,0 +1,8 @@
+﻿<p style=";font-family:Calibri;font-size:10.5pt">SELECT &#39;kill
+&#39;,a.session_id,b.name,c.client_net_address,c.client_tcp_port,b.transaction_begin_time</p><p style=";font-family:Calibri;font-size:10.5pt">,t.text</p><p style=";font-family:Calibri;font-size:10.5pt">FROM
+sys.dm_tran_session_transactions a JOIN sys.dm_tran_active_transactions b</p><p style=";font-family:Calibri;font-size:10.5pt">ON
+a.transaction_id=b.transaction_id</p><p style=";font-family:Calibri;font-size:10.5pt">JOIN
+sys.dm_exec_connections c(nolock) ON a.session_id=c.session_id</p><p style=";font-family:Calibri;font-size:10.5pt">CROSS APPLY
+sys.dm_exec_sql_text(c.most_recent_sql_handle) t</p><p style=";font-family:Calibri;font-size:10.5pt">WHERE
+b.name=&#39;implicit_transaction&#39; AND</p><p style=";font-family:Calibri;font-size:10.5pt">a.is_user_transaction=1</p><p style=";font-family:Calibri;font-size:10.5pt">ORDER BY
+b.transaction_begin_time</p><p style=";font-family:Calibri;font-size:10.5pt">&nbsp;</p><p><br/></p>

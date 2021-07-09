@@ -1,0 +1,10 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\ASyncExecute.Form1.resources
+obj\Debug\ASyncExecute.Resources.resources
+obj\Debug\ASyncExecute.vbproj.GenerateResource.Cache
+bin\Debug\ASyncExecute.exe
+bin\Debug\ASyncExecute.pdb
+bin\Debug\ASyncExecute.xml
+obj\Debug\ASyncExecute.exe
+obj\Debug\ASyncExecute.xml
+obj\Debug\ASyncExecute.pdb

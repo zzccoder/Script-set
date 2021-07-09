@@ -1,0 +1,448 @@
+key-word:
+1、关键字
+IS NULL
+ASC
+DESC
+Distinct
+聚合函数：同一列聚合为一个
+order by
+join
+交叉连接(Cross Join)
+inner join (内连接和自连接）
+SELECT m.EmployeeName
+  FROM [fordemo].[dbo].[Employee] e
+  inner join [fordemo].[dbo].[Employee] m
+  on  e.ManagerID=m.id and e.EmployeeName='Careyson'
+SELECT  m.EmployeeName
+  FROM [fordemo].[dbo].[MeettingRecord] m,
+        [fordemo].[dbo].[MeettingRecord] m2
+  where m.MeetingName='xxx' and m2.MeetingName="yyyy1"
+        and m.EmployeeName=m2.EmployeeName
+on
+left outer join
+right outer join
+full outer join
+group by
+having
+Ccount()
+	SELECT     COUNT(ManagerID) AS EmployeeWithSuperior
+FROM       HumanResources.Employee
+只有一个被统计
+SELECT     COUNT(DISTINCT ManagerID) AS NumberOfManager
+FROM       HumanResources.Employee
+默认不包含null，包含null用
+SELECT     AVG(ISNULL(VacationHours, 10)) AS  'Average vacation hours'
+FROM       HumanResources.Employee
+先遍历Gender
+据每个Gender可能的值去计算匹配ManagerID
+根据ManagerID来进行聚合
+SELECT     ManagerID, Gender, SUM(SickLeaveHours) AS SickLeaveHours, COUNT(*) AS EmployeeNumber
+FROM       HumanResources.Employee
+GROUP BY   Gender, ManagerID
+
+SELECT     ManagerID, Gender, SUM(SickLeaveHours) AS SickLeaveHours, COUNT(*) AS EmployeeNumber
+FROM       HumanResources.Employee
+GROUP BY   ManagerID, Gender
+HAVING     (COUNT(*) > 2)
+
+Having子句最强大的地方莫过于其可以使用聚合函数作为表达式
+SELECT     ManagerID, SUM(SickLeaveHours) AS TotalSickLeaveHours, COUNT(*) AS EmployeeNumber
+FROM       HumanResources.Employee
+GROUP BY   ManagerID
+HAVING      (MAX(SickLeaveHours) > 2 * MIN(SickLeaveHours))
+
+
+
+
+
+
+
+基础内容：
+1、概念
+关系数据库
+
+E-R图 设计表
+
+
+E一，二，三范式来设计表（拆表）
+	内容相识的数据列必须消除
+	列里的内容出现重复该拆分为多个表
+	与主键没有直接关系的数据列必须消除
+
+2、T-SQL查询（提取子集,关系代数和关系演算）
+
+
+视图：保存一个查询语句；
+笛卡尔积
+Distinct
+IS NULL
+ASC
+DESC
+聚合函数：同一列聚合为一个
+order by
+join
+交叉连接(Cross Join)
+
+inner join (内连接和自连接）
+SELECT m.EmployeeName   FROM [fordemo].[dbo].[Employee] e   inner join [fordemo].[dbo].[Employee] m
+  on  e.ManagerID=m.id and e.EmployeeName='Careyson'
+SELECT  m.EmployeeName   FROM [fordemo].[dbo].[MeettingRecord] m, [fordemo].[dbo].[MeettingRecord] m2
+  where m.MeetingName='xxx' and m2.MeetingName="yyyy1"
+        and m.EmployeeName=m2.EmployeeName 
+
+on 
+left outer join
+right outer join
+full outer join
+group by
+having
+Ccount()
+	SELECT     COUNT(ManagerID) AS EmployeeWithSuperior FROM       HumanResources.Employee
+只有一个被统计
+SELECT     COUNT(DISTINCT ManagerID) AS NumberOfManager FROM       HumanResources.Employee
+默认不包含null，包含null用 
+SELECT     AVG(ISNULL(VacationHours, 10)) AS  'Average vacation hours' FROM       HumanResources.Employee
+先遍历Gender
+据每个Gender可能的值去计算匹配ManagerID
+根据ManagerID来进行聚合
+
+SELECT     ManagerID, Gender, SUM(SickLeaveHours) AS SickLeaveHours, COUNT(*) AS EmployeeNumber
+FROM       HumanResources.Employee
+GROUP BY   Gender, ManagerID
+
+SELECT     ManagerID, Gender, SUM(SickLeaveHours) AS SickLeaveHours, COUNT(*) AS EmployeeNumber
+FROM       HumanResources.Employee
+GROUP BY   ManagerID, Gender
+HAVING     (COUNT(*) > 2)
+
+Having子句最强大的地方莫过于其可以使用聚合函数作为表达式
+SELECT     ManagerID, SUM(SickLeaveHours) AS TotalSickLeaveHours, COUNT(*) AS EmployeeNumber
+FROM       HumanResources.Employee
+GROUP BY   ManagerID
+HAVING      (MAX(SickLeaveHours) > 2 * MIN(SickLeaveHours))
+
+
+
+
+OIN: 如果表中有至少一个匹配，则返回行
+LEFT JOIN: 即使右表中没有匹配，也从左表返回所有的行
+RIGHT JOIN: 即使左表中没有匹配，也从右表返回所有的行
+FULL JOIN: 只要其中一个表中存在匹配，就返回行
+
+信息=* 的=条件 group by=每
+
+
+函数left() year() right() abs() ascii() ceiling() floor() power()
+pi() sqrt() square() round() len() substring(x,s,l) upper() lower()
+space() replicate(x,l) stuff(x,l,l,x) ltrim() rtrim()
+reverse() charidex(x,x) str() getdate() datepart(weekday,d) day()
+month() yser() 
+suser_name() user_name() user
+db_name() host_name() convert(type,expr) cast(expr,type)
+isdate() isnull()
+
+count(*) count(l) sum() avg() max() min()
+
+
+
+
+
+		
+=
+AS 
+空格
+
+计算列
+
+select [disinct] xxx from xxx 取消重复
+
+% _ [abcd] [^abcd]
+
+in(a,b,c,d)  and exists
+
+order by xx,xx [desc] 
+
+select [top 4] * from xxx 前4行
+select [10 percent] from xxx 前10%行
+
+连接查询(来源表、连接条件匹配、结果列)：select * from table1，[inner join]table2 on
+
+内连接：结果集是所有表之间匹配条件的记录
+外连接：结果集是其中一个表匹配条件的记录
+连接是把不同表的字段组合起来构成逻辑记录(横向连接）
+合并是把不同表的记录按照前后顺序组合成一个逻辑表（纵向连接）
+
+
+insert into xxx values()
+create table x()
+
+group by 分类统计 
+having 结果集筛选
+
+all关键字
+
+嵌套：结果集作为条件使用。 
+ in 子句查询
+
+ 
+
+
+
+3、DDL、DML和DCL
+数据库对象：
+	Table  Row column
+	Index（聚合函数）
+	View 只显示那些需要的数据信息；
+	Diagram 表间关系示意图
+	Default
+	Rule（约束） 限制column
+	Tigger 强制服从复杂的业务规则或要求，定义SQL事务
+	Proc SQL程序
+	User
+	XML集合
+	
+	
+	
+分离/附加数据库 可脱离原有实例
+
+
+
+
+
+
+
+
+
+
+
+--创建数据库test
+create database test
+go
+	
+
+--存在库testdata
+use master;
+go
+if exists(select * from sys.databases where name='TestData')
+	begin
+		drop database Testdata;
+	end
+cretae database testdata;
+
+--更改与 TestData 数据库的连接
+use testdata
+go
+
+--创建表，dbo 默认架构
+create table dbo.products
+	(productid int primary key not null,
+	productname varchar(25) not null,
+	price money null,
+	productdescription text null)
+go 
+
+--插入数据
+insert dbo.products(productid,prodectname,price,productescripton)
+	valueHes(1,'Clamp',12.48,'Workbench clamp')
+go
+
+--更新数据
+update dbo.products
+	set productname='Flat Head Screwdriver'
+	where productid=50
+go
+--查数据
+select productid,prodctname,price,productdescription from dbo.products
+select * from products
+go
+ 
+--创建windows身份验证,访问SQL server 实例
+CREATE LOGIN [computername\xxx]
+    FROM WINDOWS
+    WITH DEFAULT_DATABASE = [AdventureWorks];
+GO
+
+--授予访问数据库权限s
+USE [TestData];
+CREATE USER [xxx FOR LOGIN [computer_name\xxx];
+GO
+
+--创建视图 select语句组成的查询定义虚拟表:通常用在对用户访问数据惊醒控制的场所；
+create view vm_Name
+	as
+	select column_name from table_name where condition;
+
+
+--测试视图
+select * from vm_Names
+
+--创建存储过程
+create procedure pr_Names @VarPrice money
+	as
+	begin
+		print 'Products less than '+cast(VarPrice as varchar(10));
+		select productname,price from vm_names
+				where price<@varprice;
+	end
+go
+
+--测试存储过程
+execute pr_name 10.00;
+go
+
+--授权/未授权xxx 使用存储过程pr_names
+grant execute on pr_names to xxx;
+revoke execute on pr_names to xx;
+
+--删除数据库对象
+drop login|user|database|table|from|view|proc| xxxx:
+
+uniqueidentifier 全局唯一标识符  newid() 
+
+
+sqlcmd -s localhost\MSSQLSERVER -I C:\XXX -O C:\XXX 
+
+数据库引擎的默认实例侦听端口 1433
+
+hierarchyid 数据类型 
+服务器名字：  tcp:计算机名,端口号
+
+
+
+desc为降序 ASC为升序
+--SQL Top 子句 返回记录数目
+Select Top number|percent column_name(s) From table_name
+--SQL Link 操作符 指定
+Select column_name(s) From table_name 
+Where column_name Like pattern
+--SQL 通配符 % _ [] 
+Ne% %lond% _eorge C_r_er [ALN]% [!ALN]%
+--SQL IN 操作符 定多个值
+Select column_name(s)
+From table_name Where column_name IN (values1,values2,...)
+--SQL BETWEEN 操作符 范围
+Select column_name (s)
+From table_name
+Where column_name Between value1 and value2
+--SQL Alias  别名
+Select colum_name(s) From table_name As alias_name
+Select colum_name As alias_name From table_name
+--SQL Join 多个表中取数
+Select Persons.LastName,Persons.FirstNmae,Orders.OrderNo From Persons,Orders
+Where Persons.Id_P=Orders.Id_P
+--至少一个匹配，返回行
+Select column_name(s) 
+From table_name1
+INNER JOIN table)name2
+On table_name1.column_name=table_name2.column_name
+--左表返回所有行
+Select column_name(s)
+From table_name1
+Left Join table_name2
+ON table_name1.column_name=table_name2.column_name
+--右表返回所有行
+Select column_name(s)
+From table_name1
+Right Join table_name2
+ON table_name1.colum_name=table_name2.column_name
+--存在匹配，返回行
+Select column_name(s)
+From table_name1
+Full Join table_name2
+ON table_name1.column_name=table_name2.column_name
+--SQL Union 操作符 合并表
+Select column_name(s) From table_name1
+Union [ALL]
+Select column_name(s) From table_name2
+--Select Into 备份复件或者记录存档
+Select column_name 
+Into new_table_name [IN 'anotherdatabase']
+From old_tablename
+
+--SQL Create DB
+Create Database database_name
+--SQL Create Table
+Create Table table_name
+（
+Id_P int,
+LastName varchar(255),
+FirstName varchar(255),
+Address varchar(255),
+City varchar(255),
+year date()
+)
+--SQL 约束 *
+Not NULL 
+Unique	约束唯一，可多列
+	命名约束
+	Constraint uc_PersonID UNIQUE (xx,xxx)
+	alter table xxx add UNIQUE(xx) [CONSTRAINT un_PersonID UNIQUE (xx,xx)]
+	撤销约束
+	alter table xxx Drop CONSTRAINT un_PersonID
+Primary KEY 主键，可命名约束同Unique
+	xx int NOT NULL Primary KEY
+Foreign Key 外键，约束为另一个表列的值,约束命名同Unique
+	xx int Foreign KEY References table_name(xx)
+Check 约束列的范围,约束命名同Unique
+	xx int NOT NULL Check (xx>0)
+	Constraint chk_xxx Check (xx>0 and xxx<20)
+Default 约束列默认值
+	xx varchar(255) Default 'xxx'
+	alter table table_name 	alter column xx set Default 'xxx'
+	alter table table_name alter column xx drop Default
+--Create Index
+Index 仅仅在常常被搜索的列（以及表）上面创建索引，速查；【群集索引--物理顺序江北改变】
+应该对表中的唯一属性的字段或你用以归并操作的字段来创建索引；
+
+	create [Unique]Index index_name on table_name (column_name1,column_name2,...)
+			--unique 用于复合索引，防止有相同数据的多个记录多次出现
+	Drop Index index_name ON table_name.index_name
+--Alter Table
+	Alter Table table_name Add[Drop Column][Alter Column] column_name datatype
+--Auto Increment或者Identity 自动创建主键字段值
+	alter table table_name Auto_Increment=100
+	Identity(20,10) --20起10递增
+--SQL Date
+	GETDATE() 当前日期和时间
+	DATEPART() 日期/时间部分
+	DATEADD()  添加时间间隔
+	DATEDIFF() 日期之间的时间
+	CONVERT()	
+--SQL IS NULL
+	where xxx is null[is not null]
+	isnull(xxx,number_int)
+--SQL Group By
+	规则是:当要求分组结果返回多个数值时,不能在在 SELECT 子句中使用除分组列以外的列,这将会导致错误的返回值
+	SELECT Customer,SUM(OrderPrice) FROM Orders
+	WHERE Customer='Bush' OR Customer='Adams'
+	GROUP BY Customer
+	HAVING SUM(OrderPrice)>1500
+--SQL 函数
+	avg() count() first() last() max()
+	min() sum() ucase() lcase() 
+	mid(x,x,x) 截取 len() round(xx,0) 取整 now() format()
+	SELECT MID(City,1,3) as SmallCity FROM Persons
+	SELECT ROUND(column_name,decimals) FROM table_name  	FORMAT(Now(),'YYYY-MM-DD') 
+	ADD_MONTH(xxx,2)
+	LAST_DAY(xxx）
+	MONTHS_BETWEEN(startdate,enddate)
+	NEW_TIME
+	NEXT_DAY(date，day)
+	SYSDATE	
+	CONCAT(xx,xxx)	--连接xx,xxx
+	INITCAP(xxx）	--开头大写其他小写
+	UPPER(xx) LOWER（xx) --大小写转换
+	REPLACE（xx,xxx,xxxx)	--搜索内容xxx
+	SUBSTRing(xx,xxx,xxxx)	--xxx位置截取xxxx个字符
+	INSTR（xx,xxx,xxxx）
+
+---数据库安全
+
+--临时表
+一般，复合查询中存贮查询的结果为之后的查询使用
+
+
+
+
+
+

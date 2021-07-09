@@ -1,0 +1,248 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0064)http://www.cnblogs.com/huaxiaoyu/archive/2008/05/29/1209905.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=9.0000" 
+http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type">
+<TITLE>SQL游标的使用方法 - 宇宙骄龙 - 博客园</TITLE><LINK rel="stylesheet" type="text/css" 
+href="SQL游标的使用方法%20-%20宇宙骄龙%20-%20博客园_files/common.css"><LINK id="MainCss" rel="stylesheet" 
+type="text/css" href="SQL游标的使用方法%20-%20宇宙骄龙%20-%20博客园_files/style.css"><LINK 
+rel="stylesheet" type="text/css" href="SQL游标的使用方法%20-%20宇宙骄龙%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="SQL游标的使用方法%20-%20宇宙骄龙%20-%20博客园_files/shStyle.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/huaxiaoyu/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/huaxiaoyu/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/huaxiaoyu/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="SQL游标的使用方法%20-%20宇宙骄龙%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'huaxiaoyu';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标的使用方法%20-%20宇宙骄龙%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标的使用方法%20-%20宇宙骄龙%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标的使用方法%20-%20宇宙骄龙%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A>
+<TABLE class="Framework" cellSpacing="0" cellPadding="0" width="100%">
+  <TBODY>
+  <TR>
+    <TD colSpan="2">
+      <DIV id="top">
+      <TABLE cellSpacing="0" cellPadding="8" width="100%">
+        <TBODY>
+        <TR>
+          <TD noWrap="">
+            <H1><A id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/huaxiaoyu/">宇宙骄龙</A></H1>.net项目开发，Plugin,反射,ajax,webserver,smartClient的研究
+            		</TD></TR></TBODY></TABLE></DIV>
+      <DIV id="sub">
+      <DIV class="BlogStats">posts - 4, comments - 8, trackbacks - 0, articles - 
+      0</DIV></DIV></TD></TR>
+  <TR>
+    <TD class="LeftCell">
+      <DIV id="leftmenu">
+      <H3>导航</H3>
+      <UL>
+        <LI><A id="MyLinks2_HomeLink" href="http://www.cnblogs.com/">博客园</A>
+        <LI><A id="MyLinks2_MyHomeLink" 
+        href="http://www.cnblogs.com/huaxiaoyu/">首页</A>
+        <LI><A id="MyLinks2_NewPostLink" href="http://www.cnblogs.com/huaxiaoyu/admin/EditPosts.aspx?opt=1" 
+        rel="nofollow">新随笔</A>
+        <LI><A accessKey="9" id="MyLinks2_ContactLink" href="http://space.cnblogs.com/msg/send/%e5%ae%87%e5%ae%99%e9%aa%84%e9%be%99" 
+        rel="nofollow">联系</A>
+        <LI><A id="MyLinks2_XMLLink" 
+        href="http://www.cnblogs.com/huaxiaoyu/rss"><IMG alt="订阅" src="SQL游标的使用方法%20-%20宇宙骄龙%20-%20博客园_files/xml.gif"></A><A 
+        id="MyLinks2_Syndication" 
+        href="http://www.cnblogs.com/huaxiaoyu/rss">订阅</A>
+        <LI><A id="MyLinks2_Admin" href="http://www.cnblogs.com/huaxiaoyu/admin/EditPosts.aspx" 
+        rel="nofollow">管理</A></LI></UL>
+      <H3>公告</H3>
+      <DIV id="news">
+      <DIV id="blog-news"></DIV></DIV>
+      <DIV style="display: none;" id="blog-calendar-block">
+      <DIV id="blog-calendar"></DIV></DIV>
+      <DIV id="blog-sidecolumn"></DIV></DIV></TD>
+    <TD class="MainCell" width="100%">
+      <DIV id="main">
+      <DIV class="post">
+      <DIV class="posthead">
+      <H2><A id="cb_post_title_url" class="singleposttitle" href="http://www.cnblogs.com/huaxiaoyu/archive/2008/05/29/1209905.html">SQL游标的使用方法</A></H2>Posted 
+      on <SPAN id="post-date">2008-05-29 13:33</SPAN> <A href="http://www.cnblogs.com/huaxiaoyu/">宇宙骄龙</A> 
+      阅读(1718) 评论(<SPAN id="post-comment-count">0</SPAN>)  <A href="http://www.cnblogs.com/huaxiaoyu/admin/EditPosts.aspx?postid=1209905" 
+      rel="nofollow">编辑</A> <A onclick="AddToWz(1209905);return false;" href="http://www.cnblogs.com/huaxiaoyu/archive/2008/05/29/1209905.html#">收藏</A><IMG 
+      alt="" src="SQL游标的使用方法%20-%20宇宙骄龙%20-%20博客园_files/1209905.jpg" width="1" 
+      height="1"></DIV>
+      <DIV class="postbody">
+      <DIV id="cnblogs_post_body"><SPAN class="t18">&nbsp;
+      <P>在<A class="ReplaceKeyword" href="http://www.knowsky.com/sql.asp" 
+      target="_blank"><FONT 
+      color="#000000">数据库</FONT></A>开发过程中，当你检索的数据只是一条记录时，你所编写的事务语句代码往往使用SELECT 
+      INSERT 语句。但是我们常常会遇到这样情况，即从某一结果集中逐一地读取一条记录。那么如何解决这种问题呢？游标为我们提供了一种极为优秀的解决方案。 
+      <BR>1.1 游标和游标的优点<BR>&nbsp;&nbsp;&nbsp; 
+      在数据库中，游标是一个十分重要的概念。游标提供了一种对从表中检索出的数据进行操作的灵活手段，就本质而言，游标实际上是一种能从包括多条数据记录的结果集中每次提取一条记录的机制。游标总是与一条T_SQL 
+      选择语句相关联因为游标由结果集（可以是零条、一条或由相关的选择语句检索出的多条记录）和结果集中指向特定记录的游标位置组成。当决定对结果集进行处理时，必须声明一个指向该结果集的游标。如果曾经用 
+      C 
+      语言写过对文件进行处理的程序，那么游标就像您打开文件所得到的文件句柄一样，只要文件打开成功，该文件句柄就可代表该文件。对于游标而言，其道理是相同的。可见游标能够实现按与传统程序读取平面文件类似的方式处理来自基础表的结果集，从而把表中数据以平面文件的形式呈现给程序。</P>
+      <P>&nbsp;&nbsp;&nbsp; 我们知道关系数据库管理系统实质是面向集合的，在MS SQL SERVER 
+      中并没有一种描述表中单一记录的表达形式，除非使用where 
+      子句来限制只有一条记录被选中。因此我们必须借助于游标来进行面向单条记录的数据处理。<BR>&nbsp;&nbsp;&nbsp; 
+      由此可见，游标允许应用程序对查询语句select 
+      返回的行结果集中每一行进行相同或不同的操作，而不是一次对整个结果集进行同一种操作；它还提供对基于游标位置而对表中数据进行删除或更新的能力；而且，正是游标把作为面向集合的数据库管理系统和面向行的程序设计两者联系起来，使两个数据处理方式能够进行沟通。</P>
+      <P>1.2 游标种类<BR>MS SQL SERVER 支持三种类型的游标：Transact_SQL 游标，API 服务器游标和客户游标。<BR>
+      （1） Transact_SQL 游标<BR>&nbsp;&nbsp;&nbsp; Transact_SQL 游标是由DECLARE CURSOR 
+      语法定义、主要用在Transact_SQL 脚本、<A class="ReplaceKeyword" href="http://www.knowsky.com/tag-2.html" 
+      target="_blank"><FONT color="#000000">存储过程</FONT></A>和触发器中。Transact_SQL 
+      游标主要用在服务器上，由从客户端发送给服务器的Transact_SQL 语句或是批处理、存储过程、触发器中的Transact_SQL 进行管理。 
+      Transact_SQL 游标不支持提取数据块或多行数据。<BR>（2） API 游标<BR>&nbsp;&nbsp;&nbsp; API 
+      游标支持在OLE DB， ODBC 以及DB_library 中使用游标函数，主要用在服务器上。每一次客户端应用程序调用API 游标函数，MS 
+      SQL SEVER 的OLE DB 提供者、ODBC驱动器或DB_library 的动态链接库（DLL） 
+      都会将这些客户请求传送给服务器以对API游标进行处理。<BR>（3） 客户游标<BR>&nbsp;&nbsp;&nbsp; 
+      客户游标主要是当在客户机上缓存结果集时才使用。在客户游标中，有一个缺省的结果集被用来在客户机上缓存整个结果集。客户游标仅支持静态游标而非动态游标。由于服务器游标并不支持所有的Transact-SQL 
+      语句或批处理，所以客户游标常常仅被用作服务器游标的辅助。因为在一般情况下，服务器游标能支持绝大多数的游标操作。<BR>
+      &nbsp;&nbsp;&nbsp; 由于API 游标和Transact-SQL 
+      游标使用在服务器端，所以被称为服务器游标，也被称为后台游标，而客户端游标被称为前台游标。在本章中我们主要讲述服务器（后台）游标。</P>
+      <P>select count(id) from info</P>
+      <P>select * from info</P>
+      <P>--清除所有记录<BR>truncate table info</P>
+      <P>declare @i int<BR>set @i=1<BR>while @i&lt;1000000<BR>begin<BR>insert 
+      into info values('Justin'+str(@i),'深圳'+str(@i))<BR>set @i=@i+1<BR>end</P>
+      <P>1.3 游标操作<BR>使用游标有四种基本的步骤:声明游标、打开游标、提取数据、关闭游标。 <BR>声明游标 <BR>
+      象使用其它类型的变量一样,使用一个游标之前,首先应当声明它。游标的声明包括两个部分:游标的名称;这个游标所用到的SQL语句。如要声明一个叫作Cus-tomerCursor的游标用以查询地址在北京的客户的姓名、帐号及其余额,您可以编写如下代码: 
+      <BR>DECLARE CustomerCursor CURSOR FOR <BR>SELECT acct_no,name,balance <BR>
+      FROM customer <BR>WHERE province="北京"; <BR>
+      在游标的声明中有一点值得注意的是,如同其它变量的声明一样,声明游标的这一段代码行是不执行的,您不能将debug时的断点设在这一代码行上,也不能用IF...END 
+      IF语句来声明两个同名的游标,如下列的代码就是错误的。 <BR>IF Is_prov="北京"THEN <BR>DECLARE 
+      CustomerCursor CURSOR FOR <BR>SELECT acct_no,name,balance <BR>FROM 
+      customer <BR>WHERE province="北京"; <BR>ELSE <BR>DECLARE CustomerCursor 
+      CURSOR FOR <BR>SELECT acct_no,name,balance <BR>FROM customer <BR>WHERE 
+      province〈〉"北京"; <BR>END IF <BR>打开游标 <BR>
+      声明了游标后在作其它操作之前,必须打开它。打开游标是执行与其相关的一段SQL语句,例如打开上例声明的一个游标,我们只需键入: <BR>OPEN 
+      CustomerCursor; <BR>由于打开游标是对数据库进行一些SQL 
+      SELECT的操作,它将耗费一段时间,主要取决于您使用的系统性能和这条语句的复杂程度。如果执行的时间较长,可以考虑将屏幕上显示的鼠标改为hourglass。 
+      <BR>提取数据 <BR>
+      当用OPEN语句打开了游标并在数据库中执行了查询后,您不能立即利用在查询结果集中的数据。您必须用FETCH语句来取得数据。一条FETCH语句一次可以将一条记录放入程序员指定的变量中。事实上,FETCH语句是游标使用的核心。在DataWindow和DataStore中,执行了Retrieve()函数以后,查询的所有结果全部可以得到;而使用游标,我们只能逐条记录地得到查询结果。 
+      <BR>已经声明并打开一个游标后,我们就可以将数据放入任意的变量中。在FETCH语句中您可以指定游标的名称和目标变量的名称。如下例: <BR>
+      FETCH CustmerCur-sor <BR>INTO:ls_acct_no, <BR>:ls_name, <BR>:ll_balance; 
+      <BR>
+      从语法上讲,上面所述的就是一条合法的取数据的语句,但是一般我们使用游标却还应当包括其它的部分。正如我们前面所谈到的,游标只能一次从后台数据库中取一条记录,而在多数情况下,我们所想要作的是在数据库中从第一条记录开始提取,一直到结束。所以我们一般要将游标提取数据的语句放在一个循环体内,直至将结果集中的全部数据提取后,跳出循环圈。通过检测SQLCA.SQL-CODE的值,可以得知最后一条FETCH语句是否成功。一般,当SQLCODE值为0时表明一切正常,100表示已经取到了结果集的末尾,而其它值均表明操作出了问题,这样我们可以编写以下的代码: 
+      <BR>lb_continue=True <BR>ll_total=0 <BR>DO WHILE lb_continue <BR>FETCH 
+      CustomerCur-sor <BR>INTO:ls_acct_no, <BR>:ls_name, <BR>:ll_balance; <BR>If 
+      sqlca.sqlcode=0 Then <BR> ll_total+=ll_balance <BR>Else <BR>
+      lb_continue=False <BR>End If <BR>LOOP <BR>
+      循环体的结构有多种,这里提到的是最常见的一种。也有的程序员喜爱将一条FETCH语句放在循环体的前面,循环体内再放置另外一条FETCH语句,并检测SQLCA.SQLCODE是否为100。但是这样做,维护时需同时修改两条FETCH语句,稍麻烦了些。 
+      <BR>关闭游标 <BR>在游标操作的最后请不要忘记关闭游标,这是一个好的编程习惯,以使系统释放游标占用的资源。关闭游标的语句很简单: <BR>
+      CLOSE CustomerCursor; <BR>使用Where子句子 <BR>
+      我们可以动态地定义游标中的Where子句的参数,例如在本例中我们是直接定义了查询省份是北京的记录,但也许在应用中我们要使用一个下拉式列表框,由用户来选择要查询的省份,我们该怎样做呢? 
+      <BR>
+      我们在前面曾经提到过,DECLARE语句的作用只是定义一个游标,在OPEN语句中这个游标才会真正地被执行。了解了这些,我们就可以很方便地实现这样的功能,在DECLARE的Where子句中加入变量作参数,如下所示: 
+      <BR>DECLARE CustomerCursor CURSOR FOR <BR>SELCECT acct_no,name,balance 
+      <BR>FROM customer <BR>WHERE province=:ls_province; <BR>∥定义ls_province的值 
+      <BR>OPEN CustomerCursor; <BR>游标的类型 <BR>
+      同其它变量一样,我们也可以定义游标的访问类型:全局、共享、实例或局部,游标变量的命名规范建议也同其它变量一样。 <BR>--声明游标<BR>
+      declare my_cursor cursor keyset for select * from info<BR>--删除游标资源<BR>
+      deallocate my_cursor</P>
+      <P>--打开游标,在游标关闭或删除前都有效<BR>open my_cursor<BR>--关闭游标<BR>close my_cursor</P>
+      <P>--声明局部变量<BR>declare @id int,@name varchar(20),@address varchar(20)<BR>
+      --定位到指定位置的记录<BR>fetch absolute 56488 from my_cursor into 
+      @id,@name,@address<BR>select @id as id,@name as name,@address as 
+      address<BR>--定位到当前记录相对位置记录<BR>fetch relative -88 from my_cursor into 
+      @id,@name,@address<BR>select @id as id,@name as name,@address as 
+      address<BR>--定位到当前记录前一条<BR>fetch prior from my_cursor into 
+      @id,@name,@address<BR>select @id as id,@name as name,@address as 
+      address<BR>--定位到当前记录后一条<BR>fetch next from my_cursor into 
+      @id,@name,@address<BR>select @id as id,@name as name,@address as 
+      address<BR>--定位到首记录<BR>fetch first from my_cursor into 
+      @id,@name,@address<BR>select @id as id,@name as name,@address as 
+      address<BR>--定位到尾记录<BR>fetch last from my_cursor into 
+      @id,@name,@address<BR>select @id as id,@name as name,@address as 
+      address</P>
+      <P>实例：<BR>use database1<BR>declare my_cursor cursor scroll dynamic<BR>
+      /**//*scroll表示可随意移动游标指&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      针（否则只能向前），dynamic表示可以读写游标（否则游标只读）*/<BR>for<BR>select productname from 
+      product</P>
+      <P>open my_cursor<BR>declare @pname sysname<BR>fetch next from my_cursor 
+      into @pname<BR>while(@@fetch_status=0)<BR>begin<BR>&nbsp;&nbsp;&nbsp; 
+      print 'Product Name: ' + @pname<BR>&nbsp;&nbsp;&nbsp; fetch next from 
+      my_cursor into @pname<BR>end<BR>fetch first from my_cursor into @pname<BR>
+      print @pname<BR>/**//*update product set productname='zzg' where current 
+      of my_cursor */<BR>/**//*delete from product where current of my_cursor 
+      */<BR>close my_cursor<BR>deallocate my_cursor</P>
+      <P><BR>1.4 游标的高级技巧</P>
+      <P>尽管目前基于SQL语句的后台数据库所支持的语言都大致相当,但对游标的支持却有着一些差异,例如对滚动游标支持。所谓滚动游标,就是程序员可以指定游标向前后任意一个方向滚动。如在Informix中,您甚至还可以将游标滚向结果集开头或末尾,使用的语句分别是FETCH 
+      FIRST,FETCH LAST、FETCH PRIOR和FETCH NEXT。当程序员用FETCH语句,其缺省是指FETCH 
+      NEXT。由于滚动是在数据库后台实现的,所以滚动游标为用户编程提供了极大的方便。 <BR>
+      对游标支持的另一个不同是可修改游标。上述游标的使用都是指只读游标,而象<A class="ReplaceKeyword" href="http://www.knowsky.com/article.asp?typeid=171" 
+      target="_blank"><FONT 
+      color="#000000">Oracle</FONT></A>、Sybase等数据库却另外支持可作修改的游标。使用这样的数据库,您可以修改或删除当前游标所在的行。例如修改当前游标所在行的用户的余额,我们可以如下操作: 
+      <BR>UPDATE customer <BR>SET balance=1000 <BR>WHERE CURRENT of 
+      customerCursor; <BR>删除当前行的操作如下: <BR>DELETE FROM Customer <BR>WHERE CURRENT 
+      OF CustomerCursor; <BR>
+      但是如果您当前使用的数据库是Sybase,您需要修改数据库的参数,将游标可修改的值定为1,才能执行上述操作。这一赋值在连接数据库的前后进行均可。 
+      <BR>SQLCA.DBParm="Cursor Update=1" <BR>
+      另外一个内容是动态游标,也就是说您可以运行过程中动态地形成游标的SELECT语句。这同在PowerBuilder中动态地使用嵌入式SQL一样,需要用到DynamicStagin-gArea等数据类型,这已超出了本节的范围。</P>
+      </SPAN></DIV>
+      <DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 17382;
+var cb_entryId = 1209905;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "4f50360b-63cf-dd11-9e4d-001cf0cd104b";
+var cb_entryCreatedDate = '2008/5/29 13:33:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+      
+      <DIV id="blog_post_info_block">
+      <DIV id="blog_post_info"></DIV>
+      <DIV class="clear"></DIV>
+      <DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+      </DIV></DIV>
+      <DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+      
+      <DIV id="comment_form" class="commentform">
+      <DIV id="divCommentShow"></DIV>
+      <DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+      onclick="return RefreshCommentList();" 
+      href="javascript:void(0);">刷新评论</A><A onclick="return RefreshPage();" 
+      href="http://www.cnblogs.com/huaxiaoyu/archive/2008/05/29/1209905.html#">刷新页面</A><A 
+      href="http://www.cnblogs.com/huaxiaoyu/archive/2008/05/29/1209905.html#top">返回顶部</A></DIV>
+      <DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+      <DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+      <DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+      target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" 
+      target="_blank">博问</A><A title="IT新闻" href="http://news.cnblogs.com/" 
+      target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" target="_blank">闪存</A><A 
+      href="http://job.cnblogs.com/" target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+      target="_blank">知识库</A></DIV>
+      <DIV id="ad_under_post_holder"></DIV>
+      <DIV id="HistoryToday" class="c_ad_block"></DIV></DIV></DIV></TD></TR>
+  <TR>
+    <TD class="FooterCell" colSpan="2">
+      <P id="footer">	Powered by: 	<BR><A style="font-family: Verdana; font-size: 12px;" 
+      id="Footer1_Hyperlink3" href="http://www.cnblogs.com/" 
+      name="Hyperlink1">博客园</A><BR>Copyright © 宇宙骄龙</P></TD></TR></TBODY></TABLE>
+<SCRIPT type="text/javascript" src="SQL游标的使用方法%20-%20宇宙骄龙%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

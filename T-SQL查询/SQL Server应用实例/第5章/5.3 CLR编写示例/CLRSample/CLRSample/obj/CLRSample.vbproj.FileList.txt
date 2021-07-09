@@ -1,0 +1,10 @@
+bin\CLRSample.dll
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\CLRSample.dll
+obj\Debug\CLRSample.pdb
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\CLRSample.dll
+bin\CLRSample.xml
+obj\Release\CLRSample.xml
+bin\CLRSample.pdb
+obj\Debug\CLRSample.xml

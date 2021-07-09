@@ -1,0 +1,249 @@
+a:link {
+	color: rgb(67, 113, 166);
+}
+a:active {
+	color: rgb(67, 113, 166);
+}
+a:visited {
+	color: rgb(67, 113, 166);
+}
+a:hover {
+	color: black;
+}
+body {
+	margin: 0px; padding: 0px; line-height: 160%; font-family: georgia,verdana,Arial,helvetica,sans-seriff; font-size: 13px; word-wrap: break-word; background-image: url("images/bg.gif");
+}
+td {
+	line-height: 150%; font-family: Verdana,Helvetica,Arial; font-size: 12px; word-wrap: break-word;
+}
+.header {
+	height: 230px; padding-top: 50px; padding-left: 20px; border-bottom-color: rgb(0, 0, 0); border-bottom-width: 0px; border-bottom-style: solid; background-image: none; background-repeat: no-repeat;
+}
+a.headermaintitle:visited {
+	color: rgb(67, 113, 166); font-size: 16px; font-weight: bold; text-decoration: none;
+}
+a.headermaintitle:active {
+	color: rgb(67, 113, 166); font-size: 16px; font-weight: bold; text-decoration: none;
+}
+a.headermaintitle:link {
+	color: rgb(67, 113, 166); font-size: 16px; font-weight: bold; text-decoration: none;
+}
+a.headermaintitle:hover {
+	color: gray;
+}
+#leftcontent {
+	border: 1px dotted rgb(189, 205, 238); left: 10px; top: 230px; width: 220px; font-family: Arial; font-size: 12px; position: absolute; background-color: rgb(255, 255, 255);
+}
+#leftcontentcontainer {
+	padding: 10px; background-image: url("images/bg_leftcontent.jpg"); background-repeat: no-repeat;
+}
+#centercontent {
+	padding-top: 20px; padding-right: 10px; padding-left: 240px;
+}
+#mytopmenu {
+	padding: 4px 40px 4px 10px; border: 0px solid rgb(94, 94, 94); text-align: right; font-size: 12px; margin-left: 241px; background-image: url("images/bg_menu.gif"); background-repeat: no-repeat;
+}
+#mystats {
+	margin-top: 24px;
+}
+a.menu:link {
+	color: rgb(67, 113, 166);
+}
+a.menu:visited {
+	color: rgb(67, 113, 166);
+}
+a.menu:active {
+	color: rgb(67, 113, 166);
+}
+a.menu:hover {
+	color: rgb(67, 113, 166);
+}
+#rightcontent {
+	background: rgb(255, 255, 255); top: 70px; width: 200px; right: 10px; position: absolute;
+}
+#mylinks {
+	padding: 8px 12px; left: 260px; font-size: 12px; position: absolute;
+}
+.footer {
+	height: 70px; text-align: left; color: black; line-height: 20px; padding-top: 20px; padding-left: 150px; margin-top: 0px; margin-right: 19px; margin-left: 240px; background-image: url("images/bg_footer.jpg"); background-repeat: no-repeat;
+}
+.day {
+	padding: 20px; border: 1px dotted rgb(189, 205, 238); color: rgb(75, 75, 75); margin-bottom: 20px; margin-left: 2px; background-image: url("images/bg_day.jpg"); background-repeat: no-repeat; background-color: white;
+}
+.dayTitle {
+	padding: 14px 0px 0px 45px; font-size: 13px; font-weight: bold; margin-bottom: 40px;
+}
+a.dayTitle:link {
+	color: white;
+}
+a.dayTitle:visited {
+	color: white;
+}
+a.dayTitle:active {
+	color: white;
+}
+a.dayTitle:hover {
+	color: black;
+}
+.postSeparator {
+	margin-top: 20px; margin-bottom: 20px; border-top-color: rgb(0, 0, 0); border-top-width: 0px; border-top-style: dotted; background-image: url("images/line.gif");
+}
+.news {
+	font-family: Verdana; font-size: 11px; font-weight: bold;
+}
+.newsItem {
+	text-align: left; margin-top: 2px; margin-bottom: 20px;
+}
+.blogstats {
+	font-size: 11px;
+}
+.entrylist {
+	padding: 20px 20px 8px; border: 1px dotted rgb(189, 205, 238); color: rgb(123, 125, 98); background-color: white;
+}
+.listtitle {
+	color: rgb(102, 102, 102); font-family: verdana; font-size: 14.7px; font-weight: bold; margin-bottom: 10px; background-repeat: no-repeat;
+}
+.entrylistTitle {
+	color: black; font-family: verdana; font-size: 16px; font-weight: bold;
+}
+.entrylistDescription {
+	margin-bottom: 20px;
+}
+.entrylistItemTitle {
+	font-size: 13px; font-weight: bold; text-decoration: none;
+}
+.entrylistItemPostDesc {
+	font-size: 12px;
+}
+.gallery {
+	padding: 20px; border: 1px dotted rgb(189, 205, 238); color: rgb(123, 125, 98); background-color: white;
+}
+.galleryTitle {
+	color: black; font-family: verdana; font-size: 16px; font-weight: bold;
+}
+.galleryDescription {
+	margin-bottom: 20px;
+}
+.galleryThumbnail {
+	padding: 20px 20px 20px 0px;
+}
+.post {
+	padding: 20px; border: 1px dotted rgb(189, 205, 238); color: rgb(75, 75, 75); font-size: 13px; background-color: white;
+}
+.postTitle {
+	font-size: 14.7px; font-weight: bold; margin-bottom: 10px;
+}
+.postTitle2 {
+	text-decoration: none;
+}
+.postDesc {
+	text-align: right; color: rgb(48, 48, 48); margin-top: 10px;
+}
+.contact {
+	padding: 20px 20px 20px 22px; border: 1px dotted rgb(189, 205, 238); font-family: Verdana; font-size: 11px; font-weight: bold; background-color: white;
+}
+.comments {
+	border-width: 0px 1px 1px; border-style: none dotted dotted; border-color: currentColor rgb(189, 205, 238) rgb(189, 205, 238); padding: 0px 20px 20px 22px; font-family: Verdana; font-size: 11px; font-weight: bold; background-color: white;
+}
+.commentsTable {
+	font-family: Verdana; font-size: 11px; margin-top: 15px;
+}
+.feedback {
+	border-width: 1px 1px 0px; border-style: dotted dotted none; border-color: rgb(189, 205, 238) rgb(189, 205, 238) currentColor; padding: 20px 20px 30px; margin-top: 20px; margin-bottom: 0px; background-color: white;
+}
+.feedbackTitle {
+	font-family: Verdana; font-size: 11px; font-weight: bold;
+}
+.feedbackItem {
+	line-height: 200%; margin-top: 20px; margin-bottom: 0px;
+}
+.feedbackNoItems {
+	line-height: 200%; margin-top: 20px; margin-bottom: 0px;
+}
+.feedbackList {
+	list-style: none; padding-right: 0px; padding-left: 0px; margin-right: 0px; margin-left: 0px;
+}
+.feedbackListTitle {
+	padding: 5px 5px 5px 7px; color: rgb(0, 0, 0); font-size: 9px; position: absolute;
+}
+.feedbackListSubtitle {
+	padding: 5px 7px 5px 5px; border: 1px dotted rgb(189, 205, 238); text-align: right; color: rgb(0, 0, 0); font-size: 9px; margin-bottom: 8px; background-color: white;
+}
+.catListTitle {
+	font-family: Verdana; font-size: 14.7px; margin-bottom: 10px; background-repeat: no-repeat;
+}
+.catList {
+	list-style: none; margin: 0px 0px 20px; padding-left: 10px; border-top-color: currentColor; border-top-width: 0px; border-top-style: none;
+}
+catListItem {
+	text-align: left; margin-left: 5px;
+}
+ul {
+	list-style: none; margin: 0px 0px 10px 5px; padding-left: 5px; font-size: 12px;
+}
+.Cal {
+	border: 0px currentColor; width: 90%; height: 180px; font-family: Arial; font-size: 12px; margin-top: 10px; margin-bottom: 10px;
+}
+.CalTitle {
+	padding: 0px; height: 100%; color: rgb(67, 113, 166); font-family: verdana; font-size: 12px; font-weight: bold; margin-left: 0px; background-color: transparent;
+}
+.CalOtherMonthDay {
+	color: gray; font-weight: bold;
+}
+.CalSelector {
+	background-color: rgb(255, 255, 255);
+}
+a.CalNextPrev {
+	color: rgb(255, 255, 255);
+}
+a.CalNextPrev:link {
+	color: rgb(255, 255, 255);
+}
+a.CalNextPrev:visited {
+	color: rgb(255, 255, 255);
+}
+a.CalNextPrev:active {
+	color: rgb(255, 255, 255);
+}
+.CalNextPrev {
+	color: rgb(255, 255, 255);
+}
+.CalDayHeader {
+	color: rgb(67, 113, 166); font-weight: bold; background-color: transparent;
+}
+.CalSelectedDay {
+	background-color: rgb(204, 204, 204);
+}
+.CalWeekendDay {
+	background-color: transparent;
+}
+.CalTodayDay {
+	color: red;
+}
+.CalTodayDay a {
+	color: red;
+}
+h1 {
+	margin: 10px 0px 5px; text-align: left; color: rgb(102, 102, 102); font-size: 14.7px;
+}
+h3 {
+	margin: 10px 0px 5px; text-align: left; color: rgb(102, 102, 102); font-size: 13px;
+}
+.feedbackListTitle {
+	color: black; font-size: 12px;
+}
+.feedbackListSubtitle {
+	color: black; font-size: 12px;
+}
+.bottom {
+	background-image: url("images/bottom.gif"); background-repeat: no-repeat;
+}
+h2 {
+	font-size: 13px; font-weight: normal;
+}
+span {
+	line-height: 150%;
+}
+img {
+	border: 0px currentColor;
+}

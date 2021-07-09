@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CLRSample", "CLRSample\CLRSample.vbproj", "{C02A873A-F530-45F4-9B36-9E0BB4FED482}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C02A873A-F530-45F4-9B36-9E0BB4FED482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C02A873A-F530-45F4-9B36-9E0BB4FED482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C02A873A-F530-45F4-9B36-9E0BB4FED482}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C02A873A-F530-45F4-9B36-9E0BB4FED482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C02A873A-F530-45F4-9B36-9E0BB4FED482}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

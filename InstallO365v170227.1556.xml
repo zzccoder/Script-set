@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<BranchInformation>
+		<!-- 
+			The following data comes from http://officecdn.microsoft.com/pr/wsus/ofl.cab
+			The branch URL is stored in the computers registry in the Click To Run configuration key CDNBaseUrl, 
+			this URL tells us which branch the computer is assigned to.
+		-->
+		<baseURL branch="FirstReleaseCurrent" URL="http://officecdn.microsoft.com/pr/64256afe-f5d9-4f86-8936-8840a6a4f5be" />    
+		<baseURL branch="Current" URL="http://officecdn.microsoft.com/pr/492350f6-3a01-4f97-b9c0-c7c6ddf67d60" />
+		<baseURL branch="CMValidation" URL="http://officecdn.microsoft.com/pr/55C44C35-878E-4C43-83EE-B666BF4261A4" />
+		<baseURL branch="FirstReleaseDeferred" URL="http://officecdn.microsoft.com/pr/b8f9b850-328d-4355-9145-c59439a0c4cf" />
+		<baseURL branch="Deferred" URL="http://officecdn.microsoft.com/pr/7ffbc6bf-bc32-4f92-8982-f9dd17fd3114" />
+	</BranchInformation>
+
+    <Install ProductID="O365ProPlusRetail" InstallGroup="G_ADX_O365_Install_OfficeSuite" 
+			 SetupPath="\\upstream.apc.grp\public\Software\Applications\Microsoft\Office365ProPlus\Setup.exe" DisplayLevel="None" >
+		<Logging Level="Standard" Path="%temp%" />
+        <OfficeClientEdition ExceptionGroup="G_ADX_O365_Install_64bit_Exception" Default="32" />
+		
+        <Channels DefaultChannel="Deferred" >
+            <Channel Name="Current" Group="G_ADX_O365_Channel_Current" SourcePath="\\upstream.apc.grp\public\Software\Applications\Microsoft\Office365ProPlus\Current" />
+            <Channel Name="FirstReleaseCurrent" Group="G_ADX_O365_Channel_FirstReleaseCurrent" SourcePath="\\upstream.apc.grp\public\Software\Applications\Microsoft\Office365ProPlus\FirstReleaseCurrent" />
+            <Channel Name="FirstReleaseDeferred" Group="G_ADX_O365_Channel_FirstReleaseDeferred" SourcePath="\\upstream.apc.grp\public\Software\Applications\Microsoft\Office365ProPlus\FirstReleaseDeferred" />
+			<Channel Name="Deferred" 
+						SourcePath="\\upstream.apc.grp\public\Software\Applications\Microsoft\Office365ProPlus\Deferred" 
+						OnHoldGroup="G_ADX_O365_Install_On_Hold"
+						OnHoldVersion="16.0.6001.1073" />
+        </Channels>
+       <ExcludeApps>
+           <ProductID Name="Access" IncludeGroup="G_ADX_O365_Include_Access" />
+           <ProductID Name="OneDrive" IncludeGroup="G_ADX_O365_Include_OneDrive" />
+           <ProductID Name="Groove" />
+           <ProductID Name="Lync" IncludeGroup="G_ADX_O365_Include_Skype" />
+           <ProductID Name="Outlook" IncludeGroup="G_ADX_O365_Include_Outlook"  />
+       </ExcludeApps>
+    </Install>    
+
+    <OptionalProducts>
+        <ProductID Name="VisioProXVolume" IncludeGroup="G_ADX_O365_Install_VisioPro" />
+        <ProductID Name="VisioStdXVolume" IncludeGroup="G_ADX_O365_Install_VisioStd" />
+        <ProductID Name="ProjectProXVolume" IncludeGroup="G_ADX_O365_Install_ProjectPro" />
+        <ProductID Name="ProjectStdXVolume" IncludeGroup="G_ADX_O365_Install_ProjectStd" />
+    </OptionalProducts>
+
+    <Properties>
+        <Property Name="SharedComputerLicensing" EnableGroup="G_ADX_O365_Install_SharedComputerLicensing" Value="1" />
+        <Property Name="PinIconsToTaskbar" Value="FALSE" />
+        <Property Name="FORCEAPPSHUTDOWN" Value="TRUE" />
+    </Properties>
+
+</Configuration>
+

@@ -1,0 +1,1298 @@
+第3章 用户数据库的创建与操作
+【例3-2】 CREATE DATABASE students
+【例3-3】确认C:\DATA\与D:\DATA\文件夹已经创建，在查询分析器输入以下代码：
+  CREATE DATABASE teacher
+    ON
+    ( NAME = teacherdata1 ,
+      FILENAME = 'C:\DATA\tdata1.mdf' ,
+      SIZE = 1 MB ,       -- 默认字节单位MB可以省略
+      MAXSIZE= 10 ,       -- 文件最大容量 10 MB
+      FILEGROWTH = 15%    -- 增长量为文件容量15%
+    ) ,
+    ( NAME = teacherdata2 ,
+      FILENAME = 'D:\DATA\tdata2.mdf' ,
+      SIZE = 2 , 
+      MAXSIZE= 15 ,
+      FILEGROWTH = 2        -- 增长量为2 MB
+    )
+    LOG ON                   /* 创建事务日志文件*/
+    ( NAME = teacherlog ,
+      FILENAME = 'D:\DATA\teacherlog.LDF',
+      SIZE = 500 KB ,        /* 初始容量，用KB 为单位，不能省略 */
+      MAXSIZE = UNLIMITED ,  /* 日志文件最大容量不受限制 */
+      FILEGROWTH = 500 KB    /* 增长量 KB 不能省略 */
+    )
+【例3-5】 EXEC  sp_helpdb 
+【例3-6】 EXEC  sp_helpdb students
+【例3-7】
+  USE teacher
+  GO
+  sp_helpfile
+【例3-8】
+  sp_dboption  'students',  'single',  'true'
+  sp_dboption 'students'
+【例3-9】  sp_dboption 
+【例3-10】
+  ALTER DATABSE students           --添加文件组
+    add filegroup studentsfilegroup
+  go
+  ALTER DATABSE students           --添加数据文件，并将其加入新文件组
+    add file ( name = studentadd , Filename = 'D:\DATA\studentadd.ndf ')
+        to filegroup studentsfilegroup
+  go
+  EXECUTE sp_helpdb students        --查看数据库信息
+【例3-11】
+  ALTER DATABASE students           --修改数据文件
+    MODIFY FILE ( NAME='students', SIZE=2, MAXSIZE=20, FILEGROWTH=2 )
+  GO
+  EXECUTE sp_helpdb students        --查看数据库信息
+【实例练习3-1】
+  CREATE DATABASE diannaoxs      --创建数据库
+    ON
+    ( NAME = diannaoxs1 ,        --创建主数据文件，该逻辑名参数可以省略
+      FILENAME = 'D:\DNXS\diannaoxs1.mdf' ,
+      SIZE = 1 , 
+      MAXSIZE= UNLIMITED ,      --最大容量不受限制
+      FILEGROWTH = 10% 
+    ) ,
+    ( NAME = diannaoxs2 ,        --创建辅助数据文件，该逻辑名参数可以省略
+      FILENAME = 'D:\DNXS\diannaoxs2.mdf',
+      SIZE = 1 , 
+      MAXSIZE= UNLIMITED ,
+      FILEGROWTH = 10% )
+    LOG ON                      /* 创建事务日志文件*/
+    ( NAME = diannaoxslog ,      /* 该逻辑名参数可以省略 */
+      FILENAME = 'D:\DNXS\diannaoxslog.LDF',
+      SIZE = 500 KB , 
+      MAXSIZE = 5 ,             /* 日志文件最大容量 5 MB */
+      FILEGROWTH = 500 KB 
+    )
+  GO
+  sp_dboption  diannaoxs , autoclose , true           -- 设置数据库自动关闭
+  EXEC  sp_dboption  diannaoxs , autoshrink, true   -- 设置数据库自动收缩
+  GO
+  EXECUTE  sp_helpdb diannaoxs                  --查看数据库信息
+第4章  数据表的创建与操作
+【例4-4】
+  CREATE TABLE example ( bin_1 text , bin_2 ntext , bin_3 ntext Image)
+  Go
+  /* 以下语句指定不大于1000字节的文本或图像数据在行中存储 */
+  sp_tableoption 'example', 'text in row', 'TRUE'
+  sp_tableoption 'example ','text in row', '1000'
+  /* 以下语句指定Mytable表不在行中存储文本和图像数据 */
+  sp_tableoption 'Mytable' , 'text in row', 'FALSE'
+【例4-5】
+Print cast( year('1980-3-7') as char(4) ) + '年出生的人年龄是'
++ cast( datediff( yy,'1980-3-7',getdate() ) as char(2) ) + '岁'
+【例4-6】
+set dateformat mdy                     --设置日期格式采用月日年
+declare @d datetime,@r real,@m money   --定义局部变量
+set @d='11/20/2002 10:10:36 AM'
+set @r=268886
+set @m=9635225.3685
+print convert(varchar(30), @d, 108) -- 结果为：10:10:36
+print convert(varchar(30), @d, 111) -- 结果为：2002/11/20
+print convert(varchar(30), @d, 120) -- 结果为：2002-11-20 10:10:36
+print convert(varchar(20), @r, 0)   -- 结果为：268886
+print convert(varchar(20), @r, 1)   -- 结果为：2.6888600e+005
+print convert(varchar(22), @r, 2)   -- 结果为：2.688860000000000e+005 
+print convert(varchar(25), @m, 0)   -- 结果为：9635225.37
+print convert(varchar(25), @m, 1)   -- 结果为：9,635,225.37
+print convert(varchar(25), @m, 2)   -- 结果为：9635225.3685
+go
+【实例练习4-10】
+  Use diannaoxs               -- 打开diannaoxs 数据库
+  CREATE TABLE 供货商表       -- 创建“供货商表”数据表
+     ( 供货商ID  Char (4)     not null   primary key 
+         check(供货商ID  like ‘[a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9][a-zA-Z0-9]’),
+       供货商     Nvarchar(15) not null ,
+       厂家地址   Nvarchar(20) not null  unique , 
+       账户       Char(15)     not null  unique ,
+       联系人     Varchar(8)   -- 默认null允许空值
+     )
+【例4-7】
+  USE diannaoxs
+  ALTER TABLE 供货商表  
+      add  联系电话 char(13)  not null  default  '00000000'
+【例4-8】
+  USE diannaoxs
+  ALTER TABLE 供货商表  alter column  联系电话  char(20)  
+【实例练习4-11】
+  USE diannaoxs
+  ALTER TABLE 供货商表  add constraint 惟一厂家  unique(供货商)
+【例4-9】
+  ALTER TABLE 供货商表
+    add constraint 电话约束 unique(联系电话),
+        default ‘0531-12345678’  FOR 联系电话
+【例4-10】
+  ALTER TABLE 供货商表  nocheck constraint 惟一厂家
+  ALTER TABLE 供货商表  check constraint 惟一厂家
+【例4-11】 
+  USE diannaoxs
+  ALTER TABLE 供货商表  drop constraint 电话约束    --删除约束
+  ALTER TABLE 供货商表  drop column 联系电话        --删除字段
+【实例练习4-12】
+  USE diannaoxs                -- 打开数据库diannaoxs，在该库内创建规则
+  GO
+  CREATE RULE  数字帐号        -- 在diannaoxs内创建“数字帐号”规则对象
+      AS  @x like ‘[-0-9][-0-9][-0-9][-0-9][-0-9][-0-9][-0-9][-0-9]%’
+  GO
+  EXEC sp_bindrule ‘数字帐号’, '供货商表.账户’
+【例4-12】
+  USE diannaoxs        -- 打开数据库diannaoxs，对该库进行操作
+  EXEC sp_unbindrule  '销售表2006.单价'
+  EXEC sp_bindrule '大于0' , '销售表2006.单价'
+【实例练习4-13】
+  USE diannaoxs
+  GO 
+  CREATE DEFAULT  默认账户   AS  ‘0000-0000-0000’
+  GO
+  EXEC  sp_bindefault  ‘默认账户’  ,  ‘供货商表.账户’
+【例4-13】 
+  USE diannaoxs  
+  EXEC  sp_unbindefault  ‘销售表2006.销售日期’
+  EXEC  sp_bindefault  ‘当前日期’  ,  ‘销售表2006.销售日期’
+【实例练习4-14】
+  Use diannaoxs               
+  CREATE TABLE 进货表2006       
+    ( 序号   BigInt  identity(1,1)  not null  primary key  ,
+      进货日期  Smalldatetime not null ,    -- 未设置默认值
+      货号      Char(4)       not null 
+             foreign key  references 商品一览表(货号) , 
+      数量      Int           not null  check( 数量>0 ) ,
+      进价      Smallmoney    not null ,     -- 未设检查约束
+      供货商ID  Char          not null      -- 未指定长度未设外键约束
+    )
+
+  USE diannaoxs
+  ALTER TABLE 进货表2006       
+      add 收货人  Varchar(8)      --默认允许为空，否则必须设置 ‘ 默认值’
+  ALTER TABLE 进货表2006           -- 修改为不允许为空，类型不能省略
+      alter column  收货人  Varchar(8)  not null      
+  ALTER TABLE 进货表2006           -- 添加外键约束
+      add constraint 员工姓名  foreign key(收货人)  references 员工表(姓名)
+
+  EXEC  sp_bindefault   ‘当前日期’  ,  ’进货表2006.进货日期’
+
+  EXEC sp_bindrule '大于0', '进货表2006.进价'
+
+  USE diannaoxs
+  ALTER TABLE 进货表2006             -- 修改字段长度为6，not null不能省略
+      alter column  供货商ID  Char(4)  not null
+  ALTER TABLE 进货表2006             -- 添加外键约束“供货厂家”
+      add constraint 供货厂家 foreign key(供货商ID) references 供货商表(供货商ID)
+【实例练习4-16】
+  INSERT INTO  商品一览表  (货号, 货名, 规格, 单位, 参考价格) 
+    VALUES  (‘1003’，‘计算机’，‘FZ’，‘套’， 5500)
+
+  INSERT  商品一览表 
+    VALUES  (‘1003’，‘计算机’，‘FZ’，‘套’，default，5500，default)
+  INSERT  商品一览表 (货号, 货名, 规格, 单位) 
+    VALUES  ( '3002', 'CPU处理器', 'SY8800', '个')
+【实例练习4-17】
+  USE diannaoxs
+  INSERT 供货商表 VALUES ( 'SDLC', '山东省浪潮集团公司销售公司', 
+                           '济南市山大路1008号', '1002-305-6', '刘绪华' )
+  INSERT 供货商表 VALUES ( 'BJFZ', '北京方正电脑有限公司', 
+                           '北京市海淀区友谊路235号甲', '20006786570', '王连胜' ) 
+  INSERT 供货商表 VALUES ( 'BJLX', '北京联想科技股份有限公司',
+                           '北京市中关村6068-6号', '11204567765', '赵捷' )
+  INSERT 供货商表 VALUES ( 'SHSC', '上海电脑市场器材销售中心', 
+                           '上海市虹口区8弄科技路225号', '336-448-669', '李群' )
+  INSERT 供货商表 VALUES ( 'SHKD', '上海科大计算机技术服务公司',
+                           '上海市浦东东方明珠5925号', '2246800012', '张茂岭' )
+  INSERT 供货商表 VALUES ( 'SDKJ', '山东科技市场计算机销售处',
+                           '济南市经七纬二路9415号', default , NULL )
+【实例练习4-18】
+  USE diannaoxs
+  INSERT 员工表 (员工ID, 姓名, 性别, 出生日期, 部门, 工作时间)
+      VALUES ('11001', '吕川页',1,'1963-3-7', '办公室','1985-2-6')
+  INSERT 员工表 (员工ID, 姓名, 性别, 出生日期, 部门, 工作时间)
+      VALUES ('22001', '郑学敏', 0, '1969-11-23', '办公室', '1994-7-1')
+  INSERT 员工表 (员工ID, 姓名, 性别, 出生日期, 部门, 工作时间)
+      VALUES ('22002', '于  丽', 0, '1980-12-5', '材料处', '2002-2-15')
+  INSERT 员工表 (员工ID, 姓名, 性别, 出生日期, 部门, 工作时间)
+      VALUES ('22003', '孙立华', 1, '1979-5-4', '材料处', '2001-9-9')
+  INSERT 员工表 (员工ID, 姓名, 性别, 出生日期, 部门, 工作时间)
+      VALUES ('33001','高宏', 1,'1982-9-29', default,'2001-6-1')
+  INSERT 员工表 (员工ID, 姓名, 性别, 出生日期, 部门, 工作时间)
+      VALUES ('33002', '章晓晓', 0, '1980-11-1', '销售科' , '2000-5-30')
+  INSERT 员工表 (员工ID, 姓名, 性别, 出生日期, 部门, 工作时间) 
+      VALUES ('33003', '陈刚', 1, '1979-6-30', default, '2003-11-1')
+?	【实例练习4-20】
+  USE diannaoxs
+  INSERT 进货表2006 (进货日期, 货号, 数量, 进价, 供货商ID, 收货人)
+      VALUES ('2006-1-8', '1001', 10, 5300.00, 'SDLC', '孙立华')
+  INSERT 进货表2006     --以下均可省略字段列表
+      VALUES ('2006-1-8', '1002', 10, 5180.00, 'BJLX', '孙立华')
+  INSERT 进货表2006 
+      VALUES ('2006-1-8', '3001', 30, 350.00, 'BJFZ', '孙立华')
+  INSERT 进货表2006
+      VALUES ('2006-1-20', '2001', 30, 860.00, 'BJFZ', '于  丽')
+  INSERT 进货表2006
+      VALUES ('2006-1-28', '2002', 30, 1060.00, 'SHSC', '于  丽')
+  INSERT 进货表2006 
+      VALUES ('2006-2-5', '4001', 80, 185.50, 'SDLC', '孙立华')
+  INSERT 进货表2006 
+      VALUES ('2006-2-5', '4002', 80, 280.50, 'BJLX', '孙立华')
+  INSERT 进货表2006
+      VALUES ('2006-2-16', '1001', 10, 5250.00, 'SHKD', '于  丽')
+  INSERT 进货表2006 
+      VALUES ('2006-3-7', '3001', 30, 350.00, 'SHSC', '孙立华')
+  INSERT 进货表2006 
+      VALUES ('2006-3-26', '4002', 80, 280.50, 'SDLC', '孙立华')
+【例4-14】
+  USE diannaoxs
+  SELECT 厂家名称=供货商, 厂家地址 INTO 厂家地址表
+      FROM  供货商表  WHERE 1=2
+
+  USE diannaoxs
+  INSERT  厂家地址表 SELECT 供货商, 厂家地址 FROM  供货商表
+【例4-15】
+  USE diannaoxs
+  SELECT 厂家名称=供货商, 厂家地址 INTO 上海厂家表
+      FROM  供货商表  WHERE 1=2
+
+  USE diannaoxs
+  INSERT  上海厂家表 
+      SELECT 供货商, 厂家地址 FROM  供货商表 WHERE 厂家地址 like '%上海%'
+【例4-16】
+  USE diannaoxs
+  GO 
+  /*设置数据库允许大容量复制*/
+  EXEC  sp_dboption  diannaoxs,'select into/bulkcopy','true'
+  UPDATE 员工表 SET 个人简历=null       --更新'11001'记录该列以获得指针
+      WHERE 员工ID='11001'             --省略为更新全部记录
+  GO
+  DECLARE  @ptrtext  binary(16)        --定义局部变量
+  SELECT  @ptrtext =TEXTPTR(个人简历)  --获得该列文本数据指针
+      FROM  员工表  WHERE 员工ID='11001'
+  WRITETEXT 员工表.个人简历  @ptrtext  '2000年毕业于清华大学.'
+  GO
+  /*设置数据库拒绝大容量复制*/
+  EXEC  sp_dboption  'diannaoxs','select into/bulkcopy','false'
+  GO
+  SELECT * FROM 员工表
+【例4-17】为《员工表》吕川页的照片字段输入图象文件(c:\pic1.jpg) 
+  USE diannaoxs
+  UPDATE 员工表 SET 照片=0x      --更新'11001'记录该列为非空以获得指针
+     WHERE 姓名='吕川页'         --省略为更新全部记录
+  GO
+  DECLARE @s varchar(200)
+  SET @s='textcopy /U sa /D diannaoxs /T 员工表 /C 照片 /W where(姓名=''' + '吕川页' + ''') /F c:\pic1.jpg /i'
+  exec master..xp_cmdshell @s
+【例4-18】
+  USE diannaoxs 
+  SELECT 厂家名称=供货商, 厂家地址 INTO 上海厂家地址表  
+      FROM  供货商表  WHERE 厂家地址 like '上海%'
+【例4-19】
+  SELECT  *  INTO  进货AA表  FROM  进货表2006  
+【例4-20】
+  SELECT  *  INTO  销售表2007  FROM  销售表2006  WHERE 1=2
+
+  SELECT  *  INTO  商品明细表  FROM  商品一览表  WHERE 1=2
+
+  SELECT  货号, 货名, 规格, 参考价格 INTO简明商品表
+      FROM  商品一览表  WHERE 1=2
+【实例练习4-21】
+  USE diannaoxs
+  UPDATE  商品一览表 SET 参考价格=参考价格*0.97  WHERE 货号= '1003'
+
+  USE diannaoxs
+  UPDATE  销售表2006  SET  金额=单价*数量  
+  UPDATE  销售表2006  SET  货名=商品一览表.货名
+      FROM  商品一览表  WHERE  销售表2006.货号=商品一览表.货号
+
+  USE diannaoxs
+  SELECT * INTO  销售BB表  FROM  销售表2006    -- 创建销售表BB
+  UPDATE  销售BB表  SET  销售日期='2005-1-28'  
+      WHERE   销售日期='2005-1-26'               -- 正确的条件：序号=6 
+  UPDATE  销售BB表  SET  客户名称='青岛科技商贸有限公司'
+      WHERE   客户名称='青岛科技商贸公司'
+【例4-21】
+  USE diannaoxs
+  DELETE  销售BB表  WHERE 客户名称  LIKE ‘%青岛%’
+【例4-22】
+  USE diannaoxs
+  DELETE  销售BB表
+
+  INSERT  销售BB表(销售日期,客户名称,货号,货名,单价,数量,金额,销售员)
+      SELECT  销售日期,客户名称,货号,货名,单价,数量,金额,销售员  
+          FROM  销售表2006
+【例4-23】
+  DELETE 进货AA表  FROM 供货商表  
+      WHERE 进货AA表.供货商ID=供货商表.供货商ID 
+            AND 供货商表.供货商='北京方正电脑有限公司'
+【例4-24】
+  USE diannaoxs
+  TRUNCATE TABLE  销售BB表
+
+  INSERT  销售BB表
+      SELECT  销售日期,客户名称,货号,货名,单价,数量,金额,销售员  
+         FROM  销售表2006
+
+【例4-26】
+  DROP TABLE  厂家地址表，厂家地址表1，上海厂家表，上海厂家地址表
+【实例练习4-22】
+  USE diannaoxs
+  INSERT 销售表2006 (销售日期, 客户名称, 货号, 数量, 单价, 销售员)
+      VALUES ('2006-3-20', '济南新浪计算机公司', '1001', 3, 5780, '高宏')
+  INSERT 销售表2006 (销售日期, 客户名称, 货号, 数量, 单价, 销售员)
+      VALUES ('2006-3-20', '济南新浪计算机公司', '3001', 5, 400, '章晓晓')
+  INSERT 销售表2006 (销售日期, 客户名称, 货号, 数量, 单价, 销售员)
+      VALUES ('2006-3-20', '潍坊电脑器材商店', '4002', 25, 320, '陈刚')
+  INSERT 进货表2006
+      VALUES ('2006-3-26', '1003', 10, 4950, 'SDLC', '于  丽')
+
+  UPDATE  销售表2006  SET  金额=单价*数量  WHERE 销售日期>='2005-3-20'
+  UPDATE  销售表2006  SET  货名=商品一览表.货名   FROM  商品一览表  
+      WHERE  销售表2006.货号=商品一览表.货号 and  销售日期>='2005-3-20'
+第5章  数据库查询与视图
+【例5-1】 SELECT  'sql server 6.5',  256*256
+SELECT  字符串常量='sql server 6.5', 计算结果=256*256 
+【例5-2】 SELECT  @@version
+【例5-3】 SELECT @@language
+【例5-4】 SELECT  供货商ID, 进货日期, 货号, 数量  FROM 进货表2006
+【例5-5】 SELECT  ALL           *  FROM 销售表2006
+ SELECT  DISTINCT      *  FROM 销售表2006
+ SELECT  TOP  5        *  FROM 销售表2006
+ SELECT  TOP  20 percent *  FROM 销售表2006
+【例5-6】
+  SELECT             客户名称 FROM 销售表2006
+  SELECT  DISTINCT  客户名称 FROM 销售表2006
+【例5-7】
+  SELECT TOP  5 供货商代码=供货商ID, 进货日期, 商品编号=货号, 数量
+    FROM 进货表2006
+
+  SELECT TOP  5 供货商ID 供货商代码, 进货日期, 货号 AS 商品编号, 数量
+    FROM 进货表2006
+【例5-8】
+  USE diannaoxs
+  SELECT  商品信息=货号+ ',' +货名, 每件毛利=参考价格*0.1, 
+           30*2+5 字段外数据,  256*256    FROM 商品一览表
+【例5-9】
+  USE diannaoxs
+  SELECT 销售员, 销售日期, 货名, 单价, 数量, 金额   FROM 销售表2006
+    WHERE  金额>=10000
+【例5-10】
+  SELECT 货号, 货名, 规格, 原参考价格=参考价格, 下浮后价格=参考价格*0.75
+     FROM 商品一览表  WHERE  参考价格*0.75<1000 
+【例5-11】
+  SELECT  *  FROM 销售表2006  WHERE  销售员= '陈刚'  and  金额<10000
+【例5-12】
+  SELECT  *  FROM 销售表2006 
+      WHERE  销售日期>='2006/2/1'  and  销售日期<='2006-3-1'
+
+  SELECT  *  FROM 销售表2006 
+      WHERE  销售日期  between '2006/2/1'  and  '2006-3-1'
+【例5-13】
+  SELECT  *  FROM 销售表2006  WHERE  数量 not  between  3  and  25
+
+  SELECT  *  FROM 销售表2006  WHERE  数量<3  or  数量>25
+【例5-14】
+  SELECT * FROM 员工表  WHERE  出生日期  between '1980/1/1'  and  '1981/1/1'
+
+  SELECT * FROM 员工表  WHERE  year(出生日期)=1980
+【例5-15】
+  SELECT 员工ID, 姓名, 性别, 出生日期=Convert(char(12), 出生日期,111),
+          年龄=year(getdate())-year(出生日期), 部门,
+          工龄=CASt(year(getdate())-year(工作时间) AS varchar(2))+'年'
+     FROM 员工表  WHERE  姓名='陈刚'  or  姓名='高宏'
+【例5-16】
+  SELECT  *  FROM 员工表  WHERE  姓名 like  '于%'
+【例5-17】
+方法一：
+  SELECT  DISTINCT  客户名称  FROM  销售表2006 
+      WHERE  客户名称 like '%潍坊%'  or  客户名称 like  '%青岛%'
+方法二：
+  SELECT  DISTINCT 客户名称, 购货日期=Convert(char(12), 销售日期, 111),
+           购买商品=货名, 数量, 金额=Convert(varchar(10), 金额) 
+      FROM  销售表2006 
+      WHERE  客户名称 like '%潍坊%'  or  客户名称 like  '%青岛%'
+【例5-18】  SELECT  *  FROM  供货商表  WHERE  账户  like  '%7765'
+【例5-19】  SELECT  *  FROM  销售表2006  WHERE  货名  is  null
+【例5-20】
+  USE diannaoxs
+  SELECT  *  FROM  进货表2006  ORDER BY  数量
+【例5-21】
+  SELECT 销售员 AS 姓名, 销售日期, 货名  商品名称, 数量  
+      FROM  销售表2006  WHERE 销售员='章晓晓'  ORDER BY  数量 DESC
+【例5-22】
+  SELECT 员工ID, 姓名, 性别, 出生日期=Convert(char(12), 出生日期, 111),
+          年龄=year(getdate()) - year(出生日期), 部门
+      FROM 员工表  ORDER BY 年龄 DESC, 姓名
+【例5-23】
+  SELECT 货号, 货名, 规格  FROM  商品一览表  ORDER BY  参考价格
+【例5-24】
+  USE diannaoxs
+  SELECT  *  FROM 供货商表, 进货表2006
+【例5-25】
+  USE diannaoxs
+  SELECT  *  FROM 供货商表 AS g  join 进货表2006 AS  j 
+                     ON  g.供货商ID=j.供货商ID
+
+  SELECT  *  FROM 供货商表 AS  g , 进货表2006 AS  j  
+     WHERE  g.供货商ID=j.供货商ID
+【例5-26】
+  SELECT  销售日期=convert(varchar(12), 销售日期, 111), 客户名称, s.货号, 
+           s.货名, s.规格, s.单位, 单价=convert(varchar(10), 单价), 数量, 
+           金额=convert(varchar(10), 金额, 1), 销售员
+      FROM 商品一览表 s  JOIN  销售表2006  x  ON  s.货号=x.货号
+【例5-27】
+格式一：
+  SELECT  进货日期=convert(varchar(12), 进货日期, 111), s.货号, s.货名, s.规格, 
+       s.单位, 数量, 进价=convert(varchar(10), 进价),供货商,发货人=联系人,收货人
+    FROM 供货商表 AS  g  join  进货表2006  j  
+       ON  g.供货商ID=j.供货商ID  join  商品一览表  s  ON  j.货号=s.货号
+格式二：
+  SELECT  进货日期=convert(varchar(12), 进货日期, 111), s.货号, s.货名, s.规格, 
+       s.单位, 数量, 进价=convert(varchar(10), 进价),供货商,发货人=联系人,收货人
+    FROM 供货商表 AS  g , 进货表2006  j , 商品一览表  s
+    WHERE  g.供货商ID=j.供货商ID  and  j.货号=s.货号
+【例5-28】
+  SELECT  生产厂家=g.供货商,  j.货号,
+           供货日期=convert(varchar(15), j.进货日期, 111) , 供货数量=j.数量, 
+           货款金额=convert(varchar(10), j.进价*j.数量), j.收货人
+      FROM 供货商表 AS  g  left  join  进货表2006  j
+         ON  g.供货商ID=j.供货商ID
+【例5-29】
+  SELECT  销售日期=convert(varchar(12), 销售日期,111), 客户名称, s.货号, 
+           s.货名, s.规格, s.单位, s.库存量, 单价=convert(varchar(10), 单价),
+           数量, 金额=convert(varchar(10), 金额, 1)
+      FROM 销售表2006  x  right  join 商品一览表  s  ON  s.货号=x.货号
+【例5-30】 
+  SELECT  生产厂家=g.供货商,  j.货号, 
+           供货日期=convert(varchar(15), j.进货日期, 111) ,供货数量=j.数量, 
+           货款金额=convert(varchar(10), j.进价*j.数量) , j.收货人
+      FROM 供货商表 AS  g  full  join  进货表2006  j
+           ON  g.供货商ID=j.供货商ID
+【例5-31】
+  USE diannaoxs
+  SELECT  DISTINCT  g1.供货商ID, g1.货号, 
+           供货日期1=convert(varchar(15), g1.进货日期, 111) ,
+           供货数量=g1.数量, 货款金额=convert(varchar(10), g1.进价*g1.数量)
+      FROM 进货表2006  AS  g1   join  进货表2006  AS  g2
+           ON  g1.供货商ID= g2.供货商ID  and  g1.货号<>g2.货号  
+      ORDER BY  g1.供货商ID , convert(varchar(15), g1.进货日期, 111) 
+【实例练习5-1】
+  SELECT * INTO  销售表2007  FROM 销售表2006  WHERE  1=2
+  SELECT * INTO  进货表2007  FROM 进货表2006  WHERE  1=2
+【例5-32】
+  USE diannaoxs
+  SELECT  sum(参考价格), avg(参考价格), max(参考价格), min(参考价格),
+           count(参考价格), count(*) FROM  商品一览表
+
+  SELECT  sum(参考价格) 总价格 , avg(参考价格) AS 平均价 ,
+            最高价=max(参考价格), 最低价=min(参考价格),
+            定价商品数=count(参考价格), 总商品数=count(*) 
+      FROM  商品一览表
+【例5-33】
+  SELECT  avg(参考价格*0.9) AS 平均价, 最高价=max(参考价格*.9),
+           最低价=min(参考价格*.9), 定价商品数=count(参考价格)
+     FROM  商品一览表
+【例5-34】
+  SELECT  avg(参考价格) AS 整机类平均价, 最高价=max(参考价格),
+           最低价=min(参考价格), 定价商品数=count(参考价格), 总商品数=count(*) 
+      FROM  商品一览表  WHERE  货号 like '1%'
+【例5-35】
+  SELECT  已销售商品种类=count(DISTINCT 货号)  FROM  销售表2006
+?	
+【例5-36】
+  SELECT 货名, 商品数量=count(货号), 平均价格=avg(参考价格)
+      FROM 商品一览表  GROUP  BY  货名
+【例5-37】
+  SELECT 职工人数=count(*), 
+          平均年龄=CASt(avg(year(getdate())-year(出生日期)) AS varchar(2))+'岁',
+          最大年龄=max(year(getdate())-year(出生日期)),
+          最小年龄=min(year(getdate())-year(出生日期)),
+          平均工龄=CASt(avg(year(getdate())-year(工作时间)) AS varchar(2))+'年',
+          最长工龄=max(year(getdate())-year(工作时间)),
+          最短工龄=min(year(getdate())-year(工作时间))   FROM 员工表 
+
+  SELECT 部门, count(*), 
+          CASt(avg(year(getdate())-year(出生日期)) AS varchar(2))+'岁' 平均年龄，
+          max(year(getdate())-year(出生日期)) 最大年龄,
+          min(year(getdate())-year(出生日期)) 最小年龄,
+          CASt(avg(year(getdate())-year(工作时间)) AS varchar(2))+'年' 平均工龄,
+          max(year(getdate())-year(工作时间)) 最长工龄,
+          min(year(getdate())-year(工作时间)) 最短工龄
+      FROM 员工表  GROUP  BY  部门
+【例5-38】
+  SELECT 厂家编号=供货商ID, 进货次数=count(供货商ID), 
+          sum(数量) 进货总数, sum( 数量*进价) 总货款 
+      FROM 进货表2006  GROUP  BY  供货商ID
+【例5-39】
+  SELECT 货号, 销售总数量=sum(数量), 平均价格=avg(单价), 最高价=max(单价), 
+          最低价=min(单价), 销售总金额=sum(金额)
+      FROM  销售表2006  GROUP BY  货号
+【例5-40】
+方法一：
+  SELECT 货名,销售总数量=sum(数量),平均价格=avg(单价),销售总金额=sum(金额)
+      FROM  销售表2006  WHERE 货名<>'计算机'  GROUP BY  货名
+方法二：
+  SELECT 货名,销售总数量=sum(数量),平均价格=avg(单价),销售总金额=sum(金额)
+      FROM  销售表2006  GROUP BY  货号  HAVING 货名<>'计算机'
+【例5-41】
+  SELECT 货号, 销售总量=sum(数量), 平均价格=avg(单价), 总金额=sum(金额)
+      FROM  销售表2006  GROUP BY  货号  HAVING  sum(数量)>10
+【例5-42】
+  SELECT 客户名称, 购货总量=sum(数量), 单笔最大量=max(数量), 
+          单笔最小量=min(数量), 平均价格= convert(varchar(10), avg(单价)), 
+          购货总金额= convert(varchar(10), sum(金额), 1)
+      FROM  销售表2006  GROUP BY  客户名称 
+【例5-43】
+  SELECT 客户名称, 货号, 购货总量=sum(数量), 平均价=avg(单价), 
+          最高价=max(单价), 最低价=min(单价), 购货总金额=sum(金额) 
+      FROM  销售表2006  GROUP BY  客户名称, 货号  ORDER BY 客户名称
+【例5-44】
+  SELECT 销售日期=convert(varchar(12), 销售日期, 111), 日销售量=sum(数量), 
+          单笔最大金额=convert(varchar(10), max(金额)), 
+          单笔最小金额=convert(varchar(10), min(金额)), 
+          每日总销售额=convert(varchar(10), sum(金额), 1)
+      FROM  销售表2006  GROUP BY  销售日期
+【例5-45】
+SELECT 销售员, 销售数量=sum(数量), 单笔最大数量=max(数量),
+        单笔最大金额=convert(varchar(10), max(金额)), 
+        日营业额=convert(varchar(10), sum(金额)/90), 
+        总营业额=convert(varchar(10), sum(金额), 1) 
+      FROM  销售表2006  GROUP BY  销售员  ORDER BY  总营业额 DESC
+【例5-46】
+  SELECT 货号, 进价, 进货次数=count(*), 总数量=sum(数量)
+      FROM 进货表2006  GROUP BY 货号, 进价  ORDER BY 货号
+【例5-47】
+方法一： 
+  SELECT 月份=Month(销售日期), 数量, 单价, 金额 INTO  #销售月份表
+      FROM  销售表2006
+  SELECT 月份, 月销售量=sum(数量), 
+          单笔最大金额=convert(varchar(10), max(金额)), 
+          单笔最小金额=convert(varchar(10), min(金额)), 
+          平均价格=avg(单价), 总销售额=convert(varchar(10), sum(金额), 1) 
+      FROM  #销售月份表  GROUP BY  月份   
+方法二： 
+  SELECT 月份=Month(销售日期), 月销售量=sum(数量), 
+          单笔最大金额=convert(varchar(10), max(金额)), 
+          单笔最小金额=convert(varchar(10), min(金额)), 
+          平均价格=avg(单价), 总销售额=convert(varchar(10), sum(金额), 1) 
+      FROM  销售表2006  GROUP  BY  Month(销售日期)
+【例5-48】
+  SELECT 供货商ID, 货名, 进货次数=count(*), 总数量=sum(数量), 
+          货款总额=convert(varchar(10), sum(数量*进价))
+      FROM 进货表2006  j  join 商品一览表 s  ON  j.货号=s.货号 
+      GROUP  BY  j.供货商ID,  s.货名  ORDER  BY  供货商ID
+
+  SELECT 供货商ID, 货名, 进货次数=count(*), 总数量=sum(数量), 
+          货款总额=convert(varchar(10), sum(数量*进价))
+      FROM 进货表2006  j, 商品一览表s  WHERE  j.货号=s.货号
+      GROUP  BY  j.供货商ID,  s.货名  ORDER  BY  供货商ID
+【实例练习5-2】
+  USE diannaoxs
+  SELECT 货号, 总进货量=sum(数量) , 总进货金额= sum(数量*进价)
+      INTO  #进货量表  FROM 进货表2006  GROUP BY 货号
+  UPDATE  商品一览表  SET  平均进价= j.总进货金额 / j.总进货量
+      FROM  #进货量表 j  WHERE 商品一览表.货号=j.货号
+  SELECT  *  FROM  商品一览表
+【实例练习5-3】
+  USE diannaoxs
+  SELECT 货号, 总销售量=sum(数量)  INTO  #销售量表 
+      FROM 销售表2006  GROUP BY 货号
+  SELECT 货号1=j.货号, 货号2=x.货号,  j.总进货量,  x.总销售量
+      INTO  #进货销售量表
+      FROM  #进货量表  j  full  join  #销售量表  x  ON  j.货号=x.货号
+  /* 以下语句将有进货未销售或有销售未进货的NULL更新为相应货号和数量0；
+    如果销售量大于进货量则库存为负值，更新库存量时会出现违反约束的错误；
+    正常运行时有约束保证不会出现这种情况  */
+  UPDATE  #进货销售量表 
+      SET  货号1=货号2 , 总进货量=0   WHERE 货号1  IS  NULL  
+  UPDATE  #进货销售量表 
+      SET  货号2=货号1 , 总销售量=0   WHERE 货号2  IS  NULL
+  UPDATE  商品一览表                -- 更新“商品一览表”的库存量
+      SET  库存量= jx.总进货量- jx.总销售量
+      FROM  #进货销售量表  jx  WHERE  商品一览表.货号=jx.货号1
+  SELECT  *  FROM 商品一览表
+【实例练习5-4】
+（1）
+  SELECT  s.货号, s.货名, 平均进价, 平均销价=avg(单价), 销售数量=sum(数量), 
+           营业额=sum(金额), 毛利润=( sum(金额)-平均进价* sum(数量))
+      FROM 商品一览表  s  Join 销售表2006  x  ON  s.货号=x.货号
+      GROUP  BY  s.货号,  s.货名, 平均进价
+（2）
+  SELECT  销货次数=count(x.货号), 销货总数量=sum(数量), 
+           总营业额=convert(varchar(10), sum(金额) ), 
+           毛利润= convert(varchar(10), sum(金额)- sum(平均进价*数量) )
+      FROM 商品一览表 s, 销售表2006  x  WHERE  s.货号=x.货号
+（3）
+  SELECT 年份=year(销售日期), 销货次数=count(x.货号), 
+          销货总数量=sum(数量), 总营业额=convert(varchar(10), sum(金额) ), 
+          毛利润= convert(varchar(10), sum(金额)- sum(平均进价*数量) )
+      INTO 年度销售汇总表
+      FROM 商品一览表 s, 销售表2006 x  WHERE  s.货号=x.货号   
+      GROUP BY year(销售日期)
+  SELECT  *  FROM  年度销售汇总表
+
+  INSERT  销售表2007      -- 将销售表2006前10条记录全部插入销售表2007
+      SELECT TOP 10  销售日期, 客户名称, 货号, 货名, 单价, 数量, 金额, 销售员
+          FROM  销售表2006
+  UPDATE  销售表2007     -- 将销售表2007所有原记录的销售日期增加1年
+      SET 销售日期=Dateadd(yy, 1, 销售日期)
+  INSERT 年度销售汇总表   -- 将销售表2007的销售情况插入年度销售汇总表
+      SELECT 年份=year(销售日期), 销货次数=count(x.货号), 
+              销货总数量=sum(数量), 总营业额=convert(varchar(10), sum(金额) ),
+              毛利润= convert(varchar(10), sum(金额)- sum(平均进价*数量) )
+          FROM 商品一览表 s, 销售表2007 x  WHERE  s.货号=x.货号
+          GROUP BY year(销售日期)
+  SELECT  *  FROM  年度销售汇总表
+（4）
+  SELECT 月份=Month(销售日期), 销货次数=count(*), 月销售量=sum(数量), 
+          营业额=convert(varchar(10), sum(金额) ), 
+          毛利润= convert(varchar(10), sum(金额)- sum(平均进价*数量) )
+      FROM 商品一览表 s Join 销售表2006  x  ON  s.货号=x.货号
+      GROUP BY  Month(销售日期)
+【实例练习5-5】
+  SELECT 库存商品总数=sum(库存量), 
+          成本金额=convert(varchar(10), sum(平均进价*数量) ), 
+          估计销售金额=convert(varchar(10), sum(参考价格*数量) ),
+          可实现利润=convert(varchar(10), sum((参考价格-平均进价)*数量) )
+      FROM 商品一览表 s  Join 销售表2006  x  ON  s.货号=x.货号
+【例5-49】
+  SELECT  销售员, 总营业额=sum(金额)  FROM 销售表2006  GROUP BY 销售员
+
+  SELECT  *  FROM  销售表2006  ORDER  BY 销售员, 销售日期
+      COMPUTE  sum(金额)  BY 销售员
+【例5-50】
+  USE diannaoxs
+  SELECT 销售日期, 客户名称, 货名, 数量, 金额 FROM  销售表2006  
+      WHERE  金额>=10000
+      UNION  SELECT 销售日期, 客户名称, 货名, 数量, 金额 FROM 销售表2007
+                  WHERE  金额>=10000
+【例5-51】
+  SELECT  *  FROM  销售表2006  
+      WHERE 单价>( SELECT  avg(单价)  FROM  销售表2006 )
+【例5-52】
+  USE diannaoxs
+  SELECT 员工ID, 姓名, 性别, 出生日期=Convert(char(12),出生日期,111),
+          年龄=year(getdate())-year(出生日期), 部门,
+          工龄=CASt(year(getdate())-year(工作时间) AS varchar(2))+'年'
+      FROM 员工表  WHERE ( year(getdate())-year(出生日期) )
+                   > (SELECT  avg( year(getdate())-year(出生日期)) FROM 员工表)
+【例5-53】
+  SELECT 员工ID, 姓名, 性别, 出生日期=Convert(char(12), 出生日期, 111),
+          部门, 工作时间= Convert(char(12),工作时间,111)
+      FROM 员工表  WHERE  姓名=( SELECT  销售员  FROM 销售表2006  
+                                      WHERE  销售日期='2006-3-7')
+
+  SELECT 员工ID, 姓名, 性别, 出生日期=Convert(char(12), 出生日期, 111),
+         部门, 工作时间= Convert(char(12), 工作时间, 111)
+      FROM 员工表, 销售表2006 
+      WHERE  员工表.姓名=销售表2006.销售员 AND 销售日期='2006-3-7'
+
+  SELECT 员工ID, 姓名, 性别, 出生日期=Convert(char(12), 出生日期, 111),
+          部门, 工作时间= Convert(char(12), 工作时间, 111)
+      FROM 员工表 JOIN 销售表2006  ON 员工表.姓名=销售表2006.销售员
+      WHERE  销售日期='2006-3-7'
+【例5-54】
+SELECT 员工ID, 姓名, 性别, 出生日期=Convert(char(12), 出生日期, 111),
+        部门, 工作时间= Convert(char(12), 工作时间, 111)  FROM 员工表 
+    WHERE  姓名=( SELECT  销售员  FROM 销售表2006  
+                      WHERE  金额=( SELECT max(金额) FROM 销售表2006 ) )
+【例5-55】
+  SELECT  *  FROM  商品一览表
+      WHERE 货号 in( SELECT 货号 FROM 销售表2006)
+【例5-56】
+  SELECT  *  FROM  商品一览表
+      WHERE 货号=ANY( SELECT 货号 FROM 销售表2006  WHERE 数量>=5)
+【例5-57】
+  SELECT  *  FROM  商品一览表
+      WHERE 货号<>ALL( SELECT 货号 FROM 销售表2006 )
+
+  SELECT  *  FROM  商品一览表
+      WHERE 货号 not  in( SELECT 货号 FROM 销售表2006 )
+【例5-58】
+  SELECT  *  FROM  商品一览表
+      WHERE  5<=ANY( SELECT 数量 FROM 销售表2006  
+                            WHERE  商品一览表.货号=销售表2006.货号 )
+【例5-59】
+  SELECT  *  FROM  商品一览表
+      WHERE  exists ( SELECT  *  FROM 销售表2006 
+                         WHERE  商品一览表.货号=销售表2006.货号 )
+【实例练习5-6】
+（1）
+  USE diannaoxs
+  UPDATE  商品一览表
+      SET  平均进价= ( SELECT  sum(数量*进价)/sum(数量)  FROM 进货表2006
+                        WHERE 商品一览表.货号=进货表2006.货号 )
+      WHERE  ( SELECT  sum(数量)  FROM 进货表2006 
+                   WHERE 商品一览表.货号=进货表2006.货号 ) >= 0
+（2）
+  USE diannaoxs
+  SELECT 货号, 进货量=sum(数量)  INTO  #进货量表 
+      FROM 进货表2006  GROUP BY 货号
+  SELECT 货号, 销售量=sum(数量)  INTO  #销售量表  
+      FROM 销售表2006  GROUP BY 货号
+
+  UPDATE  商品一览表             --先计算库存量=总进货量
+      SET  库存量= (SELECT  进货量  FROM #进货量表
+                        WHERE 商品一览表.货号=#进货量表.货号)
+      WHERE  exists (SELECT  进货量  FROM #进货量表
+                        WHERE 商品一览表.货号=#进货量表.货号)
+  UPDATE  商品一览表             --再计算库存量=总进货量-总销售量
+      SET 库存量=库存量-(SELECT  销售量  FROM #销售量表
+                             WHERE 商品一览表.货号=#销售量表.货号)
+      WHERE  exists (SELECT  销售量  FROM #销售量表
+                        WHERE 商品一览表.货号=#销售量表.货号)
+（3）
+  UPDATE  商品一览表             --先计算库存量=总进货量
+      SET  库存量=( SELECT  sum(数量)  FROM  进货表2006 
+                        WHERE 商品一览表.货号=进货表2006.货号 )
+      WHERE  ( SELECT  sum(数量)  FROM 进货表2006 
+                   WHERE 商品一览表.货号=进货表2006.货号 ) >= 0
+  UPDATE  商品一览表             --再计算库存量=总进货量-总销售量
+      SET  库存量=库存量 - ( SELECT  sum(数量)  FROM  销售表2006 
+                               WHERE 商品一览表.货号=销售表2006.货号 )
+      WHERE  ( SELECT  sum(数量)  FROM 销售表2006 
+                   WHERE 商品一览表.货号=销售表2006.货号 ) >= 0
+【实例练习5-7】
+方法一：
+  use diannaoxs
+  SELECT 货号, 货名, 规格, 库存量, 提示= '尽快进货！',
+      进货厂家=(SELECT  供货商 FROM 供货商表 g 
+                WHERE  供货商ID=
+                         ( SELECT 供货商ID  FROM 进货表2006 j
+                           WHERE  供货商ID=g.供货商ID  and  货号=s.货号)
+                )
+      FROM 商品一览表 s  WHERE 库存量<10
+方法二：
+  SELECT  货号, 货名, 规格, 库存量, 提示= '尽快进货！',
+     进货厂家= ( SELECT  DISTINCT  供货商  
+          FROM 进货表2006  j  join 供货商表 g  ON  j.供货商ID=g.供货商ID
+          WHERE  货号=s.货号 )
+     FROM 商品一览表 s  WHERE 库存量<10
+解决方法： 
+  SELECT  货号, 供货商, 进价 INTO  #进货厂家
+      FROM 进货表2006  j   join  供货商表 g  ON  j.供货商ID=g.供货商ID
+  SELECT  s.货号, 货名, 规格, 库存量, 提示= '尽快进货！', 进价, 供货商
+      FROM 商品一览表 s  left  join  #进货厂家 j  ON  s.货号=j.货号
+      WHERE 库存量<20  ORDER BY  s.货号
+练习5-9】
+方法一：
+  USE diannaoxs
+  GO
+  CREATE VIEW 整机销售2006            -- 必须是批处理的第一个语句
+      AS
+      SELECT 原序号=序号, 销售日期=Convert(varchar(12), 销售日期, 111), 
+              客户名称, x.货号, x.货名, 规格, 单位,
+              单价=Convert(varchar(10),单价), 
+              数量, 金额=Convert(varchar(10),金额)
+          FROM  销售表2006  AS  x  Join 商品一览表 AS  j 
+                  ON  x.货号= j.货号   WHERE  x.货号 Like  '1%' 
+方法二： 
+  USE diannaoxs
+  drop  VIEW 整机销售2006                 -- 删除视图
+  GO 
+  CREATE VIEW 整机销售2006               -- 重新创建视图
+      AS 
+      SELECT 原序号=序号, 销售日期=Convert(varchar(12),销售日期,111), 
+              客户名称, 货号, 货名, 规格, 单位, 单价=Convert(varchar(10),单价),
+              数量, 金额=Convert(varchar(10),金额)
+          FROM  销售信息2006  WHERE 货号 Like  '1%' 
+  GO
+  SELECT  *  FROM  整机销售2006
+【实例练习5-10】
+  CREATE  VIEW  销售信息视图2006
+      WITH  ENCRYPTION
+      AS 
+      SELECT 序号, 销售日期=Convert(varchar(12),销售日期,111), 
+              客户名称, x.货号, x.货名, 规格, 单位,
+              单价=Convert(varchar(10),单价), 
+              数量, 金额=Convert(varchar(10),金额)
+         FROM  销售表2006  AS  x  Join 商品一览表  s  ON  x.货号= s.货号
+  GO
+  SELECT  *  FROM  销售信息视图2006
+【实例练习5-11】
+  USE diannaoxs
+  GO 
+  CREATE  VIEW  进货信息视图2006
+      WITH  ENCRYPTION
+      AS 
+      SELECT 序号, 进货日期=Convert(varchar(12), 进货日期, 111), 
+              s.货号,  s.货名,  s.规格, 数量, 单价=Convert(varchar(10), 进价), 
+              购货金额=Convert(varchar(10), 进价*数量), 进货厂家=供货商,
+              编号=J.供货商ID, 厂家账户=rtrim(账户), 收货人
+          FROM  进货表2006  AS  j , 商品一览表 s , 供货商表 g 
+          WHERE  j.货号=s.货号  and  j. 供货商ID=g.供货商ID
+  GO
+  SELECT  *  FROM  进货信息视图2006
+第6章  数据库索引
+【例6-1】
+  create unique clustered index  PK_商品一览表
+    on 商品一览表(货号)
+    with
+    pad_index,
+    fillfactor = 10,
+    drop_existing
+【例6-2】
+  create index index_huomingguige
+    on商品一览表(货名 , 规格) 
+    with
+    pad_index,
+    fillfactor = 50
+    on [primary]
+【例6-3】   exec sp_helpindex 商品一览表
+【例6-4】  drop index商品一览表.index1
+第7章  T-SQL程序设计、自定义类型、函数和游标
+【例7-1】
+  /*脚本文件名：SQL8-1.sql
+    编写日期：2005年8月14日  星期日
+    功能：查询2006年全部或某个月份销售商品数量和相应的营业员*/
+  USE diannaoxs   -- 打开数据库
+  GO            /* 一个批处理结束 */
+  SELECT  序号, 销售日期, 货名, 数量, 销售员  FROM  销售表2006
+  -- WHERE销售日期 beteen ‘2006/3/1’ and ‘2006/4/1’ 
+  -- 上一句去掉注释号可查询3月份销售记录，否则查询全年
+  GO
+【例7-2】
+  DECLARE  @name  char(6)           -- 定义@name长度为6的字符型
+  DECLARE  @家庭住址  varchar(30)    -- 定义长度为30的变长字符型
+  DECLARE  @r  int ,  @s  decimal(8.4)
+  -- 定义@r为整型，@s为小数总长度8位，其中小数4位
+【例7-3】
+  USE diannaoxs
+  DECLARE  @date  varchar(15),  @日期  varchar(15)
+  SET  @date= getdate()            -- 也可使用SELECT
+  SELECT  @日期='当前日期为：'   -- 也可使用SET
+  PRINT  @日期+ @date            -- 不能用PRINT @日期，@date
+  PRINT  ''                        -- 输出空串可以空行
+  SET  @date=(SELECT  MAX(销售日期)  FROM 销售表2006 ) 
+  PRINT  '2006年最后销售日期为：'+ @date
+  GO
+
+  USE diannaoxs
+  DECLARE  @date  varchar(15),  @日期  varchar(15)
+  SET  @date=GETDATE()          -- 也可使用SELECT
+  SELECT  @日期='当前日期为：'   -- 也可使用SET
+  SELECT  @日期+ @date          -- 显示为一列
+  SET  @date=(SELECT MAX(销售日期) FROM 销售表2006 )
+  SELECT  '2006年最后销售日期为：'+ @date    -- 显示为一列
+  SELECT  '2006年最后销售日期为：' , @date    -- 显示为两列
+  GO
+【例7-4】
+  USE diannaoxs
+  GO
+  IF  exists( SELECT  *  FROM 商品一览表 WHERE 库存量<40)
+     BEGIN
+        SELECT 货号, 货名, 库存量 FROM 商品一览表 WHERE 库存量<40
+        SELECT '数量<40，需要考虑进货'
+     END
+  ELSE 
+     PRINT  '库存量都超过40，暂时不需要进货'
+
+  IF  exists( SELECT  *  FROM 商品一览表 WHERE 库存量<40)
+     SELECT 货号, 货名, 库存量, 提示= '需要考虑进货'
+         FROM 商品一览表 WHERE 库存量<40    
+  ELSE 
+     PRINT  '库存量都超过40，暂时不需要进货'
+【实例练习7-1】
+  CREATE VIEW  员工信息
+    AS
+    SELECT 员工ID, 姓名, 
+         性别= CASE  性别
+                   WHEN  1  THEN  '男'
+                   WHEN  0  THEN  '女'
+               END  ,      --性别字段到此结束，后面还有字段，逗号不能丢
+         出生日期= Convert(varchar(12), 出生日期, 111),
+         年龄=year(getdate())-year(出生日期), 部门,
+         工作时间= Convert(varchar(12), 工作时间, 111),
+         工龄=cASt((year(getdate())-year(工作时间)) AS varchar(6))+'年',
+         照片, 个人简历   FROM 员工表
+  GO
+  SELECT  *  FROM  员工信息     -- 查看“员工信息”视图
+【实例练习7-2】
+  CREATE VIEW  进货厂家视图
+    AS
+    SELECT  货号, 进货厂家, 最低进价=min(单价) 
+          FROM 进货信息视图2006  Group By 货号, 进货厂家
+  GO
+  CREATE VIEW  进货提示视图    -- 创建视图不能使用ORDER BY排序
+    AS
+    SELECT  s.货号, 货名, 规格, 库存量, 最低进价, 进货厂家, 
+       提示信息= CASE
+                   WHEN  库存量>=50  THEN  '货源充足，不需考虑'
+                   WHEN  库存量>=20  THEN  '可以维持，以后再说'
+                   WHEN  库存量>=10  THEN  '已经不多，准备进货'
+                   WHEN  库存量>0    THEN  '马上缺货，抓紧进货！'
+                   WHEN  库存量=0    THEN  '已经缺货，马上进货！' 
+                 END
+       FROM 商品一览表 s  left  join  进货厂家视图 j  ON  s.货号=j.货号
+  GO 
+  SELECT  *  FROM  进货提示视图      -- 查看“进货提示视图”
+       ORDER  BY 库存量               -- 查询视图时可以排序
+【例7-5】
+  SELECT  程序开始的时间=GETDATE() ,
+           开始的时间秒数=DATEPART(SECOND, GETDATE())
+  GO
+  WAITFOR  DELAY  '00:00:20'  -- 延时20秒
+  SELECT  延时以后的时间=GETDATE() ,
+           延时后时间秒数=DATEPART(SECOND, GETDATE())
+  GO
+【例7-6】
+  DECLARE  @i  Int,  @sum  Int
+  SELECT  @i=1,  @sum =0                -- 可以使用两个SET语句
+  WHILE  @i<=100
+      SELECT @sum=@sum+@i,  @i=@i+1
+         -- 此处若使用两个SET语句则必须放在BEGIN … END语句块中
+  PRINT  @sum
+【例7-7】
+  EXEC sp_addtype telelephone , 'varchar(24)' , 'not null'
+  EXEC sp_addtype fax , 'varchar(24)' , 'null'
+【实例练习7-4】
+  USE diannaoxs
+  EXEC  sp_addtype ID_2 , 'char(15)' , 'not null'  -- 创建数据类型
+  GO
+  EXEC  sp_bindefault   '默认账户' ,  'ID_2'   -- 绑定默认值
+  EXEC  sp_bindrule  '仅数字', 'ID_2'         -- 绑定默认值
+  GO
+  ALTER  TABLE 供货商表                        -- 修改字段类型
+      ALTER  column  账户  ID_2  not null
+  ALTER  TABLE 供货商表                        -- 添加字段约束
+      ADD  constraint  weiyi  unique(账户)
+【例7-8】
+  USE  diannaoxs
+  GO
+  CREATE  FUNCTION  相对年龄  ( @出生年月 Datetime, @defyear  int)
+      RETURNS  int
+      AS
+      BEGIN
+          RETURN  @defyear-year(@出生年月)
+      END
+  GO
+
+  SELECT 姓名, 出生日期, 到2008的年龄=dbo.相对年龄(出生日期, 2008)
+      FROM  员工表   WHERE  dbo.相对年龄(出生日期, 2008)<30
+【实例练习7-5】
+  CREATE  FUNCTION  当前年龄( @日期 Datetime, @当前日期 Datetime)
+     RETURNS  varchar(6)
+     BEGIN
+       RETURN  year(@当前日期)-year(@日期)
+     END
+  GO
+  SELECT 员工编号=员工ID, 姓名,  
+          出生日期=Convert(varchar(12), 出生日期, 111),
+          年龄=dbo.当前年龄(出生日期, getdate())+'岁', 部门,
+          工作时间= Convert(varchar(12), 工作时间, 111),
+          工龄=dbo.当前年龄(工作时间, getdate())+'年'
+      FROM  员工表   WHERE  dbo.当前年龄(出生日期, getdate())>30
+【实例练习7-6】
+  CREATE  FUNCTION  平均价格 
+      ( @原平均进价 Smallmoney, @库存 BigInt, @进价 Smallmoney, @数量 Int )
+     RETURNS  Smallmoney
+     BEGIN
+       RETURN  (@原平均进价*@库存+@进价*@数量)/(@库存+@数量)
+     END
+【实例练习7-8】
+  SELECT 货名, 数量, 单价=dbo.货币格式(单价), 金额=dbo.货币格式(金额)
+      FROM 销售表2006  WHERE  数量>20
+【实例练习7-9】
+  USE diannaoxs
+  DECLARE  员工游标  cursor   keySET      -- 定义游标
+      FOR  SELECT  姓名, 性别, 年龄, 部门  FROM 员工信息 WHERE 年龄<30
+  OPEN  员工游标                          -- 打开游标
+  IF @@error=0                             -- 判断游标打开成功
+  BEGIN
+    IF @@cursor_rows>0                     -- 判断游标结果集记录个数大于0
+    BEGIN
+      PRINT '游标记录数为：'+convert(varchar(2), @@cursor_rows)
+      DECLARE @xm varchar(8) , @xb nchar, @nl int, 
+              @bm nvarchar(5), @rs int, @pjnl int
+      FETCH absolute 2 FROM 员工游标 into @xm, @xb, @nl, @bm  --提取记录
+      PRINT '第2条记录:  '+@xm+@xb+cASt(@nl AS char(2))+@bm
+      FETCH relative 2 FROM 员工游标 into @xm, @xb, @nl, @bm
+      PRINT '后移2条记录:'+@xm+@xb+cASt(@nl AS char(2))+@bm
+      SET @rs=0
+      SET @pjnl=0
+      PRINT '全部记录为：'
+      FETCH first FROM 员工游标 into @xm, @xb, @nl, @bm --先提取第一条记录
+      WHILE  @@FETCH_STATUS=0
+        BEGIN
+          PRINT cASt(@rs+1 AS char(2))+':'+@xm+@xb+
+                cASt(@nl AS char(2))+@bm
+          FETCH next FROM 员工游标 into @xm, @xb, @nl, @bm
+          SET @rs= @rs+1
+          SET @pjnl=@pjnl+@nl
+        END
+      PRINT '实际统计记录数为：'+cASt(@rs AS char(2))+
+           '  平均年龄为：'+cASt(@pjnl/@rs AS char(6))
+    END
+  END
+  ELSE  PRINT '游标打开失败！'
+  CLOSE 员工游标                          -- 关闭游标
+  DEALLOCATE 员工游标                   -- 删除游标
+【实例练习7-10】
+  USE diannaoxs
+  DECLARE 商品游标  cursor  keySET
+    FOR  SELECT 货号,货名,规格,库存量 FROM 商品一览表 WHERE 库存量<20
+  OPEN  商品游标
+  IF @@error=0
+    BEGIN
+      DECLARE @hh char(4) , @hm nvarchar(8), @gg varchar(6), @ku bigint
+      FETCH next FROM 商品游标 into @hh, @hm, @gg, @ku  --必须先提取记录
+      WHILE  @@FETCH_STATUS=0
+        BEGIN          
+          IF @ku>=10 
+            PRINT @hh+','+@hm+','+@gg+','+cASt(@ku AS varchar(4))
+                  +','+'已经不多，准备进货'          
+          ELSE IF @ku>0 
+            PRINT @hh+','+@hm+','+@gg+','+cASt(@ku AS varchar(4))
+                 +','+'马上缺货，抓紧进货！' 
+          ELSE IF @ku=0 
+            PRINT @hh+','+@hm+','+@gg+','+cASt(@ku AS varchar(4))
+                 +','+'已经缺货，马上进货！'  
+          FETCH next FROM 商品游标 into @hh, @hm, @gg, @ku
+        END
+    END
+  ELSE PRINT '游标打开失败！'
+  CLOSE 商品游标
+  DEALLOCATE 商品游标
+第8章  存储过程与触发器
+【例8-1】
+  USE diannaoxs
+  IF exists(SELECT name FROM sysobjects WHERE name='计算机_pro' AND type='p')
+     DROP  procedure 计算机_pro
+  GO
+  CREATE  procedure  计算机_pro        -- 创建“计算机_pro”存储过程
+    AS 
+    SELECT 进货日期, 供货商, j.货号, 货名, 数量, 进价
+       FROM 进货表2006 AS  j , 供货商表 AS  g , 商品一览表 s
+       WHERE j.供货商ID=g.供货商ID  AND j.货号=s.货号 AND s.货名='计算机'
+  GO
+  EXECUTE 计算机_pro                -- 调用执行“计算机_pro”存储过程
+【实例练习8-1】
+  USE diannaoxs
+  IF exists(SELECT name FROM sysobjects WHERE name='商品_pro1' AND type='p')
+      DROP procedure 商品_pro1
+  GO
+  CREATE  procedure 商品_pro1  @商品名 nvarchar(8)
+      AS 
+      SELECT 进货日期, 供货商, j.货号, 货名, 数量, 进价
+        FROM 进货表2006  j  join 供货商表 g  ON  j.供货商ID=g.供货商ID
+             join 商品一览表 s  ON  j.货号=s.货号
+        WHERE  s.货名=@商品名
+  GO
+  EXECUTE  商品_pro1  '计算机'          -- 提供参数调用存储过程
+
+  EXEC  商品_pro1  '显示器'              -- 提供参数调用存储过程
+【实例练习8-2】
+  IF exists(SELECT name FROM sysobjects WHERE name='商品_pro2' AND type='p')
+      DROP procedure 商品_pro2
+  GO
+  CREATE procedure 商品_pro2  @厂家  nvarchar(15)
+      AS 
+      IF exists(SELECT *
+             FROM 销售表2006 x, 进货表2006 j, 供货商表 g, 商品一览表 s
+             WHERE  j.供货商ID=g.供货商ID AND j.货号=s.货号
+                    AND  x.货号=j.货号 AND  g.供货商 like  @厂家+'%')
+        BEGIN
+          SELECT 销售日期, x.货号, x.货名, 供货商, x.数量
+            FROM 销售表2006 x, 进货表2006 j, 供货商表 g, 商品一览表 s
+            WHERE  j.供货商ID=g.供货商ID AND j.货号=s.货号
+                      AND  x.货号=j.货号 AND  g.供货商 like  @厂家+'%'  
+          RETURN 1
+        END
+      ELSE
+        RETURN 0
+  GO
+
+  DECLARE  @x  int
+  EXECUTE  @x=商品_pro2  '上海电脑'
+  IF  @x=1
+     PRINT '所查找厂家的产品有进货也有销售。'
+  ELSE
+     PRINT '所查找厂家不存在或者没有进货或者产品没有销售！'
+
+  DECLARE  @x int
+  EXECUTE  @x=商品_pro2  '北京联想'
+  IF @x=0  PRINT  '所查找厂家不存在或者没有进货或者产品没有销售！'
+
+  DECLARE  @x int
+  EXECUTE  @x=商品_pro2 '北京科技'
+  IF @x=0  PRINT  '所查找厂家不存在或者没有进货或者产品没有销售！'
+
+  DECLARE  @x int
+  EXECUTE  @x=商品_pro2 '山东科技'
+  IF @x<>1  PRINT  '所查找厂家不存在或者没有进货或者产品没有销售！'
+【实例练习8-3】
+  IF exists(SELECT name FROM sysobjects WHERE name='商品_pro3' AND type='p')
+      DROP procedure 商品_pro3
+  GO
+  CREATE procedure 商品_pro3 @hm nvarchar(8),
+                            @kuzs bigint output, @cb money output
+      AS
+      SELECT @kuzs=sum(库存量) , @cb=sum(平均进价*库存量) 
+          FROM 商品一览表   WHERE 货名=@hm
+  GO
+
+  DECLARE  @aa nvarchar(8) , @bb bigint , @cc money 
+  SET  @aa='计算机'
+  EXECUTE  商品_pro3  @aa , @bb output , @cc output
+  SELECT  '货品名称：'+@aa , '总库存数量：'
+          +cast( @bb  AS  char(4)) , '总成本：'+cast(  @cc  AS  varchar(12) )
+【例8-2】  EXECUTE  ( N'SELECT 姓名, 性别, 部门 FROM 员工表' ) 
+ EXECUTE ( 'SELECT 姓名, 性别, 部门 FROM 员工表' )
+
+  DECLARE  @sql varchar(36)              --2
+  SET  @sql=' SELECT 姓名, 性别, 部门 FROM 员工表'
+  EXECUTE (@sql)
+【例8-4】
+  CREATE  TRIGGER  删除商品  ON  商品表  after  delete
+     AS
+     DELETE 销售合同表2006  WHERE 货号 in (SELECT 货号 FROM  deleted )
+
+  DELETE 商品表 WHERE 货号='1005'    -- 删除“商品表”1005号商品记录
+  IF  not  exists( SELECT  *  FROM 销售合同表2006  WHERE 货号='1005' )
+      PRINT  '相关记录已经从“销售合同表2006”中删除了！'
+【例8-5】
+  USE diannaoxs
+  IF  exists ( SELECT  name  FROM  sysobjects
+               WHERE  name='统计被修改记录数'  AND  type='tr' )
+      DROP  TRIGGER  统计被修改记录数
+  GO
+
+  CREATE  统计被修改记录数 ON 销售合同表2006  after  update
+      AS
+      DECLARE  @msg  varchar(100)
+      SELECT  @msg=str( @@rowcount )+' diannaoxs被修改描述'
+      PRINT  @msg 
+      RETURN
+  GO
+【实例练习8-4】
+  USE diannaoxs
+  IF exists (SELECT name FROM sysobjects  WHERE name='修改姓名' AND type='tr')
+      DROP TRIGGER  修改姓名
+  GO
+  CREATE  TRIGGER 修改姓名 ON 员工表  after  update
+     AS
+     DECLARE  @xm1 varchar(8) , @xm2 varchar(8)  -- 定义局部变量
+     SELECT  @xm1=姓名 FROM  deleted   -- 从deleted表得到被删除的原姓名
+     SELECT  @xm2=姓名 FROM  inserted   -- 从inserted表得到被更新的新姓名
+     UPDATE 销售表2006  SET 销售员=@xm2  WHERE 销售员=@xm1
+     UPDATE 进货表2006  SET 收货人=@xm2  WHERE 收货人=@xm1
+  GO
+
+  UPDATE 员工表 SET 姓名='高立宏'  WHERE 姓名='高宏'
+  SELECT  *  FROM  员工信息
+【实例练习8-5】
+  USE diannaoxs
+  IF exists (SELECT name FROM sysobjects  WHERE name='进货检查' AND type='tr')
+      DROP  TRIGGER  进货检查
+  GO
+  CREATE  TRIGGER 进货检查 ON 进货表2006  after  insert
+    AS
+    DECLARE  @hh char(4) , @sl int , @jj Smallmoney, @pj Smallmoney , @kc bigint
+    SELECT  @hh=货号, @sl=数量, @jj=进价  FROM  inserted
+    SELECT  @pj=平均进价, @kc=库存量 FROM 商品一览表 WHERE 货号=@hh
+    UPDATE 商品一览表 SET 平均进价=平均价格( @pj, @kc, @jj, @sl)
+         WHERE 货号=@hh 
+    UPDATE 商品一览表  SET 库存量=@kc+@sl  WHERE 货号=@hh
+  GO
+
+  INSERT 进货表2006
+      VALUES (default, '1001', 10, 5180.00, 'BJLX', '于丽' )
+  SELECT  *  FROM 进货信息视图2006
+
+  INSERT 进货表2006
+      VALUES (default, '1001', 10, 5180.00, 'BJLX', '于  丽' )
+  SELECT  *  FROM 进货信息视图2006
+【实例练习8-6】
+  USE diannaoxs
+  IF exists (SELECT name FROM sysobjects  WHERE name='销售检查' AND type='tr')
+      DROP  TRIGGER  销售检查
+  GO
+  CREATE TRIGGER 销售检查 ON 销售表2006  after  insert
+    AS
+    DECLARE  @xh BigInt, @hh char(4) , @sl int , @dj Smallmoney, 
+               @hm Nvarchar(8) , @ckjg Smallmoney , @kc bigint
+    SELECT  @xh=序号,@hh=货号, @sl=数量, @dj=单价  FROM  inserted
+    SELECT  @hm=货名, @ckjg=参考价格, @kc=库存量  FROM 商品一览表 
+        WHERE 货号=@hh
+    IF  @sl <=@kc
+      BEGIN
+        IF  @dj >=@ckjg*0.95  AND  @dj<=@ckjg*1.05
+          BEGIN
+             UPDATE 销售表2006      -- 条件不能使用货号，货号不惟一
+                 SET 货名= @hm , 金额=@sl*@dj  WHERE 序号=@xh
+             UPDATE 商品一览表  SET 库存量=@kc-@sl  WHERE 货号=@hh
+          END
+        ELSE
+          BEGIN
+             PRINT  '单价超出参考价格'+cast( @ckjg  AS  varchar(10) )
+                     + '的%5范围，不能销售'
+             ROLLBACK  TRANSACTION      -- 事务回滚，撤消插入
+          END 
+      END
+    ELSE
+      BEGIN
+         PRINT  '销售量大于库存量'+cast( @kc AS varchar(4))
+                 + '，库存不足不能销售'
+         ROLLBACK  TRANSACTION
+      END
+  GO
+
+  INSERT 销售表2006 (销售日期, 客户名称, 货号, 数量, 单价, 销售员)
+         VALUES (default, '济南商业电脑商城', '1002', 2, 5500, '章晓晓')
+  SELECT  *  FROM 销售信息视图2006
+【实例练习8-7】
+  USE diannaoxs
+  IF exists (SELECT name FROM sysobjects  WHERE name='修改商品' AND type='tr')
+      DROP  TRIGGER  修改商品
+  GO
+  CREATE  TRIGGER 修改商品 ON 商品一览表 after  update
+      AS
+      DECLARE @hh char(4), @hm nvarchar(8), @pj1 Smallmoney, @pj2 Smallmoney,
+                @kc1 bigint, @kc2 bigint
+      SELECT  @hh=货号, @pj1=平均进价, @kc1=库存量  FROM deleted
+      SELECT  @hm=货名, @pj2=平均进价, @kc2=库存量  FROM inserted
+      IF  @pj1<>@pj2
+        BEGIN
+          PRINT  '平均进价不允许修改！'
+          ROLLBACK  TRANSACTION      -- 事务回滚，撤消修改
+        END 
+      ELSE 
+        BEGIN
+          IF  @kc1<>@kc2
+            BEGIN
+               PRINT  '库存量不允许修改！'
+               ROLLBACK  TRANSACTION    -- 事务回滚，撤消修改
+            END
+          ELSE
+            UPDATE 销售表2006  SET 货名=@hm  WHERE 货号=@hh
+        END 
+  GO
+【实例练习8-8】
+  USE diannaoxs
+  IF exists (SELECT name FROM sysobjects  WHERE name='修改销售' AND type='tr')
+      DROP  TRIGGER  修改销售
+  GO
+  CREATE  TRIGGER 修改销售 ON 销售表2006  after  update
+      AS
+      DECLARE  @rq  Smalldatetime 
+      SELECT  @rq=销售日期  FROM  deleted        
+      IF  Datediff(dd, @rq,getdate())>5
+         BEGIN
+             PRINT  '销售记录已超过5天，不准修改！'
+             ROLLBACK  TRANSACTION       -- 事务回滚，撤消修改
+         END 
+  GO
+【实例练习8-9】
+  USE diannaoxs
+  IF exists (SELECT name FROM sysobjects  WHERE name='禁止修改' AND type='tr')
+      DROP  TRIGGER  禁止修改
+  GO
+  CREATE  TRIGGER 禁止修改 ON 供货商表
+      instead  of  update, delete              -- 修改或删除激活
+      AS
+      PRINT  '请原谅，《供货商表》不允许对任何数据进行修改和删除。'
+  GO
+【实例练习8-10】
+  ALTER  TABLE供货商表  DISABLE  TRIGGER 禁止修改
+  UPDATE 供货商表 SET 供货商='山东科技市场计算机销售处' 
+     WHERE 供货商ID='SDKJ'
+  SELECT  *  FROM 供货商表
+

@@ -1,0 +1,12 @@
+bin\Debug\ScriptSample.exe
+bin\Debug\ScriptSample.pdb
+bin\Debug\ScriptSample.xml
+bin\Debug\Microsoft.SqlServer.BatchParser.dll
+bin\Debug\Microsoft.SqlServer.Replication.dll
+bin\Debug\zh-CHS\Microsoft.SqlServer.Replication.resources.dll
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\ScriptSample.Resources.resources
+obj\Debug\ScriptSample.vbproj.GenerateResource.Cache
+obj\Debug\ScriptSample.exe
+obj\Debug\ScriptSample.xml
+obj\Debug\ScriptSample.pdb

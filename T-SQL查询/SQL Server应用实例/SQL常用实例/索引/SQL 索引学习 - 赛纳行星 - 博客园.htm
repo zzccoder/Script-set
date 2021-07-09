@@ -1,0 +1,294 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0068)http://www.cnblogs.com/sainaxingxing/archive/2009/11/18/1605204.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=9.0000" 
+http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type"><TITLE>SQL 
+索引学习 - 赛纳行星 - 博客园</TITLE><LINK rel="stylesheet" type="text/css" href="SQL%20索引学习%20-%20赛纳行星%20-%20博客园_files/common.css">
+<LINK id="MainCss" rel="stylesheet" type="text/css" href="SQL%20索引学习%20-%20赛纳行星%20-%20博客园_files/style.css">
+<LINK rel="stylesheet" type="text/css" href="SQL%20索引学习%20-%20赛纳行星%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="SQL%20索引学习%20-%20赛纳行星%20-%20博客园_files/shStyle.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/sainaxingxing/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/sainaxingxing/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/sainaxingxing/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="SQL%20索引学习%20-%20赛纳行星%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'sainaxingxing';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL%20索引学习%20-%20赛纳行星%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL%20索引学习%20-%20赛纳行星%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL%20索引学习%20-%20赛纳行星%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A><!--done-->
+<DIV id="banner">
+<DIV id="bnr_pic"><!--done-->
+<DIV class="header">
+<DIV class="headerText"><A id="Header1_HeaderTitle" class="headermaintitle" 
+href="http://www.cnblogs.com/sainaxingxing/">绝对零度</A><BR></DIV><BR>
+<DIV class="headerDis">异度空间</DIV></DIV></DIV></DIV>
+<DIV id="main"><!-- left starts -->
+<DIV id="left">
+<DIV id="mystats"><BR><!--done-->
+<DIV class="blogStats">随笔 - 33&nbsp;文章 - 0&nbsp;评论 - 9&nbsp;</DIV></DIV>
+<DIV id="mylinks"><!--done--><A id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</A>&nbsp;&nbsp;<A 
+id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/sainaxingxing/">首页</A>&nbsp;&nbsp;<A 
+id="MyLinks1_NewPostLink" class="menu" href="http://www.cnblogs.com/sainaxingxing/admin/EditPosts.aspx?opt=1" 
+rel="nofollow">新随笔</A>&nbsp;&nbsp;<A accessKey="9" id="MyLinks1_ContactLink" 
+class="menu" href="http://space.cnblogs.com/msg/send/%e8%b5%9b%e7%ba%b3%e8%a1%8c%e6%98%9f" 
+rel="nofollow">联系</A>&nbsp;&nbsp;<A id="MyLinks1_Admin" class="menu" href="http://www.cnblogs.com/sainaxingxing/admin/EditPosts.aspx" 
+rel="nofollow">管理</A>&nbsp;&nbsp;<A id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/sainaxingxing/rss">订阅</A>&nbsp;<A 
+id="MyLinks1_XMLLink" href="http://www.cnblogs.com/sainaxingxing/rss"><IMG alt="订阅" 
+src="SQL%20索引学习%20-%20赛纳行星%20-%20博客园_files/xml.gif"></A></DIV>
+<DIV id="topics">
+<DIV class="post">
+<DIV class="postTitle">
+<H1><A id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/sainaxingxing/archive/2009/11/18/1605204.html">SQL 
+索引学习</A></H1></DIV>
+<DIV id="cnblogs_post_body">
+<P>1.概念<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+索引是在数据库表或者视图上创建的对象，目的是为了加快对表或视图的查询的速度（简单理解）。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+索引是一个单独的、物理的数据库结构，它是某个表中一列或若干列值的集合和相应的指向表中物理标识这些值的数据页的逻辑指针清单（深刻理解）。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+按照存储方式分为：聚集与非聚集索引（需要重视和区别的概念，后面详解）<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+按照维护与管理索引角度分为：唯一索引、复合索引和系统自动创建的索引（相对简单，如下解释：）<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+1).唯一索引：惟一索引可以确保索引列不包含重复的值.<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+可以用多个列，但是索引可以确保索引列中每个值组合都是唯一的，<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+即下面的姓不能有重复，同时名也不能有重复：<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+名<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+李&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+二<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+张&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+三<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+王&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+五<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 语法： create unique 
+index idxempid on emp(姓,名)</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+2).复合索引：如果在两上以上的列上创建一个索引，则称为复合索引。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+那么，不可能有两行的姓和名是重复的，即上面的表没有两行其姓和名的组合是一样的。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+语法： create index indxfullname on emp(姓,名)</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+3).系统自建的索引：在使用T_sql语句创建表的时候使用PRIMARY 
+KEY或UNIQUE约束时，会在表上<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+自动创建一个惟一索引，自动创建的索引是无法删除的。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+语法：<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+create table 
+ABC<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+( empID int PRIMARY 
+KEY,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+firstname varchar(50) 
+UNIQUE,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+lastname&nbsp; varchar(50) 
+UNIQUE,<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+)&nbsp;&nbsp;&nbsp; /*这样的结果就出来了三个索引，但只有一个聚集索引empID*/</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+索引的结构是由：根节点---&gt;非叶节点---&gt;非叶节点---&gt;叶节点（注意索引在数据库引擎中所用的<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+内部数据结构一般是B+树，参考后文）</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+聚集索引和非聚集索引——&nbsp;&nbsp; <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+用一个现实中的例子说明以助理解。我们的汉语字典的正文本身就是一个聚集索引。比如，我们要查“安”字，就会很自然地翻开字典的前几页，因为“安”的拼音是“</P>
+<P>an”，而按照拼音排序汉字的字典是以英文字母“a”开头并以“z”结尾的，那么“安”字就自然地排在字典的前部。如果您翻完了所有以“a”开头的部分仍然找不到这个字，那</P>
+<P>么就说明您的字典中没有这个字；同样的，如果查“张”字，那您也会将您的字典翻到最后部分，因为“张”的拼音是“zhang”。也就是说，字典的正文部分本身就是一个目录，</P>
+<P>您不需要再去查其他目录来找到您需要找的内容。 <BR>　　我们把这种正文内容本身就是一种按照一定规则排列的目录称为“聚集索引”。</P>
+<P>　　如果您认识某个字，您可以快速地从自动中查到这个字。但您也可能会遇到您不认识的字，不知道它的发音，这时候，您就不能按照刚才的方法找到您要查的字，而需要去根</P>
+<P>据“偏旁部首”查到您要找的字，然后根据这个字后的页码直接翻到某页来找到您要找的字。但您结合“部首目录”和“检字表”而查到的字的排序并不是真正的正文的排序方法</P>
+<P>，比如您查“张”字，我们可以看到在查部首之后的检字表中“张”的页码是672页，检字表中“张”的上面是“驰”字，但页码却是63页，“张”的下面是“弩”字，页面是390</P>
+<P>页。很显然，这些字并不是真正的分别位于“张”字的上下方，现在您看到的连续的“驰、张、弩”三字实际上就是他们在非聚集索引中的排序，是字典正文中的字在非聚集索引</P>
+<P>中的映射。我们可以通过这种方式来找到您所需要的字，但它需要两个过程，先找到目录中的结果，然后再翻到您所需要的页码。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+我们把这种目录纯粹是目录，正文纯粹是正文的排序方式称为“非聚集索引”。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+2.性质及使用方法<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+1)聚集索引：表中存储的数据按照索引的顺序存储，检索效率比普通索引高，索引占用硬盘<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+存储空间小（1%左右），但对数据新增/修改/删除的速度影响比较大（降低）。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+特点：<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(1) 
+无索引，数据无序<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(2) 有索引，数据与索引同序 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(3) 
+数据会根据索引键的顺序重新排列数据<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(4) 
+一个表只能有一个索引<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(5) 叶节点的指针指向的数据也在同一位置存储<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+语法：create CLUSTERED INDEX idxempID ON emp(empID)</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+2)非聚集索引：不影响表中的数据存储顺序，检索效率比聚集索引低，索引占用硬盘存储<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+空间大（30%~40%），对数据新增/修改/删除的影响很少。<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+特点：<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(1) 
+一个表可以最多可以创建249个非聚集索引<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(2) 
+先建聚集索引才能创建非聚集索引<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(3) 
+非聚集索引数据与索引不同序<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(4) 
+数据与非聚集索引在不同位置<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(5) 
+非聚集索引在叶节点上存储，在叶节点上有一个“指针”直接指向要查询的数据区域<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(6) 数据不会根据非聚集索引键的顺序重新排列数据<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+语法：create NONCLUSTERED INDEX idximpID ON 
+emp(empID)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+创建索引的方法：<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+1)企业管理器中<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(1)右击某个表，所有任务---管理索引，打开管理索引，单击“新建”就可以创建索引<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(2)在设计表中进行设计表，管理索引/键<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(3)在关系图中，添加表后右击关系图中的某个表，就有“索引/键”<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(4)通过向导,数据库---创建索引向导<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(5)通过T-SQL语句<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+2)能过“索引优化向导”来优化索引的向导，通过它可以决定选择哪些列做为索引列&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;动作描述/是否应该&nbsp;&nbsp;&nbsp;&nbsp; 
+使用聚集索引&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 使用非聚集索引 
+<BR>&nbsp;<BR>&nbsp;列经常被分组排序&nbsp;&nbsp; 应&nbsp;&nbsp; 应</P>
+<P>&nbsp;返回某范围内的数据&nbsp;&nbsp; 应&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+不应</P>
+<P>&nbsp;一个或极少不同值&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+不应&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 不应</P>
+<P>&nbsp;小数目的不同值&nbsp;&nbsp;&nbsp; 
+应&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+不应<BR>&nbsp;<BR>&nbsp;大数目的不同值&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+不应&nbsp;&nbsp; 
+应<BR>&nbsp;<BR>&nbsp;频繁更新的列&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+不应&nbsp;&nbsp; 应<BR>&nbsp;<BR>&nbsp;外键列&nbsp;&nbsp;&nbsp;&nbsp; 应&nbsp;&nbsp; 
+应<BR>&nbsp;<BR>&nbsp;主键列&nbsp;&nbsp;&nbsp;&nbsp; 应&nbsp;&nbsp; 
+应<BR>&nbsp;<BR>&nbsp;频繁修改索引列&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+不应&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 不应<BR>&nbsp;<BR>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+3.数据库引擎中索引的内部结构<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+有必要先说明一下数据库引擎，<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+这部分是较深的内容，需要有一定的数据库理论知识和数据结构与算法知识，数据结构和算法告诉我们，对索引关键字进行快速查找时要使用树形数据结构，在数据库引</P>
+<P>擎中，索引通常用B+树来表示，google发现这方面的文章较少，后面找到相关详细资料会补充。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+4.主键、索引、聚集索引和非聚集索引<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+1)主键&nbsp;&nbsp; (PK)&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+唯一标识表中的所有行的一个列或一组列。主键不允许空值。不能存在具有相同的主键值的两个<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+行，因此主键值总是唯一标识单个行。表中可以有不止一个键唯一标识行，每个键都称作候选键。只有<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+一个候选键可以选作表的主键，所有其它候选键称作备用键。尽管表不要求具有主键，但定义主键是很<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+好的做法。&nbsp;&nbsp; 在规范化的表中，每行中的所有数据值都完全依赖于主键。例如，在以&nbsp;&nbsp; 
+EmployeeID&nbsp;&nbsp; 作为<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+主键的规范化的&nbsp;&nbsp; employee&nbsp;&nbsp; 
+表中，所有列都应包含与某个特定职员相关的数据。该表不具有&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DepartmentName 
+列，因为部门的名称依赖于部门&nbsp;&nbsp; ID，而不是职员&nbsp;&nbsp; ID。&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2)索引&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+关系数据库中基于键值提供对表的行中数据的快速访问的数据库对象。索引还可以在表的行上强制唯<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+一性。SQL&nbsp;&nbsp; Server&nbsp;&nbsp; 
+支持聚集索引和非聚集索引。对表的主键自动进行索引。在全文搜索中，全文索引<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+存储关于重要词和这些词在给定列中的位置的信息。&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+如果某列有多行包含&nbsp;&nbsp; NULL&nbsp;&nbsp; 
+值，则不能在该列上创建唯一索引。同样，如果列的组合中有多行包<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+含&nbsp;&nbsp; NULL&nbsp;&nbsp; 值，则不能在多个列上创建唯一索引。在创建索引时，这些被视为重复的值。&nbsp;&nbsp; 
+</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3)聚集索引&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+在创建聚集索引时，将会对表进行复制，对表中的数据进行排序，然后删除原始的表。因此，数据库<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+上必须有足够的空闲空间，以容纳数据复本。默认情况下，表中的数据在创建索引时排序。但是，如果<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+因聚集索引已经存在，且正在使用同一名称和列重新创建，而数据已经排序，则会重建索引，而不是从<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+头创建该索引，以自动跳过排序操作。重建操作会检查行是否在生成索引时进行了排序。如果有任何行<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+排序不正确，即会取消操作，不创建索引。&nbsp;&nbsp; </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4)非聚集索引&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+非聚集索引与课本中的索引类似。数据存储在一个地方，索引存储在另一个地方，索引带有指针指向<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+数据的存储位置。索引中的项目按索引键值的顺序存储，而表中的信息按另一种顺序存储（这可以由聚<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+集索引规定）。如果在表中未创建聚集索引，则无法保证这些行具有任何特定的顺序。 </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+打开设计表界面里面有个钥匙就是主键的意思，当你声明一列为主键的时候数据库实际上就是生成一个<BR>唯一的索引，查询优化器实际上是根据列上有没有唯一索引来保证列的唯一性而不是根据列是否被声明为主键。&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+聚集索引一个表只有一个，实际上它的叶子节点就是数据页，比非聚集索引速度快，占用的空间小，大概只有表的1％左右。如果在声明的时候没有选择UNIQUE选项，则</P>
+<P>在插入数据的时候会自动生成一个唯一标示符。&nbsp;&nbsp; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+非聚集索引一个表可以有多个，一个3层的非聚簇索引要查询6次才可以找到真实数据，因为其叶子节点并不是真实数据，而是标识（如果表上有聚集索引则为聚集索引，</P>
+<P>如没有，则为实际数据的页号），非聚集索引通常占用空间比较大，表的30－40％。&nbsp;&nbsp;</P>
+<P>转载：<A href="http://blog.csdn.net/cqf7174/archive/2009/05/08/4159398.aspx" 
+target="_blank">http://blog.csdn.net/cqf7174/archive/2009/05/08/4159398.aspx</A></P>
+<P>SQL 索引结构与使用：<A href="http://www.cnblogs.com/tintown/archive/2005/04/25/145137.html" 
+target="_blank">http://www.cnblogs.com/tintown/archive/2005/04/25/145137.html</A></P>
+<P>SQL查询优化--索引：<A href="http://www.cnitblog.com/liangchao/archive/2006/07/26/14242.html" 
+target="_blank">http://www.cnitblog.com/liangchao/archive/2006/07/26/14242.html</A></P>
+<P><A href="http://blog.csdn.net/htl258/archive/2009/03/07/3967321.aspx" target="_blank">http://blog.csdn.net/htl258/archive/2009/03/07/3967321.aspx</A>&nbsp;</P>
+<P><A style="color: rgb(255, 0, 0);" title="SQL  全文索引详解" href="http://files.cnblogs.com/sainaxingxing/Sql2005全文索引.doc" 
+target="_blank">SQL 全文索引详解</A></P>
+<P><A href="http://blog.csdn.net/wufeng4552/archive/2009/10/14/4667405.aspx" 
+target="_blank">http://blog.csdn.net/wufeng4552/archive/2009/10/14/4667405.aspx</A></P></DIV>
+<DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 42327;
+var cb_entryId = 1605204;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "9b4e420b-63cf-dd11-9e4d-001cf0cd104b";
+var cb_entryCreatedDate = '2009/11/18 10:57:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV id="blog_post_info_block">
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+
+<DIV class="postDesc">posted on <SPAN id="post-date">2009-11-18 10:57</SPAN> <A 
+href="http://www.cnblogs.com/sainaxingxing/">赛纳行星</A> 阅读(167) 评论(<SPAN id="post-comment-count">0</SPAN>) 
+ <A href="http://www.cnblogs.com/sainaxingxing/admin/EditPosts.aspx?postid=1605204" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(1605204);return false;" href="http://www.cnblogs.com/sainaxingxing/archive/2009/11/18/1605204.html#">收藏</A></DIV>
+</DIV><IMG alt="" src="SQL%20索引学习%20-%20赛纳行星%20-%20博客园_files/1605204.jpg" width="1" 
+height="1">
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+
+<DIV id="comment_form" class="commentform">
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/sainaxingxing/archive/2009/11/18/1605204.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/sainaxingxing/archive/2009/11/18/1605204.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="ad_under_post_holder"></DIV>
+<DIV id="HistoryToday" class="c_ad_block"></DIV></DIV></DIV></DIV><!-- left ends --><!-- right starts -->
+<DIV id="right"><!-- 右侧工具部分 -->
+<DIV id="right_content"><!--done-->
+<H2 class="listtitle">公告</H2>
+<DIV class="newsItem">
+<DIV id="blog-news"></DIV></DIV>
+<DIV id="calendar">
+<DIV style="display: none;" id="blog-calendar-block">
+<DIV id="blog-calendar"></DIV></DIV></DIV>
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV></DIV></DIV><!-- //右侧工具部分 -->
+<DIV id="footer"><!--done-->Copyright ©2012 赛纳行星		</DIV></DIV><!-- right ends -->
+<DIV class="clear"></DIV></DIV>
+<SCRIPT type="text/javascript" src="SQL%20索引学习%20-%20赛纳行星%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

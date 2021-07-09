@@ -1,0 +1,300 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0060)http://www.cnblogs.com/ahghy/archive/2011/11/18/2254015.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=9.0000" 
+http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type"><TITLE>SQl 事务 
+异常和游标 - 山之子 - 博客园</TITLE><LINK rel="stylesheet" type="text/css" href="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/common.css">
+<LINK id="MainCss" rel="stylesheet" type="text/css" href="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/style.css">
+<LINK rel="stylesheet" type="text/css" href="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/shStyle.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/ahghy/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/ahghy/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/ahghy/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'ahghy';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A><!--done-->
+<DIV id="home">
+<DIV id="header">
+<DIV id="blogTitle"><A id="lnkBlogLogo" 
+href="http://www.cnblogs.com/ahghy/"><IMG id="blogLogo" alt="返回主页" src="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/logo.gif"></A><!--done-->
+<H1><A id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/ahghy/">山之子</A></H1>
+<H2></H2></DIV><!--end: blogTitle 博客的标题和副标题 -->
+<DIV id="navigator"><!--done-->
+<UL id="navList">
+  <LI><A id="MyLinks1_HomeLink" class="menu" 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A id="MyLinks1_SpaceLink" class="menu" 
+  href="http://space.cnblogs.com/">社区</A></LI>
+  <LI><A id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/ahghy/">首页</A></LI>
+  <LI><A id="MyLinks1_NewPostLink" class="menu" href="http://www.cnblogs.com/ahghy/admin/EditPosts.aspx?opt=1" 
+  rel="nofollow">新随笔</A></LI>
+  <LI><A accessKey="9" id="MyLinks1_ContactLink" class="menu" href="http://space.cnblogs.com/msg/send/%e5%b1%b1%e4%b9%8b%e5%ad%90" 
+  rel="nofollow">联系</A></LI>
+  <LI><A id="MyLinks1_Admin" class="menu" href="http://www.cnblogs.com/ahghy/admin/EditPosts.aspx" 
+  rel="nofollow">管理</A></LI>
+  <LI><A id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/ahghy/rss">订阅</A><A 
+  id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/ahghy/rss"><IMG 
+  alt="订阅" src="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/rss.gif"></A></LI></UL>
+<DIV class="blogStats"><!--done-->随笔- 69&nbsp;文章- 0&nbsp;评论- 4&nbsp;					</DIV><!--end: blogStats --></DIV><!--end: navigator 博客导航栏 -->
+</DIV><!--end: header 头部 -->
+<DIV id="main">
+<DIV id="mainContent">
+<DIV class="forFlow"><!--done-->
+<DIV id="topics">
+<DIV class="post">
+<H1 class="postTitle"><A id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/ahghy/archive/2011/11/18/2254015.html">SQl 
+事务 异常和游标</A></H1>
+<DIV class="clear"></DIV>
+<DIV class="postBody">
+<DIV id="cnblogs_post_body">
+<H1 class="postTitle"><A id="ctl02_TitleUrl" class="postTitle2" href="http://www.cnblogs.com/hoojo/archive/2011/07/19/2110325.html">SQL 
+Server 事务、异常和游标</A></H1>
+<DIV id="cnblogs_post_body">
+<P>建议先阅读存储过程：<A href="http://www.cnblogs.com/hoojo/archive/2011/07/19/2110862.html">SQL 
+Server 存储过程</A></P>
+<P>Ø 事务</P>
+<P>在数据库中有时候需要把多个步骤的指令当作一个整体来运行，这个整体要么全部成功，要么全部失败，这就需要用到事务。</P>
+<P>&nbsp;&nbsp;&nbsp; 1、 事务的特点</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+事务有若干条T-SQL指令组成，并且所有的指令昨晚一个整体提交给数据库系统，执行时，这组指令要么全部执行完成，要么全部取消。因此，事务是一个不可分割的逻辑单元。</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+事务有4个属性：原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）以及持久性（Durability），也称作事务的ACID属性。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<STRONG>原子性</STRONG>：事务内的所有工作要么全部完成，要么全部不完成，不存在只有一部分完成的情况。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<STRONG>一致性</STRONG>：事务内的然后操作都不能违反数据库的然后约束或规则，事务完成时有内部数据结构都必须是正确的。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<STRONG>隔离性</STRONG>：事务直接是相互隔离的，如果有两个事务对同一个数据库进行操作，比如读取表数据。任何一个事务看到的所有内容要么是其他事务完成之前的状态，要么是其他事务完成之后的状态。一个事务不可能遇到另一个事务的中间状态。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<STRONG>持久性</STRONG>：事务完成之后，它对数据库系统的影响是持久的，即使是系统错误，重新启动系统后，该事务的结果依然存在。</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp; 2、 事务的模式</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a、 显示事务</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 显示事务就是用户使用T-SQL明确的定义事务的开始（begin 
+transaction）和提交（commit transaction）或回滚事务（rollback transaction）</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b、 自动提交事务</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+自动提交事务是一种能够自动执行并能自动回滚事务，这种方式是T-SQL的默认事务方式。例如在删除一个表记录的时候，如果这条记录有主外键关系的时候，删除就会受主外键约束的影响，那么这个删除就会取消。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 可以设置事务进入隐式方式：set 
+implicit_transaction on;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c、 隐式事务</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 隐式事务是指当事务提交或回滚后，SQL 
+Server自动开始事务。因此，隐式事务不需要使用begin transaction显示开始，只需直接失业提交事务或回滚事务的T-SQL语句即可。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 使用时，需要设置set implicit_transaction 
+on语句，将隐式事务模式打开，下一个语句会启动一个新的事物，再下一个语句又将启动一个新事务。</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp; 3、 事务处理</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 常用T-SQL事务语句：</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a、 begin transaction语句</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+开始事务，而@@trancount全局变量用来记录事务的数目值加1，可以用@@error全局变量记录执行过程中的错误信息，如果没有错误可以直接提交事务，有错误可以回滚。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b、 commit transaction语句</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+回滚事务，表示一个隐式或显示的事务的结束，对数据库所做的修改正式生效。并将@@trancount的值减1；</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; c、 rollback transaction语句</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 回滚事务，执行rollback 
+tran语句后，数据会回滚到begin tran的时候的状态</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp; 4、 事务的示例</P>
+<DIV id="codeSnippetWrapper"><PRE>--开始事务<BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> <SPAN style="color: rgb(0, 0, 255);">transaction</SPAN> tran_bank;<BR><SPAN style="color: rgb(0, 0, 255);">declare</SPAN> @tran_error <SPAN style="color: rgb(0, 0, 255);">int</SPAN>;<BR>    <SPAN style="color: rgb(0, 0, 255);">set</SPAN> @tran_error = 0;<BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN> try<BR>        <SPAN style="color: rgb(0, 0, 255);">update</SPAN> bank <SPAN style="color: rgb(0, 0, 255);">set</SPAN> totalMoney = totalMoney - 10000 <SPAN style="color: rgb(0, 0, 255);">where</SPAN> userName = <SPAN style="color: rgb(0, 96, 128);">'jack'</SPAN>;        <BR>        <SPAN style="color: rgb(0, 0, 255);">set</SPAN> @tran_error = @tran_error + @@error;<BR>        <SPAN style="color: rgb(0, 0, 255);">update</SPAN> bank <SPAN style="color: rgb(0, 0, 255);">set</SPAN> totalMoney = totalMoney + 10000 <SPAN style="color: rgb(0, 0, 255);">where</SPAN> userName = <SPAN style="color: rgb(0, 96, 128);">'jason'</SPAN>;<BR>        <SPAN style="color: rgb(0, 0, 255);">set</SPAN> @tran_error = @tran_error + @@error;<BR>    <SPAN style="color: rgb(0, 0, 255);">end</SPAN> try<BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN> catch        <BR>        <SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'出现异常，错误编号：'</SPAN> + <SPAN style="color: rgb(0, 0, 255);">convert</SPAN>(<SPAN style="color: rgb(0, 0, 255);">varchar</SPAN>, error_number()) + <SPAN style="color: rgb(0, 96, 128);">'， 错误消息：'</SPAN> + error_message(); <BR>        <SPAN style="color: rgb(0, 0, 255);">set</SPAN> @tran_error = @tran_error + 1;<BR>    <SPAN style="color: rgb(0, 0, 255);">end</SPAN> catch<BR><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (@tran_error &gt; 0)<BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN><BR>        --执行出错，回滚事务<BR>        <SPAN style="color: rgb(0, 0, 255);">rollback</SPAN> <SPAN style="color: rgb(0, 0, 255);">tran</SPAN>;<BR>        <SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'转账失败，取消交易'</SPAN>;<BR>    <SPAN style="color: rgb(0, 0, 255);">end</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">else</SPAN><BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN><BR>        --没有异常，提交事务<BR>        <SPAN style="color: rgb(0, 0, 255);">commit</SPAN> <SPAN style="color: rgb(0, 0, 255);">tran</SPAN>;<BR>        <SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'转账成功'</SPAN>;<BR>    <SPAN style="color: rgb(0, 0, 255);">end</SPAN><BR>go</PRE>
+</DIV>
+<DIV id="codeSnippetWrapper">&nbsp;</DIV>
+<P>Ø 异常</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 
+在程序中，有时候完成一些Transact-SQL会出现错误、异常信息。如果我们想自己处理这些异常信息的话，需要手动捕捉这些信息。那么我们可以利用try 
+catch完成。</P>
+<P>TRY…CATCH 构造包括两部分：一个 TRY 块和一个 CATCH 块。如果在 TRY 块中所包含的 Transact-SQL 
+语句中检测到错误条件，控制将被传递到 CATCH 块（可在此块中处理该错误）。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; CATCH 块处理该异常错误后，控制将被传递到 END CATCH 语句后面的第一个 
+Transact-SQL 语句。如果 END CATCH 语句是存储过程或触发器中的最后一条语句，控制将返回到调用该存储过程或触发器的代码。将不执行 TRY 
+块中生成错误的语句后面的 Transact-SQL 语句。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 如果 TRY 块中没有错误，控制将传递到关联的 END CATCH 语句后紧跟的语句。如果 END 
+CATCH 语句是存储过程或触发器中的最后一条语句，控制将传递到调用该存储过程或触发器的语句。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; TRY 块以 BEGIN TRY 语句开头，以 END TRY 语句结尾。在 BEGIN TRY 和 
+END TRY 语句之间可以指定一个或多个 Transact-SQL 语句。CATCH 块必须紧跟 TRY 块。CATCH 块以 BEGIN CATCH 
+语句开头，以 END CATCH 语句结尾。在 Transact-SQL 中，每个 TRY 块仅与一个 CATCH 块相关联。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; # 错误函数</P>
+<DIV id="codeSnippetWrapper"><PRE>TRY...CATCH 使用错误函数来捕获错误信息。<BR>    ERROR_NUMBER() 返回错误号。<BR>    ERROR_MESSAGE() 返回错误消息的完整文本。此文本包括为任何可替换参数（如长度、对象名称或时间）提供的值。<BR>    ERROR_SEVERITY() 返回错误严重性。<BR>    ERROR_STATE() 返回错误状态号。<BR>    ERROR_LINE() 返回导致错误的例程中的行号。<BR>    ERROR_PROCEDURE() 返回出现错误的存储过程或触发器的名称。</PRE>
+</DIV>
+<DIV id="codeSnippetWrapper">&nbsp;</DIV>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 示例</P>
+<DIV id="codeSnippetWrapper"><PRE>--错误消息存储过程<BR><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (object_id(<SPAN style="color: rgb(0, 96, 128);">'proc_error_info'</SPAN>) <SPAN style="color: rgb(0, 0, 255);">is</SPAN> <SPAN style="color: rgb(0, 0, 255);">not</SPAN> <SPAN style="color: rgb(0, 0, 255);">null</SPAN>)<BR>    <SPAN style="color: rgb(0, 0, 255);">drop</SPAN> <SPAN style="color: rgb(0, 0, 255);">procedure</SPAN> proc_error_info<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">create</SPAN> <SPAN style="color: rgb(0, 0, 255);">proc</SPAN> proc_error_info<BR><SPAN style="color: rgb(0, 0, 255);">as</SPAN><BR>    <SPAN style="color: rgb(0, 0, 255);">select</SPAN> <BR>        error_number() <SPAN style="color: rgb(0, 96, 128);">'错误编号'</SPAN>,<BR>        error_message() <SPAN style="color: rgb(0, 96, 128);">'错误消息'</SPAN>,<BR>        error_severity() <SPAN style="color: rgb(0, 96, 128);">'严重性'</SPAN>,<BR>        error_state() <SPAN style="color: rgb(0, 96, 128);">'状态好'</SPAN>,<BR>        error_line() <SPAN style="color: rgb(0, 96, 128);">'错误行号'</SPAN>,<BR>        error_procedure() <SPAN style="color: rgb(0, 96, 128);">'错误对象(存储过程或触发器)名称'</SPAN>;<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN></PRE>
+</DIV>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; # 示例：用异常处理错误信息</P>
+<DIV id="codeSnippetWrapper"><PRE>--简单try catch示例<BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> try<BR>    <SPAN style="color: rgb(0, 0, 255);">select</SPAN> 1 / 0;<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> try<BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> catch<BR>    <SPAN style="color: rgb(0, 0, 255);">exec</SPAN> proc_error_info; --调用错误消息存储过程<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> catch<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN></PRE>
+</DIV>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; # 示例：异常能处理的错误信息</P>
+<DIV id="codeSnippetWrapper"><PRE><SPAN style="color: rgb(0, 128, 0);">--</SPAN><BR><SPAN style="color: rgb(0, 128, 0);">--简单try catch示例，无法处理错误</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> try<BR>    <SPAN style="color: rgb(0, 0, 255);">select</SPAN> * * <SPAN style="color: rgb(0, 0, 255);">from</SPAN> student;<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> try<BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> catch<BR>    <SPAN style="color: rgb(0, 0, 255);">exec</SPAN> proc_error_info;<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> catch<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN><BR><SPAN style="color: rgb(0, 128, 0);">--</SPAN><BR><SPAN style="color: rgb(0, 128, 0);">--简单try catch示例，不处理错误(不存在的表对象)</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> try<BR>    <SPAN style="color: rgb(0, 0, 255);">select</SPAN> * <SPAN style="color: rgb(0, 0, 255);">from</SPAN> st;<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> try<BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> catch<BR>    <SPAN style="color: rgb(0, 0, 255);">exec</SPAN> proc_error_info;<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> catch<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN><BR><SPAN style="color: rgb(0, 128, 0);">--</SPAN><BR><SPAN style="color: rgb(0, 128, 0);">--异常处理，能处理存储过程（触发器）中（不存在表对象）的错误信息</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (object_id(<SPAN style="color: rgb(0, 96, 128);">'proc_select'</SPAN>) <SPAN style="color: rgb(0, 0, 255);">is</SPAN> <SPAN style="color: rgb(0, 0, 255);">not</SPAN> <SPAN style="color: rgb(0, 0, 255);">null</SPAN>)<BR>    <SPAN style="color: rgb(0, 0, 255);">drop</SPAN> <SPAN style="color: rgb(0, 0, 255);">procedure</SPAN> proc_select<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">create</SPAN> <SPAN style="color: rgb(0, 0, 255);">proc</SPAN> proc_select<BR><SPAN style="color: rgb(0, 0, 255);">as</SPAN><BR>    <SPAN style="color: rgb(0, 0, 255);">select</SPAN> * <SPAN style="color: rgb(0, 0, 255);">from</SPAN> st;<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> try<BR>    <SPAN style="color: rgb(0, 0, 255);">exec</SPAN> proc_select;<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> try<BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> catch    <BR>    <SPAN style="color: rgb(0, 0, 255);">exec</SPAN> proc_error_info;<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> catch<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN></PRE>
+</DIV>
+<DIV id="codeSnippetWrapper">&nbsp;</DIV>
+<DIV id="codeSnippetWrapper">&nbsp;</DIV>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 
+异常不能处理编译期的错误，如语法错误。以及重编译造成部分名称对象得不到正确解析的时候所出现的错误。</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; # 示例：无法提交的事务</P>
+<DIV id="codeSnippetWrapper"><PRE>--创建临时用表<BR><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (object_id(<SPAN style="color: rgb(0, 96, 128);">'temp_tab'</SPAN>, <SPAN style="color: rgb(0, 96, 128);">'u'</SPAN>) <SPAN style="color: rgb(0, 0, 255);">is</SPAN> <SPAN style="color: rgb(0, 0, 255);">not</SPAN> <SPAN style="color: rgb(0, 0, 255);">null</SPAN>)<BR>    <SPAN style="color: rgb(0, 0, 255);">drop</SPAN> <SPAN style="color: rgb(0, 0, 255);">table</SPAN> temp_tab<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">create</SPAN> <SPAN style="color: rgb(0, 0, 255);">table</SPAN> temp_tab(<BR>    id <SPAN style="color: rgb(0, 0, 255);">int</SPAN> <SPAN style="color: rgb(0, 0, 255);">primary</SPAN> <SPAN style="color: rgb(0, 0, 255);">key</SPAN> <SPAN style="color: rgb(0, 0, 255);">identity</SPAN>(100000, 1),<BR>    name <SPAN style="color: rgb(0, 0, 255);">varchar</SPAN>(200)<BR>)<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN><BR><BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> try<BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN> <SPAN style="color: rgb(0, 0, 255);">tran</SPAN>;<BR>    --没有createTime字段<BR>    <SPAN style="color: rgb(0, 0, 255);">alter</SPAN> <SPAN style="color: rgb(0, 0, 255);">table</SPAN> temp_tab <SPAN style="color: rgb(0, 0, 255);">drop</SPAN> <SPAN style="color: rgb(0, 0, 255);">column</SPAN> createTime;<BR>    <SPAN style="color: rgb(0, 0, 255);">commit</SPAN> <SPAN style="color: rgb(0, 0, 255);">tran</SPAN>;<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> try<BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> catch<BR>    <SPAN style="color: rgb(0, 0, 255);">exec</SPAN> proc_error_info;--显示异常信息<BR>    <SPAN style="color: rgb(0, 0, 255);">if</SPAN> (xact_state() = -1)<BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN><BR>        <SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'会话具有活动事务，但出现了致使事务被归类为无法提交的事务的错误。'</SPAN><BR>            + <SPAN style="color: rgb(0, 96, 128);">'会话无法提交事务或回滚到保存点；它只能请求完全回滚事务。'</SPAN><BR>            + <SPAN style="color: rgb(0, 96, 128);">'会话在回滚事务之前无法执行任何写操作。会话在回滚事务之前只能执行读操作。'</SPAN><BR>            + <SPAN style="color: rgb(0, 96, 128);">'事务回滚之后，会话便可执行读写操作并可开始新的事务。'</SPAN>;<BR>    <SPAN style="color: rgb(0, 0, 255);">end</SPAN><BR>    <SPAN style="color: rgb(0, 0, 255);">else</SPAN> <SPAN style="color: rgb(0, 0, 255);">if</SPAN> (xact_state() = 0)<BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN><BR>        <SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'会话没有活动事务。'</SPAN>;<BR>    <SPAN style="color: rgb(0, 0, 255);">end</SPAN><BR>    <SPAN style="color: rgb(0, 0, 255);">else</SPAN> <SPAN style="color: rgb(0, 0, 255);">if</SPAN> (xact_state() = 1)<BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN><BR>        <SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'会话具有活动事务。会话可以执行任何操作，包括写入数据和提交事务。'</SPAN>;<BR>    <SPAN style="color: rgb(0, 0, 255);">end</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> catch<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; # 示例：处理异常日志信息</P>
+<DIV id="codeSnippetWrapper"><PRE><SPAN style="color: rgb(0, 128, 0);">--</SPAN><BR><SPAN style="color: rgb(0, 128, 0);">---异常、错误信息表</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (object_id(<SPAN style="color: rgb(0, 96, 128);">'errorLog'</SPAN>, <SPAN style="color: rgb(0, 96, 128);">'U'</SPAN>) <SPAN style="color: rgb(0, 0, 255);">is</SPAN> <SPAN style="color: rgb(0, 0, 255);">not</SPAN> <SPAN style="color: rgb(0, 0, 255);">null</SPAN>)<BR>    <SPAN style="color: rgb(0, 0, 255);">drop</SPAN> <SPAN style="color: rgb(0, 0, 255);">table</SPAN> errorLog<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">create</SPAN> <SPAN style="color: rgb(0, 0, 255);">table</SPAN> errorLog(<BR>    errorLogID <SPAN style="color: rgb(0, 0, 255);">int</SPAN> <SPAN style="color: rgb(0, 0, 255);">primary</SPAN> <SPAN style="color: rgb(0, 0, 255);">key</SPAN> <SPAN style="color: rgb(0, 0, 255);">identity</SPAN>(100, 1),    --ErrorLog 行的主键。<BR>    errorTime datetime <SPAN style="color: rgb(0, 0, 255);">default</SPAN> getDate(),            --发生错误的日期和时间。<BR>    userName sysname <SPAN style="color: rgb(0, 0, 255);">default</SPAN> <SPAN style="color: rgb(0, 0, 255);">current_user</SPAN>,            --执行发生错误的批处理的用户。<BR>    errorNumber <SPAN style="color: rgb(0, 0, 255);">int</SPAN>,                                --发生的错误的错误号。<BR>    errorSeverity <SPAN style="color: rgb(0, 0, 255);">int</SPAN>,                                --发生的错误的严重性。<BR>    errorState <SPAN style="color: rgb(0, 0, 255);">int</SPAN>,                                    --发生的错误的状态号。<BR>    errorProcedure nvarchar(126),                    --发生错误的存储过程或触发器的名称。<BR>    errorLine <SPAN style="color: rgb(0, 0, 255);">int</SPAN>,                                    --发生错误的行号。<BR>    errorMessage nvarchar(4000)<BR>)<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN><BR><SPAN style="color: rgb(0, 128, 0);">--</SPAN><BR><SPAN style="color: rgb(0, 128, 0);">--存储过程：添加异常日志信息</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (object_id(<SPAN style="color: rgb(0, 96, 128);">'proc_add_exception_log'</SPAN>, <SPAN style="color: rgb(0, 96, 128);">'p'</SPAN>) <SPAN style="color: rgb(0, 0, 255);">is</SPAN> <SPAN style="color: rgb(0, 0, 255);">not</SPAN> <SPAN style="color: rgb(0, 0, 255);">null</SPAN>)<BR>    <SPAN style="color: rgb(0, 0, 255);">drop</SPAN> <SPAN style="color: rgb(0, 0, 255);">proc</SPAN> proc_add_exception_log<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">create</SPAN> <SPAN style="color: rgb(0, 0, 255);">proc</SPAN> proc_add_exception_log(@logId <SPAN style="color: rgb(0, 0, 255);">int</SPAN> = 0 <SPAN style="color: rgb(0, 0, 255);">output</SPAN>)<BR><SPAN style="color: rgb(0, 0, 255);">as</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN><BR>    <SPAN style="color: rgb(0, 0, 255);">set</SPAN> nocount <SPAN style="color: rgb(0, 0, 255);">on</SPAN>;<BR>    <SPAN style="color: rgb(0, 0, 255);">set</SPAN> @logId = 0;<BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN> try<BR>        <SPAN style="color: rgb(0, 0, 255);">if</SPAN> (error_number() <SPAN style="color: rgb(0, 0, 255);">is</SPAN> <SPAN style="color: rgb(0, 0, 255);">null</SPAN>)<BR>            <SPAN style="color: rgb(0, 0, 255);">return</SPAN>;<BR>        <BR>        <SPAN style="color: rgb(0, 0, 255);">if</SPAN> (xact_state() = -1)<BR>        <SPAN style="color: rgb(0, 0, 255);">begin</SPAN><BR>            <SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'会话具有活动事务，但出现了致使事务被归类为无法提交的事务的错误。'</SPAN><BR>                + <SPAN style="color: rgb(0, 96, 128);">'会话无法提交事务或回滚到保存点；它只能请求完全回滚事务。'</SPAN><BR>                + <SPAN style="color: rgb(0, 96, 128);">'会话在回滚事务之前无法执行任何写操作。会话在回滚事务之前只能执行读操作。'</SPAN><BR>                + <SPAN style="color: rgb(0, 96, 128);">'事务回滚之后，会话便可执行读写操作并可开始新的事务。'</SPAN>;<BR>        <SPAN style="color: rgb(0, 0, 255);">end</SPAN><BR>        <SPAN style="color: rgb(0, 0, 255);">else</SPAN> <SPAN style="color: rgb(0, 0, 255);">if</SPAN> (xact_state() = 0)<BR>        <SPAN style="color: rgb(0, 0, 255);">begin</SPAN><BR>            <SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'会话没有活动事务。'</SPAN>;<BR>        <SPAN style="color: rgb(0, 0, 255);">end</SPAN><BR>        <SPAN style="color: rgb(0, 0, 255);">else</SPAN> <SPAN style="color: rgb(0, 0, 255);">if</SPAN> (xact_state() = 1)<BR>        <SPAN style="color: rgb(0, 0, 255);">begin</SPAN><BR>            <SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'会话具有活动事务。会话可以执行任何操作，包括写入数据和提交事务。'</SPAN>;<BR>        <SPAN style="color: rgb(0, 0, 255);">end</SPAN><BR>        <BR>        --添加日志信息<BR>        insert <SPAN style="color: rgb(0, 0, 255);">into</SPAN> errorLog <SPAN style="color: rgb(0, 0, 255);">values</SPAN>(getDate(), <BR>            <SPAN style="color: rgb(0, 0, 255);">current_user</SPAN>, error_number(), <BR>            error_severity(), error_state(), <BR>            error_procedure(), <BR>            error_line(), error_message());<BR>        --设置自增值<BR>        <SPAN style="color: rgb(0, 0, 255);">select</SPAN> @logId = @@<SPAN style="color: rgb(0, 0, 255);">identity</SPAN>;<BR>    <SPAN style="color: rgb(0, 0, 255);">end</SPAN> try<BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN> catch<BR>        <SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'添加异常日志信息出现错误'</SPAN>;<BR>        <SPAN style="color: rgb(0, 0, 255);">exec</SPAN> proc_error_info;--显示错误信息<BR>        <SPAN style="color: rgb(0, 0, 255);">return</SPAN> -1;<BR>    <SPAN style="color: rgb(0, 0, 255);">end</SPAN> catch<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN><BR><SPAN style="color: rgb(0, 128, 0);">--</SPAN><BR><SPAN style="color: rgb(0, 128, 0);">---处理异常信息示例</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">declare</SPAN> @id <SPAN style="color: rgb(0, 0, 255);">int</SPAN>;<BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> try<BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN> <SPAN style="color: rgb(0, 0, 255);">tran</SPAN>;<BR>    --删除带有外键的记录信息<BR>    <SPAN style="color: rgb(0, 0, 255);">delete</SPAN> classes <SPAN style="color: rgb(0, 0, 255);">where</SPAN> id = 1;<BR>    <SPAN style="color: rgb(0, 0, 255);">commit</SPAN> <SPAN style="color: rgb(0, 0, 255);">tran</SPAN>;<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> try<BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN> catch<BR>    <SPAN style="color: rgb(0, 0, 255);">exec</SPAN> proc_error_info;--显示错误信息<BR>    <SPAN style="color: rgb(0, 0, 255);">if</SPAN> (xact_state() &lt;&gt; 0)<BR>    <SPAN style="color: rgb(0, 0, 255);">begin</SPAN><BR>        <SPAN style="color: rgb(0, 0, 255);">rollback</SPAN> <SPAN style="color: rgb(0, 0, 255);">tran</SPAN>;<BR>    <SPAN style="color: rgb(0, 0, 255);">end</SPAN><BR>    <SPAN style="color: rgb(0, 0, 255);">exec</SPAN> proc_add_exception_log @id <SPAN style="color: rgb(0, 0, 255);">output</SPAN><BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN> catch<BR><SPAN style="color: rgb(0, 0, 255);">select</SPAN> * <SPAN style="color: rgb(0, 0, 255);">from</SPAN> errorLog <SPAN style="color: rgb(0, 0, 255);">where</SPAN> errorLogID = @id;<BR><SPAN style="color: rgb(0, 0, 255);">go</SPAN></PRE>
+</DIV>
+<P>&nbsp;</P>
+<P>Ø 游标</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 
+游标可以对一个select的结果集进行处理，或是不需要全部处理，就会返回一个对记录集进行处理之后的结果。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 1、游标实际上是一种能从多条数据记录的结果集中每次提取一条记录的机制。游标可以完成：</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 允许定位到结果集中的特定行</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 
+从结果集的当前位置检索一行或多行数据</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 支持对结果集中当前位置的进行修改</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 
+由于游标是将记录集进行一条条的操作，所以这样给服务器增加负担，一般在操作复杂的结果集的情况下，才使用游标。SQL Server 
+2005有三种游标：T-SQL游标、API游标、客户端游标。</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 2、游标的基本操作</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+游标的基本操作有定义游标、打开游标、循环读取游标、关闭游标、删除游标。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; A、 定义游标</P>
+<DIV id="codeSnippetWrapper"><PRE><SPAN style="color: rgb(0, 0, 255);">declare</SPAN> cursor_name    --游标名称<BR><SPAN style="color: rgb(0, 0, 255);">cursor</SPAN> [<SPAN style="color: rgb(0, 0, 255);">local</SPAN> | <SPAN style="color: rgb(0, 0, 255);">global</SPAN>]    --全局、局部<BR>[forward <SPAN style="color: rgb(0, 0, 255);">only</SPAN> | <SPAN style="color: rgb(0, 0, 255);">scroll</SPAN>]    --游标滚动方式<BR>[read_only | scroll_locks | optimistic]    --读取方式<BR><SPAN style="color: rgb(0, 0, 255);">for</SPAN> select_statements                    --查询语句<BR>[<SPAN style="color: rgb(0, 0, 255);">for</SPAN> <SPAN style="color: rgb(0, 0, 255);">update</SPAN> | <SPAN style="color: rgb(0, 0, 255);">of</SPAN> column_name ...]        --修改字段</PRE>
+</DIV>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 参数：</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; forward only | 
+scroll：前一个参数，游标只能向后移动；后一个参数，游标可以随意移动</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; read_only：只读游标</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; scroll_locks：游标锁定，游标在读取时，数据库会将该记录锁定，以便游标完成对记录的操作</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 
+optimistic：该参数不会锁定游标；此时，如果记录被读入游标后，对游标进行更新或删除不会超过</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; B、 打开游标</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; open cursor_name;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+游标打开后，可以使用全局变量@@cursor_rows显示读取记录条数</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; C、 检索游标</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fetch cursor_name;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 检索方式如下：</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+fetch first; 读取第一行</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+fetch next; 读取下一行</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+fetch prior; 读取上一行</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+fetch last; 读取最后一行</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+fetch absolute n; 读取某一行</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+如果n为正整数，则读取第n条记录</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+如果n为负数，则倒数提取第n条记录</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+如果n为，则不读取任何记录</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+fetch pelative n</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+如果n为正整数，则读取上次读取记录之后第n条记录</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+如果n为负数，则读取上次读取记录之前第n条记录</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+如果n为，则读取上次读取的记录</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; D、 关闭游标</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; close cursor_name;</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; E、 删除游标</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; deallocate 
+cursor_name;</P>
+<P>&nbsp;</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 3、游标操作示例</P>
+<DIV id="codeSnippetWrapper"><PRE>--创建一个游标<BR><SPAN style="color: rgb(0, 0, 255);">declare</SPAN> cursor_stu <SPAN style="color: rgb(0, 0, 255);">cursor</SPAN> <SPAN style="color: rgb(0, 0, 255);">scroll</SPAN> <SPAN style="color: rgb(0, 0, 255);">for</SPAN><BR>    <SPAN style="color: rgb(0, 0, 255);">select</SPAN> id, name, age <SPAN style="color: rgb(0, 0, 255);">from</SPAN> student;<BR>--打开游标<BR><SPAN style="color: rgb(0, 0, 255);">open</SPAN> cursor_stu;<BR>--存储读取的值<BR><SPAN style="color: rgb(0, 0, 255);">declare</SPAN> @id <SPAN style="color: rgb(0, 0, 255);">int</SPAN>,<BR>        @name nvarchar(20),<BR>        @age <SPAN style="color: rgb(0, 0, 255);">varchar</SPAN>(20);<BR>--读取第一条记录<BR><SPAN style="color: rgb(0, 0, 255);">fetch</SPAN> <SPAN style="color: rgb(0, 0, 255);">first</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN> cursor_stu <SPAN style="color: rgb(0, 0, 255);">into</SPAN> @id, @name, @age;<BR>--循环读取游标记录<BR><SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'读取的数据如下：'</SPAN>;<BR>--全局变量<BR><SPAN style="color: rgb(0, 0, 255);">while</SPAN> (@@fetch_status = 0)<BR><SPAN style="color: rgb(0, 0, 255);">begin</SPAN><BR>    <SPAN style="color: rgb(0, 0, 255);">print</SPAN> <SPAN style="color: rgb(0, 96, 128);">'编号：'</SPAN> + <SPAN style="color: rgb(0, 0, 255);">convert</SPAN>(<SPAN style="color: rgb(0, 0, 255);">char</SPAN>(5), @id) + <SPAN style="color: rgb(0, 96, 128);">', 名称：'</SPAN> + @name + <SPAN style="color: rgb(0, 96, 128);">', 类型：'</SPAN> + @age;<BR>    --继续读取下一条记录<BR>    <SPAN style="color: rgb(0, 0, 255);">fetch</SPAN> <SPAN style="color: rgb(0, 0, 255);">next</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN> cursor_stu <SPAN style="color: rgb(0, 0, 255);">into</SPAN> @id, @name, @age;<BR><SPAN style="color: rgb(0, 0, 255);">end</SPAN><BR>--关闭游标<BR><SPAN style="color: rgb(0, 0, 255);">close</SPAN> area_cursor;<BR><BR>--删除游标<BR>--<SPAN style="color: rgb(0, 0, 255);">deallocate</SPAN> area_cursor;</PRE>
+</DIV></DIV></DIV>
+<DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 86197;
+var cb_entryId = 2254015;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "798a2ee6-1a41-df11-ba8f-001cf0cd104b";
+var cb_entryCreatedDate = '2011/11/18 13:56:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV id="blog_post_info_block">
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+</DIV>
+<DIV class="postDesc">posted @ <SPAN id="post-date">2011-11-18 13:56</SPAN> <A 
+href="http://www.cnblogs.com/ahghy/">山之子</A> 阅读(105) 评论(<SPAN id="post-comment-count">0</SPAN>) 
+ <A href="http://www.cnblogs.com/ahghy/admin/EditPosts.aspx?postid=2254015" rel="nofollow">编辑</A> 
+<A onclick="AddToWz(2254015);return false;" href="http://www.cnblogs.com/ahghy/archive/2011/11/18/2254015.html#">收藏</A></DIV></DIV><IMG 
+alt="" src="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/2254015.jpg" width="1" 
+height="1"></DIV><!--end: topics 文章、评论容器-->
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+
+<DIV id="comment_form" class="commentform">
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/ahghy/archive/2011/11/18/2254015.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/ahghy/archive/2011/11/18/2254015.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="ad_under_post_holder"></DIV>
+<DIV id="HistoryToday" class="c_ad_block"></DIV>
+</DIV></DIV><!--end: forFlow --></DIV><!--end: mainContent 主体内容容器-->
+<DIV id="sideBar">
+<DIV id="sideBarMain">
+<DIV id="calendar">
+<DIV style="displya: none;" id="blog-calendar"></DIV></DIV><!--done-->
+<DIV class="newsItem">
+<H3 class="catListTitle">公告</H3>
+<DIV id="blog-news"></DIV></DIV>
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV></DIV></DIV><!--end: sideBarMain --></DIV><!--end: sideBar 侧边栏容器 -->
+<DIV class="clear"></DIV></DIV><!--end: main -->
+<DIV class="clear"></DIV>
+<DIV id="footer"><!--done--> Copyright ©2012 山之子	</DIV><!--end: footer --></DIV><!--end: home 自定义的最大容器 -->
+<SCRIPT type="text/javascript" src="SQl%20事务%20异常和游标%20-%20山之子%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

@@ -1,0 +1,309 @@
+#EntryTag {
+	font-size: 9pt;
+}
+#divRefreshComments {
+	text-align: right; font-size: 9pt; margin-right: 10px; margin-bottom: 5px;
+}
+.topicListFooter {
+	text-align: right; margin-top: 10px; margin-right: 10px;
+}
+* {
+	margin: 0px; padding: 0px;
+}
+body {
+	background: rgb(255, 255, 255); color: rgb(0, 0, 0); line-height: 1.5; font-family: verdana,arial; font-size: 13px;
+}
+img {
+	border: 0px currentColor;
+}
+li {
+	list-style: none;
+}
+input {
+	border: 1px solid rgb(153, 153, 153);
+}
+textarea {
+	border: 1px solid rgb(153, 153, 153);
+}
+h1 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+h2 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+h3 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+h4 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+h5 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+h6 {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+th {
+	color: rgb(0, 0, 0); font-weight: bold;
+}
+a {
+	color: rgb(0, 0, 0); text-decoration: none;
+}
+a:hover {
+	color: red;
+}
+#header {
+	background: rgb(249, 249, 249);
+}
+#mainContent {
+	margin-right: 330px;
+}
+#sideBar {
+	padding: 0px 8px 20px 30px; top: 120px; width: 300px; right: 0px; overflow: hidden; border-left-color: rgb(204, 204, 204); border-top-width: 0px; border-left-width: 1px; border-left-style: solid; position: absolute;
+}
+.forFlow {
+	margin: 0px 50px;
+}
+#footer {
+	text-align: center;
+}
+#lnkBlogLogo {
+	display: none;
+}
+#blogTitle {
+	padding: 16px;
+}
+#blogTitle h1 {
+	font-size: 17pt;
+}
+#blogTitle h2 {
+	color: rgb(153, 153, 153); font-size: 10.5pt;
+}
+#blogTitle .title {
+	font-size: 17pt;
+}
+#blogTitle .subtitle {
+	color: rgb(153, 153, 153); font-size: 10.5pt;
+}
+#navigator {
+	background: rgb(246, 246, 246); border-width: 1px; height: 30px; color: rgb(153, 153, 153); line-height: 30px; padding-top: 2px; padding-right: 5px; padding-left: 15px; border-top-color: rgb(204, 204, 204); border-bottom-color: rgb(204, 204, 204); border-top-style: solid; border-bottom-style: solid;
+}
+#navigator img {
+	display: none;
+}
+.blogStats {
+	color: rgb(153, 153, 153); float: right;
+}
+#navList li {
+	font-size: 10.5pt; margin-right: 20px; float: left;
+}
+#sideBar li {
+	text-indent: -1.5em; margin-left: 1.5em;
+}
+.divRecentCommentAticle {
+	text-indent: -1.5em; margin-left: 1.5em;
+}
+#sideBar h3 {
+	margin: 16px 0px 0px; text-align: left; font-size: 14px;
+}
+#MyIng .ing_title {
+	margin: 16px 0px 0px; text-align: left; font-size: 14px;
+}
+#calendar {
+	text-align: center; margin-top: 16px;
+}
+#calendar table {
+	margin: 0px auto; width: 90%;
+}
+#calendar .CalOtherMonthDay {
+	color: rgb(153, 153, 153);
+}
+#sideBar .divRecentComment {
+	margin: 0px 0px 8px 8px; color: rgb(102, 102, 102);
+}
+#sideBar .recent_comment_body {
+	margin: 5px 0px 8px 18px; color: rgb(102, 102, 102); text-indent: 0px;
+}
+.ing_title a:link {
+	font-weight: bold;
+}
+.ing_title a:visited {
+	font-weight: bold;
+}
+.ing_title a:hover {
+	font-weight: bold;
+}
+.ing_title a:active {
+	font-weight: bold;
+}
+div.commentform textarea {
+	width: 450px; height: 300px; ont-size: 13px;
+}
+.dayTitle {
+	display: none;
+}
+.entrylistTitle {
+	text-align: left; font-size: 14px; font-weight: bold; margin-top: 20px;
+}
+.thumbTitle {
+	text-align: left; font-size: 14px; font-weight: bold; margin-top: 20px;
+}
+.PostListTitle {
+	text-align: left; font-size: 14px; font-weight: bold; margin-top: 20px;
+}
+.forFlow h3 div {
+	text-align: left; font-size: 14px; font-weight: bold; margin-top: 20px;
+}
+.galleryTitle {
+	text-align: left; font-size: 14px; font-weight: bold; margin-top: 20px;
+}
+.entrylistDescription {
+	margin-left: 16px;
+}
+.thumbDescription {
+	margin-left: 16px;
+}
+.postTitle {
+	margin: 20px 0px 10px; font-size: 14px; font-weight: bold; border-bottom-color: rgb(221, 221, 221); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.entrylistPosttitle {
+	margin: 20px 0px 10px; font-size: 14px; font-weight: bold; border-bottom-color: rgb(221, 221, 221); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.feedback_area_title {
+	margin: 20px 0px 10px; font-size: 14px; font-weight: bold; border-bottom-color: rgb(221, 221, 221); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.postBody {
+	color: rgb(17, 17, 17); line-height: 1.8; font-size: 13px;
+}
+.postBody span {
+	color: rgb(17, 17, 17); line-height: 1.8em; font-size: 13px;
+}
+.postBody h5 {
+	font-size: 10pt;
+}
+.postCon {
+	overflow: hidden;
+}
+.postCon a {
+	color: rgb(0, 102, 204); text-decoration: underline;
+}
+.postBody a {
+	color: rgb(0, 102, 204); text-decoration: underline;
+}
+.feedbackCon a {
+	color: rgb(0, 102, 204); text-decoration: underline;
+}
+.postCon a:hover {
+	border-color: rgb(153, 153, 153);
+}
+.postBody a:hover {
+	border-color: rgb(153, 153, 153);
+}
+.feedbackCon a:hover {
+	border-color: rgb(153, 153, 153);
+}
+.postDesc {
+	text-align: right; color: rgb(102, 102, 102); padding-bottom: 5px; vertical-align: middle; border-bottom-color: rgb(153, 153, 153); border-bottom-width: 0px; border-bottom-style: dotted;
+}
+.entrylistItemPostDesc {
+	text-align: right; color: rgb(102, 102, 102); padding-bottom: 5px; vertical-align: middle; border-bottom-color: rgb(153, 153, 153); border-bottom-width: 0px; border-bottom-style: dotted;
+}
+.postDesc a:link {
+	color: rgb(102, 102, 102); text-decoration: none;
+}
+.postDesc a:active {
+	color: rgb(102, 102, 102); text-decoration: none;
+}
+.postDesc a:visited {
+	color: rgb(102, 102, 102); text-decoration: none;
+}
+.postDesc a:hover {
+	text-decoration: underline;
+}
+.PostList {
+	margin: auto; padding: 6px 0px; width: 96%; text-align: right; overflow: hidden; clear: both; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: dotted; float: none;
+}
+.postTitl2 {
+	float: left;
+}
+.postText2 {
+	text-align: left; color: rgb(102, 102, 102);
+}
+.feedbackItem {
+	padding: 8px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: dotted;
+}
+.feedbackManage {
+	float: right;
+}
+.feedbackCon {
+	color: rgb(102, 102, 102); line-height: 1.5; margin-left: 1em;
+}
+.commentform td div span {
+	margin-left: 12px;
+}
+.gallery img {
+	margin: 8px;
+}
+#taglist {
+	margin: 20px auto;
+}
+.pfl_feedback_area_title {
+	margin: 16px 0px; font-size: 16px; font-weight: bold;
+}
+.pfl_feedback_area_title a {
+	color: rgb(153, 153, 153); font-size: 12px; font-weight: normal;
+}
+.pfl_feedbacksubtitle {
+	height: 30px;
+}
+.pfl_feedbackname {
+	margin: 10px 20px 0px 0px; float: left;
+}
+.pfl_feedbackManage {
+	margin: 10px 20px 0px 0px; float: left;
+}
+.pfl_feedbackCon {
+	clear: both; margin-left: 12px;
+}
+.pfl_feedbackAnswer {
+	clear: both; margin-left: 12px;
+}
+.btn_my_zzk {
+	border: 0px currentColor;
+}
+#sideBarMain {
+	padding-left: 0px;
+}
+#MyIng {
+	padding-left: 10px;
+}
+div#sideBar div#side_ing_block ul li {
+	text-indent: 0px; margin-left: 0px;
+}
+#side_ing_block {
+	line-height: 180%;
+}
+#EntryTag {
+	margin-top: 10px;
+}
+#blog_ad_google h3 {
+	margin-bottom: 10px;
+}
+#digg_block a:link {
+	color: rgb(1, 95, 182);
+}
+#digg_block a:visited {
+	color: rgb(1, 95, 182);
+}
+#digg_block a:active {
+	color: rgb(1, 95, 182);
+}
+#digg_block {
+	color: rgb(1, 95, 182);
+}
+span.diggnum {
+	color: rgb(1, 95, 182);
+}
+span.burynum {
+	color: rgb(1, 95, 182);
+}

@@ -1,0 +1,185 @@
+1.一道SQL语句面试题，关于group by
+表内容：
+2005-05-09 胜
+2005-05-09 胜
+2005-05-09 负
+2005-05-09 负
+2005-05-10 胜
+2005-05-10 负
+2005-05-10 负
+
+如果要生成下列结果, 该如何写sql语句?
+
+            胜 负
+2005-05-09 2 2
+2005-05-10 1 2
+------------------------------------------
+create table #tmp(rq varchar(10),shengfu nchar(1))
+
+insert into #tmp values('2005-05-09','胜')
+insert into #tmp values('2005-05-09','胜')
+insert into #tmp values('2005-05-09','负')
+insert into #tmp values('2005-05-09','负')
+insert into #tmp values('2005-05-10','胜')
+insert into #tmp values('2005-05-10','负')
+insert into #tmp values('2005-05-10','负')
+
+select * from #tmp
+select rq, shengfu from #tmp group by rq,shengfu
+select rq, shengfu from #tmp group by shengfu,rq
+select rq, shengfu,sum(shengfu) from #tmp group by shengfu,rq
+
+ 
+
+1)select rq, 
+
+sum(case when shengfu='胜' then 1 else 0 end)'胜',
+
+sum(case when shengfu='负' then 1 else 0 end)'负' 
+
+from #tmp 
+
+group by rq
+
+ 
+
+2) select N.rq,N.勝,M.負 from (
+select rq,勝=count(*) from #tmp where shengfu='胜'group by rq)N inner join
+(select rq,負=count(*) from #tmp where shengfu='负'group by rq)M on N.rq=M.rq
+3)select a.col001,a.a1 胜,b.b1 负 from
+(select col001,count(col001) a1 from temp1 where col002='胜' group by col001) a,
+(select col001,count(col001) b1 from temp1 where col002='负' group by col001) b
+where a.col001=b.col001
+
+ 
+
+2.请教一个面试中遇到的SQL语句的查询问题
+表中有A B C三列,用SQL语句实现：当A列大于B列时选择A列否则选择B列，当B列大于C列时选择B列否则选择C列。
+------------------------------------------
+select (case when a>b then a else b end ),
+(case when b>c then b esle c end)
+from table_name
+
+ 
+
+3.面试题：一个日期判断的sql语句？
+请取出tb_send表中日期(SendTime字段)为当天的所有记录?(SendTime字段为datetime型，包含日期与时间)
+------------------------------------------
+select * from tb where datediff(dd,SendTime,getdate())=0
+
+ 
+
+4.有一张表，里面有3个字段：语文，数学，英语。其中有3条记录分别表示语文70分，数学80分，英语58分，请用一条sql语句查询出这三条记录并按以下条件显示出来（并写出您的思路）： 
+   大于或等于80表示优秀，大于或等于60表示及格，小于60分表示不及格。 
+       显示格式： 
+       语文              数学                英语 
+       及格              优秀                不及格    
+------------------------------------------
+select
+(case when 语文>=80 then '优秀'
+        when 语文>=60 then '及格'
+else '不及格') as 语文,
+(case when 数学>=80 then '优秀'
+        when 数学>=60 then '及格'
+else '不及格') as 数学,
+(case when 英语>=80 then '优秀'
+        when 英语>=60 then '及格'
+else '不及格') as 英语,
+from table
+
+ 
+
+5.在sqlserver2000中请用sql创建一张用户临时表和系统临时表，里面包含两个字段ID和IDValues,类型都是int型，并解释下两者的区别?
+------------------------------------------
+用户临时表:create table #xx(ID int, IDValues int)
+系统临时表:create table ##xx(ID int, IDValues int)
+
+区别:
+用户临时表只对创建这个表的用户的Session可见,对其他进程是不可见的.
+当创建它的进程消失时这个临时表就自动删除.
+
+全局临时表对整个SQL Server实例都可见,但是所有访问它的Session都消失的时候,它也自动删除.
+
+ 
+
+6.sqlserver2000是一种大型数据库，他的存储容量只受存储介质的限制，请问它是通过什么方式实现这种无限容量机制的。
+------------------------------------------
+它的所有数据都存储在数据文件中(*.dbf),所以只要文件够大,SQL    Server的存储容量是可以扩大的.
+
+SQL Server 2000 数据库有三种类型的文件：
+
+主要数据文件
+主要数据文件是数据库的起点，指向数据库中文件的其它部分。每个数据库都有一个主要数据文件。主要数据文件的推荐文件扩展名是 .mdf。
+
+次要数据文件
+次要数据文件包含除主要数据文件外的所有数据文件。有些数据库可能没有次要数据文件，而有些数据库则有多个次要数据文件。次要数据文件的推荐文件扩展名是 .ndf。
+
+日志文件
+日志文件包含恢复数据库所需的所有日志信息。每个数据库必须至少有一个日志文件，但可以不止一个。日志文件的推荐文件扩展名是 .ldf。
+
+ 
+
+7.请用一个sql语句得出结果
+从table1,table2中取出如table3所列格式数据，注意提供的数据及结果不准确，只是作为一个格式向大家请教。
+如使用存储过程也可以。
+
+table1
+
+月份mon 部门dep 业绩yj
+-------------------------------
+一月份      01      10
+一月份      02      10
+一月份      03      5
+二月份      02      8
+二月份      04      9
+三月份      03      8
+
+table2
+
+部门dep      部门名称dname
+--------------------------------
+      01      国内业务一部
+      02      国内业务二部
+      03      国内业务三部
+      04      国际业务部
+
+table3 （result）
+
+部门dep 一月份      二月份      三月份
+--------------------------------------
+      01      10        null      null
+      02      10         8        null
+      03      null       5        8
+      04      null      null      9
+
+------------------------------------------
+1)
+select a.部门名称dname,b.业绩yj as '一月份',c.业绩yj as '二月份',d.业绩yj as '三月份'
+from table1 a,table2 b,table2 c,table2 d
+where a.部门dep = b.部门dep and b.月份mon = '一月份' and
+a.部门dep = c.部门dep and c.月份mon = '二月份' and
+a.部门dep = d.部门dep and d.月份mon = '三月份' and
+2)
+select a.dep,
+sum(case when b.mon=1 then b.yj else 0 end) as '一月份',
+sum(case when b.mon=2 then b.yj else 0 end) as '二月份',
+sum(case when b.mon=3 then b.yj else 0 end) as '三月份',
+sum(case when b.mon=4 then b.yj else 0 end) as '四月份',
+sum(case when b.mon=5 then b.yj else 0 end) as '五月份',
+sum(case when b.mon=6 then b.yj else 0 end) as '六月份',
+sum(case when b.mon=7 then b.yj else 0 end) as '七月份',
+sum(case when b.mon=8 then b.yj else 0 end) as '八月份',
+sum(case when b.mon=9 then b.yj else 0 end) as '九月份',
+sum(case when b.mon=10 then b.yj else 0 end) as '十月份',
+sum(case when b.mon=11 then b.yj else 0 end) as '十一月份',
+sum(case when b.mon=12 then b.yj else 0 end) as '十二月份',
+from table2 a left join table1 b on a.dep=b.dep
+
+ 
+
+8.华为一道面试题
+一个表中的Id有多个记录，把所有这个id的记录查出来，并显示共有多少条记录数。
+------------------------------------------
+select id, Count（*) from tb group by id having count(*)>1
+select * from(select count(ID) as count from table group by ID)T where T.count>1
+ 

@@ -1,0 +1,11 @@
+CREATE TABLE [dbo].[SignUp](
+	[SignUpId] [int] IDENTITY(1,1) NOT NULL,
+	[SignUpName] [nvarchar](500) NULL,
+	[CreateDate] [datetime] NULL,
+	[UserId] [int] NULL,
+	[LastCompleteTask] [int] NULL,
+ CONSTRAINT [PK_SIGNUP] PRIMARY KEY CLUSTERED 
+(
+	[SignUpId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]

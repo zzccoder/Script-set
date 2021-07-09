@@ -1,0 +1,230 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0067)http://www.cnblogs.com/justforextjs/archive/2010/04/04/1704223.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><HTML><HEAD><META 
+content="IE=9.0000" http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type">
+<TITLE>SQL索引全攻略 - 天使梦魇 - 博客园</TITLE><LINK rel="stylesheet" type="text/css" href="SQL索引全攻略%20-%20天使梦魇%20-%20博客园_files/common.css">
+<LINK id="MainCss" rel="stylesheet" type="text/css" href="SQL索引全攻略%20-%20天使梦魇%20-%20博客园_files/style.css">
+<LINK rel="stylesheet" type="text/css" href="SQL索引全攻略%20-%20天使梦魇%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="SQL索引全攻略%20-%20天使梦魇%20-%20博客园_files/shStyle.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/JustForExtJs/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/JustForExtJs/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/JustForExtJs/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="SQL索引全攻略%20-%20天使梦魇%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'JustForExtJs';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL索引全攻略%20-%20天使梦魇%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL索引全攻略%20-%20天使梦魇%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL索引全攻略%20-%20天使梦魇%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A>
+<SCRIPT type="text/javascript">
+	try {
+		if (screen.availWidth > 1200) {
+			document.getElementById("MainCss").href = '/Skins/BOOK/style2.css';
+		}
+	} catch (e) { }
+</SCRIPT>
+
+<DIV id="header">
+<DIV id="HeaderTitle">
+<DIV id="Title"><A id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/JustForExtJs/">天使梦魇</A>
+</DIV>
+<DIV id="subTitle"></DIV></DIV></DIV>
+<DIV id="main">
+<DIV class="post">
+<H2><A id="cb_post_title_url" href="http://www.cnblogs.com/JustForExtJs/archive/2010/04/04/1704223.html">SQL索引全攻略</A></H2>
+<DIV id="cnblogs_post_body">
+<TABLE style="table-layout: fixed;">
+  <TBODY>
+  <TR>
+    <TD>
+      <DIV class="cnt">一 概述 
+      <P>&nbsp;</P>
+      <P>可以利用索引快速访问数据库表中的特定信息。索引是对数据库表中一个或多个列的值进行排序的结构。<BR>索引提供指针以指向存储在表中指定列的数据值，然后根据指定的排序次序排列这些指针。<BR>数据库使用索引的方式与使用书的目录很相似：通过搜索索引找到特定的值，<BR>然后跟随指针到达包含该值的行</P>
+      <P><BR>二 索引的两种类型： </P>
+      <P>聚集索引=簇集索引</P>
+      <P>聚集索引基于数据行的键值在表内排序和存储这些数据行。由于数据行按基于聚集索引键的排序次序存储，<BR>因此聚集索引对查找行很有效。每个表只能有一个聚集索引，因为数据行本身只能按一个顺序存储。<BR>数据行本身构成聚集索引的最低级别。</P>
+      <P>只有当表包含聚集索引时，表内的数据行才按排序次序存储。如果表没有聚集索引，<BR>则其数据行按堆集方式存储。</P>
+      <P>聚集索引对于那些经常要搜索范围值的列特别有效。使用聚集索引找到包含第一个值的行后，<BR>便可以确保包含后续索引值的行在物理相邻。例如，如果应用程序执行的一个查询经常检索某一日期范围<BR>内的记录，则使用聚集索引可以迅速找到包含开始日期的行，然后检索表中所有相邻的行，<BR>直到到达结束日期。这样有助于提高此类查询的性能。同样，如果对从表中检索的数据进行排序时<BR>经常要用到某一列，则可以将该表在该列上聚集（物理排序），避免每次查询该列时都进行排序，<BR>从而节省成本</P>
+      <P>非聚集索引 </P>
+      <P>非聚集索引具有完全独立于数据行的结构。非聚集索引的最低行包含非聚集索引的键值，<BR>并且每个键值项都有指针指向包含该键值的数据行。数据行不按基于非聚集键的次序存储。</P>
+      <P>在非聚集索引内，从索引行指向数据行的指针称为行定位器。<BR>行定位器的结构取决于数据页的存储方式是堆集还是聚集。对于堆集，行定位器是指向行的指针。<BR>对于有聚集索引的表，行定位器是聚集索引键。<BR>只有在表上创建了聚集索引时，表内的行才按特定的顺序存储。这些行就基于聚集索引键按顺序存储。<BR>如果一个表只有非聚集索引，它的数据行将按无序的堆集方式存储<BR>非聚集索引可以建多个,两者都能改善查询性能</P>
+      <P>非聚集索引与聚集索引一样有 B 树结构，但是有两个重大差别： 
+      <BR>数据行不按非聚集索引键的顺序排序和存储。<BR>非聚集索引的叶层不包含数据页。 
+      <BR>相反，叶节点包含索引行。每个索引行包含非聚集键值以及一个或多个行定位器，<BR>这些行定位器指向有该键值的数据行（如果索引不唯一，则可能是多行）。<BR>非聚集索引可以在有聚集索引的表、堆集或索引视图上定义</P>
+      <P><BR>另外<BR>唯一索引</P>
+      <P>唯一索引可以确保索引列不包含重复的值。在多列唯一索引的情况下，该索引可以确保索引列中每个值组<BR>合都是唯一的。唯一索引既是索引也是约束。</P>
+      <P>复合索引<BR>索引项是多个的就叫组合索引，也叫复合索引。复合索引使用时需要注意索引项的次序。</P>
+      <P>二 索引的创建</P>
+      <P>有两种方法可以在 SQL Server 内定义索引: CREATE INDEX 语句和CREATE TABLE 语句</P>
+      <P>CREATE TABLE支持在创建索引时使用下列约束：</P>
+      <P>PRIMARY KEY 创建唯一索引来强制执行主键<BR>UNIQUE 创建唯一索引<BR>CLUSTERED 
+      创建聚集索引<BR>NONCLUSTERED 创建非聚集索引</P>
+      <P>注: 1 定义索引时，可以指定每列的数据是按升序还是降序存储。如果不指定，则默认为升序<BR>2 支持在计算列上创建索引<BR>3 
+      为索引指定填充因子<BR>可标识填充因子来指定每个索引页的填满程度。索引页上的空余空间量很重要，<BR>因为当索引页填满时，系统必须花时间拆分它以便为新行腾出空间。</P>
+      <P><BR>三 索引的维护语句</P>
+      <P>DBCC DBREINDEX 重建指定数据库中表的一个或多个索引<BR>DBCC 
+      INDEXFRAG　　整理指定的表或视图的聚集索引和辅助索引碎片</P>
+      <P>比较</P>
+      <P>速度 兼容性 日志影响 数据访问影响 额外磁盘空间<BR>DBCC 最快 最好 大,但能通过把 操作过程中数据不 
+      需要大<BR>DBREINDEX 可以重 故障还原模型设 能访问，影响大<BR>建所有 为简单减少日志 <BR>有索引</P>
+      <P>DBCC 慢 但可 必须分 小 数据未被锁定 需要小<BR>INDEXDEFRAG 随时终 别指定<BR>止执行 <BR></P>
+      <P>drop index 中等 必须分 大,但能通过把 仅在操作执行时 中等，操作在 <BR>create index 别指定 故障还原模型设 
+      锁定数据 tempdb中进行<BR>为简单减少日志</P>
+      <P><BR>四 查看索引的方法</P>
+      <P>sp_indexes 返回指定远程表的索引信息<BR>INDEXKEY_PROPERTY 
+      返回有关索引键的信息<BR>sysindexes系统表 数据库中的每个索引和表在表中各占一行，该表存储在每个数据库中</P>
+      <P><BR>五 可以通过执行计划<BR>查看sql语句执行时是否建立在索引之上</P>
+      <P>比如<BR>CREATE TABLE Test<BR>(Field_1 int NOT NULL,<BR>Field_2 int 
+      CONSTRAINT PK_Test<BR>PRIMARY KEY CLUSTERED (Field_1))</P>
+      <P>CREATE index IX_Test ON Test (Field_2)</P>
+      <P>1 SELECT * FROM Test WHERE Field_2 =408<BR>执行计划可以看出使用了IX_Test索引<BR>2 
+      SELECT * FROM Test WHERE Field_1 =1<BR>执行计划可以看出使用了PK_Test<BR>3 但如果是SELECT 
+      * FROM Test with (index(IX_Test)) WHERE Field_1 =1<BR>则指定使用索引</P>
+      <P><BR>六 索引的具体使用 (转贴)</P>
+      <P>1） 索引的设计 <BR>A:尽量避免表扫描 
+      <BR>检查你的查询语句的where子句，因为这是优化器重要关注的地方。包含在where里面的每一列（column)都是可能的侯选索引，为能达到最优的性能，考虑在下面给出的例子：对于在where子句中给出了column1这个列。 
+      <BR>下面的两个条件可以提高索引的优化查询性能！ <BR>第一：在表中的column1列上有一个单索引 
+      <BR>第二：在表中有多索引，但是column1是第一个索引的列 
+      <BR>避免定义多索引而column1是第二个或后面的索引，这样的索引不能优化服务器性能 <BR>例如：下面的例子用了pubs数据库。 
+      <BR>SELECT au_id, au_lname, au_fname FROM authors <BR>WHERE au_lname = 
+      ’White’ <BR>按下面几个列上建立的索引将会是对优化器有用的索引 <BR>?au_lname <BR>?au_lname, au_fname 
+      <BR>而在下面几个列上建立的索引将不会对优化器起到好的作用 <BR>?au_address <BR>?au_fname, au_lname 
+      <BR>考虑使用窄的索引在一个或两个列上，窄索引比多索引和复合索引更能有效。用窄的索引，在每一页上 
+      <BR>将会有更多的行和更少的索引级别（相对与多索引和复合索引而言），这将推进系统性能。 <BR>对于多列索引，SQL 
+      Server维持一个在所有列的索引上的密度统计（用于联合）和在第一个索引上的 
+      <BR>histogram（柱状图）统计。根据统计结果，如果在复合索引上的第一个索引很少被选择使用，那么优化器对很多查询请求将不会使用索引。 
+      <BR>有用的索引会提高select语句的性能，包括insert,uodate,delete。 
+      <BR>但是，由于改变一个表的内容，将会影响索引。每一个insert,update,delete语句将会使性能下降一些。实验表明，不要在一个单表上用大量的索引，不要在共享的列上（指在多表中用了参考约束）使用重叠的索引。 
+      <BR>在某一列上检查唯一的数据的个数，比较它与表中数据的行数做一个比较。这就是数据的选择性，这比较结果将会帮助你决定是否将某一列作为侯选的索引列，如果需要，建哪一种索引。你可以用下面的查询语句返回某一列的不同值的数目。 
+      <BR>select count(distinct cloumn_name) from table_name 
+      <BR>假设column_name是一个10000行的表，则看column_name返回值来决定是否应该使用，及应该使用什么索引。 
+      <BR>Unique values Index </P>
+      <P>5000 Nonclustered index <BR>20 Clustered index <BR>3 No index </P>
+      <P><BR>2) 镞索引和非镞索引的选择 </P>
+      <P>&lt;1:&gt;镞索引是行的物理顺序和索引的顺序是一致的。页级，低层等索引的各个级别上都包含实际的数据页。一个表只能是有一个镞索引。由于update,delete语句要求相对多一些的读操作，因此镞索引常常能加速这样的操作。在至少有一个索引的表中，你应该有一个镞索引。 
+      <BR>在下面的几个情况下，你可以考虑用镞索引： <BR>例如： 某列包括的不同值的个数是有限的（但是不是极少的） 
+      <BR>顾客表的州名列有50个左右的不同州名的缩写值，可以使用镞索引。 <BR>例如： 
+      对返回一定范围内值的列可以使用镞索引，比如用between,&gt;,&gt;=,&lt;,&lt;=等等来对列进行操作的列上。 
+      <BR>select * from sales where ord_date between ’5/1/93’ and ’6/1/93’ 
+      <BR>例如： 对查询时返回大量结果的列可以使用镞索引。 <BR>SELECT * FROM phonebook WHERE last_name = 
+      ’Smith’ </P>
+      <P>当有大量的行正在被插入表中时，要避免在本表一个自然增长（例如，identity列）的列上建立镞索引。如果你建立了镞的索引，那么insert的性能就会大大降低。因为每一个插入的行必须到表的最后，表的最后一个数据页。 
+      <BR>当一个数据正在被插入（这时这个数据页是被锁定的），所有的其他插入行必须等待直到当前的插入已经结束。 
+      <BR>一个索引的叶级页中包括实际的数据页，并且在硬盘上的数据页的次序是跟镞索引的逻辑次序一样的。 </P>
+      <P>&lt;2:&gt;一个非镞的索引就是行的物理次序与索引的次序是不同的。一个非镞索引的叶级包含了指向行数据页的指针。 
+      <BR>在一个表中可以有多个非镞索引，你可以在以下几个情况下考虑使用非镞索引。 <BR>在有很多不同值的列上可以考虑使用非镞索引 
+      <BR>例如：一个part_id列在一个part表中 <BR>select * from employee where emp_id = 
+      ’pcm9809f’ <BR>查询语句中用order by 子句的列上可以考虑使用镞索引 </P>
+      <P>&nbsp;</P>
+      <P>3) 一个表列如果设为主键(primary key),它会自动生成一个聚簇索引<BR>这时不能直接使用Drop index 
+      Table1.Tableindex1语句<BR>必须删除主键约束，用语句:alter table table1 drop constraint 
+      约束名(如pk_xxx)</P></DIV></TD></TR></TBODY></TABLE>
+<DIV id="digg_block">
+<DIV id="author_profile"></DIV>
+<DIV id="div_digg">
+<DIV class="diggit" onclick=""><SPAN id="digg_count_719276" 
+class="diggnum"><FONT color="#075db3">0</FONT></SPAN> </DIV>
+<DIV class="buryit" onclick=""><SPAN id="bury_count_719276" 
+class="burynum"><FONT color="#075db3">0</FONT></SPAN> </DIV>
+<DIV class="clear"></DIV><SPAN style="display: none;" 
+id="span_isdigged_719276">0</SPAN>
+<DIV id="digg_word_719276" class="diggword">(请您对文章做出评价)</DIV></DIV></DIV></DIV>
+<DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 65357;
+var cb_entryId = 1704223;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "90ae2892-05fd-de11-ba8f-001cf0cd104b";
+var cb_entryCreatedDate = '2010/4/4 16:41:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV id="blog_post_info_block">
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+
+<P class="postfoot">			posted on <SPAN id="post-date">2010-04-04 16:41</SPAN> <A 
+href="http://www.cnblogs.com/JustForExtJs/">天使梦魇</A> 阅读(168) 评论(<SPAN id="post-comment-count">0</SPAN>) 
+ <A href="http://www.cnblogs.com/JustForExtJs/admin/EditPosts.aspx?postid=1704223" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(1704223);return false;" href="http://www.cnblogs.com/justforextjs/archive/2010/04/04/1704223.html#">收藏</A></P></DIV><IMG 
+alt="" src="SQL索引全攻略%20-%20天使梦魇%20-%20博客园_files/1704223.jpg" width="1" height="1">
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+
+<DIV id="comment_form" class="commentform">
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/justforextjs/archive/2010/04/04/1704223.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/justforextjs/archive/2010/04/04/1704223.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="ad_under_post_holder"></DIV>
+<DIV id="HistoryToday" class="c_ad_block"></DIV></DIV>
+<P id="footer">	Powered by: 	<BR><A style="font-family: Verdana; font-size: 12px;" 
+id="Footer1_Hyperlink3" href="http://www.cnblogs.com/" 
+name="Hyperlink1">博客园</A><BR>Copyright © 天使梦魇</P></DIV>
+<DIV id="rightmenu">
+<DIV style="display: none;" id="blog-calendar-block">
+<DIV id="blog-calendar"></DIV></DIV>
+<H3>导航</H3>
+<UL>
+  <LI><A id="MyLinks1_HomeLink" href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A id="MyLinks1_MyHomeLink" 
+  href="http://www.cnblogs.com/JustForExtJs/">首页</A></LI>
+  <LI><A id="MyLinks1_NewPostLink" href="http://www.cnblogs.com/JustForExtJs/admin/EditPosts.aspx?opt=1" 
+  rel="nofollow">新随笔</A></LI>
+  <LI><A accessKey="9" id="MyLinks1_ContactLink" href="http://space.cnblogs.com/msg/send/%e5%a4%a9%e4%bd%bf%e6%a2%a6%e9%ad%87" 
+  rel="nofollow">联系</A></LI>
+  <LI><A id="MyLinks1_Syndication" href="http://www.cnblogs.com/JustForExtJs/rss">订阅</A><A 
+  id="MyLinks1_XMLLink" href="http://www.cnblogs.com/JustForExtJs/rss"><IMG alt="订阅" 
+  src="SQL索引全攻略%20-%20天使梦魇%20-%20博客园_files/xml.gif"></A>
+  <LI><A id="MyLinks1_Admin" href="http://www.cnblogs.com/JustForExtJs/admin/EditPosts.aspx" 
+  rel="nofollow">管理</A></LI></UL>
+<H3>统计</H3>
+<UL>
+  <LI>随笔 - 13		
+  <LI>文章 - 0		
+  <LI>评论 - 1		
+  <LI>引用 - 0	</LI></UL>
+<H3>公告</H3>
+<DIV id="blog-news"></DIV>
+<DIV id="blog-sidecolumn"></DIV></DIV>
+<SCRIPT type="text/javascript" src="SQL索引全攻略%20-%20天使梦魇%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

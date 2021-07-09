@@ -1,0 +1,360 @@
+#EntryTag {
+	color: gray; font-size: 9pt; margin-top: 20px;
+}
+.topicListFooter {
+	text-align: right; line-height: 1.5em; padding-right: 10px; margin-top: 10px; margin-right: 0px; background-color: rgb(204, 204, 204);
+}
+#divRefreshComments {
+	text-align: right; font-size: 9pt; margin-right: 10px; margin-bottom: 5px;
+}
+* {
+	margin: 0px; padding: 0px;
+}
+html {
+	height: 100%;
+}
+body {
+	background: rgb(255, 255, 255); color: rgb(0, 0, 0); font-family: "verdana","ms song","ËÎÌå","Arial","Î¢ÈíÑÅºÚ", "Helvetica", "sans-serif"; font-size: 9pt; min-height: 101%;
+}
+table {
+	border-collapse: collapse; border-spacing: 0;
+}
+fieldset {
+	border: 0px currentColor;
+}
+img {
+	border: 0px currentColor;
+}
+ul {
+	word-break: break-all;
+}
+li {
+	list-style: none;
+}
+h1 {
+	font-size: 100%; font-weight: normal;
+}
+h2 {
+	font-size: 100%; font-weight: normal;
+}
+h3 {
+	font-size: 100%; font-weight: normal;
+}
+h4 {
+	font-size: 100%; font-weight: normal;
+}
+h5 {
+	font-size: 100%; font-weight: normal;
+}
+h6 {
+	font-size: 100%; font-weight: normal;
+}
+a:link {
+	color: rgb(59, 89, 153); text-decoration: none;
+}
+a:visited {
+	color: rgb(59, 89, 153); text-decoration: none;
+}
+a:hover {
+	color: rgb(59, 89, 153); text-decoration: underline;
+}
+a:active {
+	color: rgb(59, 89, 153); text-decoration: none;
+}
+.clear {
+	clear: both;
+}
+#home {
+	margin: 0px auto; width: 963px;
+}
+#header {
+	width: 750px; height: 35px; margin-left: 190px; position: absolute; background-color: rgb(59, 89, 153);
+}
+#blogTitle {
+	left: -133px; top: 30px; position: absolute;
+}
+#blogTitle .headermaintitle:link {
+	color: rgb(255, 255, 255); font-size: 16px; font-weight: bold; text-decoration: none;
+}
+#blogTitle .headermaintitle:visited {
+	color: rgb(255, 255, 255); font-size: 16px; font-weight: bold; text-decoration: none;
+}
+#blogTitle .headermaintitle:hover {
+	color: rgb(255, 255, 255); font-size: 16px; font-weight: bold; text-decoration: none;
+}
+#blogTitle .headermaintitle:active {
+	color: rgb(255, 255, 255); font-size: 16px; font-weight: bold; text-decoration: none;
+}
+#blogTitle h2 {
+	display: none;
+}
+#lnkBlogLogo {
+	display: none;
+}
+#navigator {
+	width: 736px; height: 35px; margin-left: 10px; float: left;
+}
+.blogStats {
+	text-align: right; color: rgb(204, 204, 204); margin-top: 15px; float: right;
+}
+#navList {
+	width: 410px; margin-top: 15px; float: left;
+}
+#navList li {
+	margin-left: 10px; float: left;
+}
+#navList li a {
+	padding: 2px 5px; width: 50px; color: rgb(255, 255, 255); text-decoration: none;
+}
+#navList li a img {
+	display: none;
+}
+#navList li a:hover {
+	background-color: rgb(109, 132, 180);
+}
+#commentform_title {
+	padding: 0px 0px 0px 25px; margin-bottom: 10px; background-image: url("http://static.cnblogs.com/images/icon_addcomment.gif"); background-repeat: no-repeat;
+}
+div.commentform input.author {
+	padding: 4px 4px 4px 30px; border: 1px solid rgb(204, 204, 204); width: 300px; font-size: 13px; background-image: url("http://static.cnblogs.com/images/icon_form.gif"); background-repeat: no-repeat;
+}
+div.commentform input.email {
+	padding: 4px 4px 4px 30px; border: 1px solid rgb(204, 204, 204); width: 300px; font-size: 13px; background-image: url("http://static.cnblogs.com/images/icon_form.gif"); background-repeat: no-repeat;
+}
+div.commentform input.url {
+	padding: 4px 4px 4px 30px; border: 1px solid rgb(204, 204, 204); width: 300px; font-size: 13px; background-image: url("http://static.cnblogs.com/images/icon_form.gif"); background-repeat: no-repeat;
+}
+div.commentform input.author {
+	background-position: 3px -3px;
+}
+div.commentform input.email {
+	background-position: 3px -33px;
+}
+div.commentform input.url {
+	background-position: 3px -63px;
+}
+div.commentform textarea {
+	width: 450px; height: 300px; font-size: 13px;
+}
+div.commentform p {
+	line-height: 20px; margin-top: 10px;
+}
+.commentbox_title {
+	width: 450px;
+}
+.commentbox_title_left {
+	float: left;
+}
+.commentbox_title_right {
+	height: 22px; float: right;
+}
+.login_tips {
+	padding: 0px 0px 10px 25px; font-weight: bold; margin-top: 10px; background-image: url("http://static.cnblogs.com/images/icon_addcomment.gif"); background-repeat: no-repeat;
+}
+.login_tips a {
+	text-decoration: underline;
+}
+.commentform .commentButton {
+	width: 60px;
+}
+#sideBar {
+	background: url("/Skins/facebook/images/toplogo.jpg") no-repeat left top; width: 190px; float: left; word-break: break-all;
+}
+#sideBarMain {
+	margin-top: 60px; background-color: rgb(247, 247, 247);
+}
+.newsItem {
+	padding-top: 10px; padding-right: 5px; padding-left: 5px;
+}
+.newsItem .catListTitle {
+	display: none;
+}
+#leftcontentcontainer {
+	padding: 10px 5px 5px; width: 180px; text-align: left;
+}
+#leftcontentcontainer h3 {
+	color: rgb(51, 51, 51); line-height: 1.5em; padding-left: 5px; font-size: 13px; margin-top: 10px; margin-bottom: 5px; background-color: rgb(233, 233, 233);
+}
+#leftcontentcontainer ul {
+	margin-left: 10px;
+}
+.mySearch #q {
+	width: 100px; height: 19px; margin-left: 6px;
+}
+.catListLink ul li {
+	margin-top: 3px; margin-left: 5px;
+}
+.catListLink ul a {
+	color: rgb(59, 89, 153); text-decoration: none;
+}
+.catListLink ul a:hover {
+	text-decoration: underline;
+}
+.catListNoteBook ul li {
+	margin-top: 3px; margin-left: 5px;
+}
+.catListNoteBook ul a {
+	color: rgb(59, 89, 153); text-decoration: none;
+}
+.catListNoteBook ul a:hover {
+	text-decoration: underline;
+}
+.catListTag ul li {
+	margin-top: 3px; margin-left: 5px;
+}
+.catListTag ul a {
+	color: rgb(59, 89, 153); text-decoration: none;
+}
+.catListTag ul a:hover {
+	text-decoration: underline;
+}
+.catListView {
+	
+}
+.catListFeedback {
+	
+}
+.catListComment {
+	
+}
+#Calendar1_entryCal {
+	
+}
+#main {
+	width: 980px;
+}
+#mainContent {
+	padding: 10px; border: 1px solid rgb(204, 204, 204); left: -18px; top: -6px; width: 750px; text-align: left; overflow: hidden; margin-top: 40px; float: right; position: relative;
+}
+.postTitle {
+	padding: 2px 5px 1px; margin-top: 10px; background-color: rgb(216, 223, 234);
+}
+.postTitle a {
+	color: rgb(51, 51, 51); font-size: 13px; font-weight: bold; text-decoration: none;
+}
+.postCon {
+	padding: 10px; color: rgb(85, 85, 85);
+}
+.postDesc {
+	margin: 5px; text-align: right; color: rgb(59, 89, 153);
+}
+.postDesc a {
+	color: rgb(59, 89, 153); text-decoration: none;
+}
+.postDesc a:hover {
+	text-decoration: underline;
+}
+.dayTitle a {
+	margin: 10px; color: rgb(51, 51, 51); font-size: 15px; font-weight: bold; text-decoration: none;
+}
+.postBody {
+	padding: 10px; line-height: 150%;
+}
+.postBody span {
+	line-height: 150%;
+}
+#divRefreshComments a {
+	background-color: rgb(59, 89, 153);
+}
+.commentform {
+	padding: 10px; border-top-color: rgb(149, 165, 198); border-top-width: 1px; border-top-style: solid; background-color: rgb(247, 247, 247);
+}
+.commentform tr {
+	margin-top: 5px;
+}
+.commentform .commenttb {
+	width: 300px;
+}
+.commentform a {
+	color: rgb(59, 89, 153);
+}
+.contact {
+	padding: 20px; background-color: rgb(247, 247, 247);
+}
+#calendar {
+	line-height: 150%; padding-top: 10px;
+}
+.Cal {
+	width: 180px;
+}
+.CalTitle {
+	width: 180px; text-align: center;
+}
+.dayTitle {
+	padding-bottom: 2px; border-bottom-color: rgb(59, 89, 153); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.feedback_area_title {
+	color: rgb(59, 89, 153); line-height: 1.5em; padding-left: 10px; font-weight: bold; background-color: rgb(233, 233, 233);
+}
+.feedbackItem {
+	margin: 5px; padding: 5px; border: 1px solid rgb(149, 165, 198); background-color: rgb(247, 247, 247);
+}
+.feedbackManage {
+	float: right;
+}
+.feedbackManage a {
+	color: rgb(85, 85, 85);
+}
+.feedbackCon {
+	padding: 10px 5px;
+}
+#AjaxHolder_PostComment_refreshList {
+	padding: 3px; color: rgb(255, 255, 255);
+}
+#footer {
+	color: rgb(119, 119, 119); padding-bottom: 20px; margin-top: 15px; margin-right: 40px; float: right;
+}
+div.commentform textarea {
+	width: 450px; height: 300px; font-size: 13px;
+}
+#digg_block {
+	margin-top: 10px;
+}
+#author_profile {
+	width: 300px; margin-top: 10px; float: left;
+}
+.author_avatar {
+	border: 0px currentColor; padding-top: 5px; padding-right: 5px; padding-left: 2px; vertical-align: top; float: left;
+}
+.author_profile_title {
+	color: rgb(102, 102, 102); font-weight: bold;
+}
+.author_profile_info {
+	line-height: 18px; float: left;
+}
+#div_digg {
+	width: 120px; text-align: center; font-size: 12px; margin-top: 10px; margin-right: 30px; margin-bottom: 10px; float: right;
+}
+.diggit {
+	background: url("/images/upup.gif") no-repeat; width: 46px; height: 52px; text-align: center; margin-top: 2px; float: left; cursor: pointer;
+}
+.diggnum {
+	color: rgb(7, 93, 179); line-height: 2.2em; font-family: Verdana; font-size: 14px;
+}
+.buryit {
+	background: url("/images/downdown.gif") no-repeat; width: 46px; height: 52px; text-align: center; margin-top: 2px; margin-left: 20px; float: right; cursor: pointer;
+}
+.burynum {
+	color: rgb(7, 93, 179); line-height: 2.2em; font-family: Verdana; font-size: 14px;
+}
+.diggword {
+	color: gray; font-size: 12px; margin-top: 5px; margin-left: 0px;
+}
+a.digg_gray:link {
+	color: gray; text-decoration: underline;
+}
+a.digg_gray:visited {
+	color: gray; text-decoration: underline;
+}
+a.digg_gray:hover {
+	color: red; text-decoration: underline;
+}
+a.digg_gray:active {
+	color: gray; text-decoration: underline;
+}
+.divRecentComment {
+	overflow: hidden;
+}
+#cnblogs_post_body {
+	line-height: 1.8;
+}

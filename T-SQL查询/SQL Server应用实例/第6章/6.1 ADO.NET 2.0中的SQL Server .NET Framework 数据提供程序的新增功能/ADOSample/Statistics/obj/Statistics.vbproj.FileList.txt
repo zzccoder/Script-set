@@ -1,0 +1,10 @@
+bin\Debug\Statistics.exe
+bin\Debug\Statistics.pdb
+bin\Debug\Statistics.xml
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\Statistics.Form1.resources
+obj\Debug\Statistics.Resources.resources
+obj\Debug\Statistics.vbproj.GenerateResource.Cache
+obj\Debug\Statistics.exe
+obj\Debug\Statistics.xml
+obj\Debug\Statistics.pdb

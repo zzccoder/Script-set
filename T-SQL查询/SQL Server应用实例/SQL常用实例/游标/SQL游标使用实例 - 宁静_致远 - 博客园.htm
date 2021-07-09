@@ -1,0 +1,142 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0063)http://www.cnblogs.com/zhangzhu/archive/2012/05/10/2494985.html -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><HTML><HEAD><META 
+content="IE=9.0000" http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type">
+<TITLE>SQL游标使用实例 - 宁静.致远 - 博客园</TITLE><LINK rel="stylesheet" type="text/css" 
+href="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/common.css"><LINK id="MainCss" rel="stylesheet" 
+type="text/css" href="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/style.css"><LINK 
+rel="stylesheet" type="text/css" href="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/shStyle.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/zhangzhu/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/zhangzhu/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/zhangzhu/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'zhangzhu';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A><!--done-->
+<TABLE border="0" cellSpacing="0" cellPadding="0" width="100%" align="center">
+  <TBODY>
+  <TR>
+    <TD background="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/banner1.gif" width="184"></TD>
+    <TD background="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/banner.gif"><!--done-->
+      <DIV class="header">
+      <DIV class="headerText"><A id="Header1_HeaderTitle" class="headermaintitle" 
+      href="http://www.cnblogs.com/zhangzhu/">宁静致远</A><BR><SPAN style="color: rgb(67, 113, 166); font-size: 12px;">狂奔在0和1的世界里</SPAN></DIV>
+      </DIV></TD>
+    <TD background="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/banner2.gif" width="295"></TD>
+  </TR></TBODY></TABLE>
+<DIV id="mylinks"><!--done--><A id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</A>&nbsp;&nbsp;&nbsp;<A 
+id="MyLinks1_MyHomeLink" class="mainmenu" href="http://www.cnblogs.com/zhangzhu/">首页</A>&nbsp;&nbsp;&nbsp;<A 
+id="MyLinks1_NewPostLink" class="mainmenu" href="http://www.cnblogs.com/zhangzhu/admin/EditPosts.aspx?opt=1" 
+rel="nofollow">新随笔</A>&nbsp;&nbsp;&nbsp;<A id="MyLinks1_NewArticleLink" class="mainmenu" 
+href="http://www.cnblogs.com/EnterMyBlog.aspx?NewArticle=1">新文章</A>&nbsp;&nbsp;&nbsp;<A 
+accessKey="9" id="MyLinks1_ContactLink" class="mainmenu" href="http://space.cnblogs.com/msg/send/%e5%ae%81%e9%9d%99.%e8%87%b4%e8%bf%9c" 
+rel="nofollow">联系</A>&nbsp;&nbsp;&nbsp;<A id="MyLinks1_Syndication" class="mainmenu" 
+href="http://www.cnblogs.com/zhangzhu/rss">订阅</A><A id="MyLinks1_XMLLink" href="http://www.cnblogs.com/zhangzhu/rss"><IMG 
+alt="订阅" 
+src="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/xml.gif"></A>&nbsp;&nbsp;&nbsp;<A id="MyLinks1_Admin" 
+class="menu" href="http://www.cnblogs.com/zhangzhu/admin/EditPosts.aspx" rel="nofollow">管理</A>
+</DIV>
+<DIV id="mytopmenu">
+<DIV id="mystats"><!--done-->
+<DIV class="blogStats">posts - 57,comments - 2,trackbacks - 0</DIV></DIV></DIV>
+<DIV id="leftcontent">
+<DIV id="leftcontentcontainer">
+<DIV style="display: none;" id="blog-calendar-block">
+<DIV id="blog-calendar"></DIV></DIV><BR><!--done-->
+<DIV class="newsItem">
+<DIV id="blog-news"></DIV></DIV>
+<DIV id="blog-sidecolumn"></DIV></DIV></DIV>
+<DIV id="centercontent"><!--done-->
+<DIV class="post">
+<DIV class="postTitle"><A id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/zhangzhu/archive/2012/05/10/2494985.html">SQL游标使用实例</A></DIV>
+<DIV id="cnblogs_post_body">
+<P>游标是个好东西，最大的用处在于可以将表中的数据全部取出来，修改了再存进去。<BR><BR>
+--先定义两个变量用来保存取出的数据<BR>declare&nbsp;&nbsp;@id&nbsp;&nbsp;int<BR>
+declare&nbsp;&nbsp;@name&nbsp;&nbsp;nvarchar(20)<BR><BR>
+declare&nbsp;&nbsp;cursor1&nbsp;&nbsp;cursor&nbsp;&nbsp;for&nbsp; 
+&nbsp;&nbsp;&nbsp;---定义游标cursorl<BR>select&nbsp;&nbsp;ID, Name from 
+Test.dbo.Emp&nbsp; &nbsp; ---使用游标对象<BR><BR>open cursorl1&nbsp;&nbsp;---打开游标<BR>
+<BR>fench&nbsp;&nbsp;next&nbsp;&nbsp;from&nbsp;&nbsp;cursor1&nbsp; 
+&nbsp;into&nbsp;&nbsp;@id , @name&nbsp; &nbsp;---将游标向下移一行，将数据存入变量中<BR><BR>
+while&nbsp;&nbsp;@@fench_status = 0<BR><BR>begin<BR><BR>&nbsp; 
+&nbsp;&nbsp;&nbsp;update&nbsp;&nbsp;Test.dbo.Emp&nbsp;&nbsp;set&nbsp;&nbsp;Name 
+= name&nbsp;&nbsp;+ "hello world"&nbsp;&nbsp;where&nbsp;&nbsp;ID = @id<BR><BR>
+&nbsp; &nbsp;&nbsp;&nbsp;fench next from cursor1&nbsp;&nbsp;into @id, @name<BR>
+<BR>end<BR><BR>close cursor1</P></DIV>
+<DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 117147;
+var cb_entryId = 2494985;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "0cf4f2b1-419a-e111-aa3f-842b2b196315";
+var cb_entryCreatedDate = '2012/5/10 21:24:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV id="blog_post_info_block">
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+
+<DIV class="postDesc">posted on <SPAN id="post-date">2012-05-10 21:24</SPAN> <A 
+href="http://www.cnblogs.com/zhangzhu/">宁静.致远</A> 阅读(8) 评论(<SPAN id="post-comment-count">0</SPAN>) 
+ <A href="http://www.cnblogs.com/zhangzhu/admin/EditPosts.aspx?postid=2494985" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(2494985);return false;" href="http://www.cnblogs.com/zhangzhu/archive/2012/05/10/2494985.html#">收藏</A></DIV>
+</DIV><IMG alt="" src="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/2494985.jpg" width="1" 
+height="1">
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+
+<DIV id="comment_form" class="commentform">
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/zhangzhu/archive/2012/05/10/2494985.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/zhangzhu/archive/2012/05/10/2494985.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="ad_under_post_holder"></DIV>
+<DIV id="HistoryToday" class="c_ad_block"></DIV></DIV></DIV><!--done-->
+<DIV class="footer">		Copyright ©2012 宁静.致远 Powered By<A href="http://www.cnblogs.com/">博客园</A> 
+模板提供：<A href="http://blog.hjenglish.com/">沪江博客</A></DIV>
+<SCRIPT type="text/javascript" src="SQL游标使用实例%20-%20宁静_致远%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

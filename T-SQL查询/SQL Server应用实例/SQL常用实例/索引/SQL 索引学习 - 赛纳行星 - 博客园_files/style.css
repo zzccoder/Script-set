@@ -1,0 +1,321 @@
+html {
+	background: url("images/bg.gif") repeat-x left top rgb(233, 241, 248); font: 12px/150% black verdana; margin: auto; height: 100%; font-size-adjust: none; font-stretch: normal;
+}
+body {
+	background: url("images/bg.gif") repeat-x left top rgb(233, 241, 248); font: 12px/150% black verdana; margin: auto; height: 100%; font-size-adjust: none; font-stretch: normal;
+}
+div {
+	font-family: verdana; word-wrap: break-word;
+}
+td {
+	font-size: 12px;
+}
+ul {
+	list-style-type: circle;
+}
+a:link {
+	color: rgb(102, 102, 102); text-decoration: none;
+}
+a:visited {
+	color: rgb(102, 102, 102); text-decoration: none;
+}
+a:hover {
+	color: rgb(102, 102, 102); text-decoration: underline;
+}
+a:active {
+	color: red; text-decoration: none;
+}
+.none {
+	display: none;
+}
+.floatright {
+	float: right;
+}
+.clear {
+	clear: both;
+}
+#banner {
+	background: url("images/banner.gif") repeat-x left top; border: 0px solid rgb(0, 0, 0); width: 100%; height: 160px;
+}
+#bnr_pic {
+	background: url("images/top.gif") no-repeat right; border: 0px solid red; width: 100%; height: 100%;
+}
+#main {
+	width: 100%; height: 100%;
+}
+#left {
+	border: 0px solid red; left: 240px; top: 160px; height: 100%; right: 20px; position: absolute;
+}
+#right {
+	background: white; border: 1px dashed rgb(103, 103, 103); width: 220px; text-align: center; color: rgb(102, 102, 102); padding-bottom: 20px; margin-left: 10px; float: left;
+}
+#right_content {
+	margin: 15px 0px; border: 0px solid red; width: 90%; text-align: left;
+}
+#footer {
+	border: 0px solid red; text-align: center;
+}
+.listtitle {
+	background: url("images/tit_list.jpg") no-repeat center; width: 135px !important; height: 36px !important; color: rgb(102, 102, 102); padding-top: 3px; padding-left: 45px; font-size: 14px;
+}
+.catListTitle {
+	background: url("images/tit_list.jpg") no-repeat center; width: 135px !important; height: 36px !important; color: rgb(102, 102, 102); padding-top: 3px; padding-left: 45px; font-size: 14px;
+}
+#leftcontentcontainer {
+	
+}
+#leftcontentcontainer h3 {
+	background: url("images/tit_list.jpg") no-repeat center; width: 135px !important; height: 36px !important; color: rgb(102, 102, 102); padding-top: 3px; padding-left: 45px; font-size: 14px; margin-bottom: 5px;
+}
+#leftcontentcontainer ul {
+	padding-left: 5px;
+}
+#leftcontentcontainer li {
+	line-height: 1.8;
+}
+.catList {
+	margin-left: 10px;
+}
+ul {
+	margin-left: 0px;
+}
+li {
+	margin-left: 10px; list-style-type: none;
+}
+.newsItem {
+	padding: 0px 15px; border: 0px solid red; line-height: 1.5; margin-bottom: 10px;
+}
+#mylinks {
+	background: url("images/top_menu.gif") no-repeat left top; padding: 10px; margin-left: 15px;
+}
+a.menu:link {
+	color: rgb(102, 102, 102); text-decoration: none;
+}
+a.menu:visited {
+	color: rgb(102, 102, 102); text-decoration: none;
+}
+a.menu:hover {
+	color: rgb(102, 102, 102); text-decoration: underline;
+}
+a.menu:active {
+	color: rgb(102, 102, 102); text-decoration: none;
+}
+#mystats {
+	padding: 10px; float: right;
+}
+.headerText {
+	border: 0px solid red; padding-top: 20px; padding-left: 50px;
+}
+.headermaintitle {
+	font-family: "courier new", verdana, monospace; font-weight: bold;
+}
+a.headermaintitle:link {
+	color: black; text-decoration: none;
+}
+a.headermaintitle:visited {
+	color: black; text-decoration: none;
+}
+a.headermaintitle:hover {
+	color: black; text-decoration: underline;
+}
+a.headermaintitle:active {
+	color: black; text-decoration: none;
+}
+.headerDis {
+	border: 0px solid red; text-align: left; color: gray; overflow: hidden; padding-right: 10px; padding-left: 50px; font-family: "courier new", verdana, monospace;
+}
+#topics {
+	margin: 30px 10px auto 30px; border: 0px solid red;
+}
+.day {
+	background: url("images/bg_day.jpg") no-repeat right top white; padding: 15px; border: 1px dashed rgb(103, 103, 103); margin-bottom: 20px;
+}
+.dayTitle {
+	color: rgb(102, 102, 102); padding-bottom: 10px; font-family: verdana, monospace; font-weight: bold; margin-bottom: 0px;
+}
+.postTitle {
+	padding: 10px 10px 10px 5px; border: 0px solid red; font-size: 14px; font-weight: bold;
+}
+.postTitle h1 {
+	padding: 10px; border: 0px solid red; font-size: 14px; font-weight: bold;
+}
+.postTitle2 {
+	padding-bottom: 10px; border-bottom-color: rgb(239, 239, 239); border-bottom-width: 0px; border-bottom-style: dotted;
+}
+.post a:link {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.post a:visited {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.post a:hover {
+	color: rgb(167, 167, 167); text-decoration: underline;
+}
+.post a:active {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+a.postTitle2:link {
+	color: rgb(120, 175, 211); text-decoration: none;
+}
+a.postTitle2:visited {
+	color: rgb(120, 175, 211); text-decoration: none;
+}
+a.postTitle2:hover {
+	color: rgb(167, 167, 167); text-decoration: underline;
+}
+a.postTitle2:active {
+	color: rgb(120, 175, 211); text-decoration: none;
+}
+.postCon {
+	padding: 10px; border: 0px dotted rgb(239, 239, 239); line-height: 150%; font-size: 14px;
+}
+.postDesc {
+	border: 0px solid red; text-align: right; color: gray; font-family: arial; font-size: 12px;
+}
+.postDesc a:link {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.postDesc a:visited {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.postDesc a:hover {
+	color: rgb(167, 167, 167); text-decoration: underline;
+}
+.postDesc a:active {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.postSeparator {
+	background: url("images/line.jpg") no-repeat center; height: 20px; margin-top: 10px; margin-bottom: 5px;
+}
+.post {
+	background: url("images/bg_day.jpg") no-repeat right top white; padding: 15px; border: 1px dashed rgb(103, 103, 103); line-height: 1.5; font-size: 14px;
+}
+.entrylist {
+	background: url("images/bg_day.jpg") no-repeat right top white; padding: 15px; border: 1px dashed rgb(103, 103, 103);
+}
+.entrylistTitle {
+	padding: 10px; border: 0px solid red; font-family: verdana; font-size: 14px; font-weight: bold;
+}
+.entrylistDescription {
+	padding: 15px; color: gray;
+}
+.entrylistItem {
+	padding: 15px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 0px; border-bottom-style: dotted;
+}
+.entrylistItemTitle {
+	font-family: verdana; font-size: 14px;
+}
+.entrylistItemPostDesc {
+	text-align: right; color: gray; font-family: arial;
+}
+.feedback_area_title {
+	margin: 0px 0px 10px; font-size: 14px; font-weight: bold; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: dotted;
+}
+.feedbackListSubtitle {
+	color: rgb(79, 79, 79); font-weight: bold; margin-bottom: 10px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: dotted;
+}
+.commentform {
+	margin: 0px 20px 10px;
+}
+.feedbackItem {
+	margin: 0px 0px 10px;
+}
+.feedbackManage {
+	font-weight: normal; float: right;
+}
+.postDesc a:link {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.postDesc a:visited {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.postDesc a:hover {
+	color: rgb(167, 167, 167); text-decoration: underline;
+}
+.postDesc a:active {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.feedbackCon {
+	margin-bottom: 20px;
+}
+.calendar {
+	text-align: center;
+}
+.Cal {
+	background: url("images/bg_cal.jpg") no-repeat center; padding: 0px; width: 100%; line-height: 22px; font-family: arial; font-size: 12px; margin-left: 7px;
+}
+.CalTitle {
+	height: 30px; color: rgb(0, 153, 204); font-family: verdana; font-size: 12px;
+}
+.CalDayHeader {
+	border: 0px solid red; font-weight: bold; background-color: transparent;
+}
+.CalTodayDay {
+	background: rgb(220, 231, 236); border: 0px solid red;
+}
+.CalSelector {
+	border: 0px solid red;
+}
+.CalWeekendDay {
+	background: rgb(233, 241, 248);
+}
+.CalOtherMonthDay {
+	color: gray;
+}
+.CalNextPrev {
+	padding: 5px; border: 0px solid red; font-weight: bold;
+}
+.pages {
+	font-size: 14px;
+}
+.pfl_feedback_area_title {
+	font-size: 14px; font-weight: bold;
+}
+.pfl_feedback_area_title a:link {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.pfl_feedback_area_title a:visited {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.pfl_feedback_area_title a:hover {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.pfl_feedbackItem a:link {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.pfl_feedbackItem a:visited {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.pfl_feedbackItem a:hover {
+	color: rgb(120, 175, 211); text-decoration: underline;
+}
+.pfl_feedbackItem {
+	margin-top: 10px;
+}
+.pfl_feedbacksubtitle {
+	height: 24px; line-height: 24px; margin-bottom: 5px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: dashed;
+}
+.pfl_feedbackname {
+	color: rgb(79, 79, 79); font-weight: bold; float: left;
+}
+.pfl_feedbackManage {
+	float: right;
+}
+.pfl_feedbackCon {
+	padding-bottom: 10px;
+}
+.pfl_answer {
+	padding-bottom: 10px; margin-left: 20px;
+}
+.div_my_zzk {
+	padding-left: 20px;
+}
+.c_b_p_link_desc {
+	padding-left: 10px;
+}
+.RecentComment ul {
+	margin-top: 0px;
+}
+.c_b_p_desc {
+	text-indent: 0px;
+}

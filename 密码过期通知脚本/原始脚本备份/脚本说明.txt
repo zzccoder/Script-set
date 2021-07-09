@@ -1,0 +1,6 @@
+ExpirationNotifier-测试中.vbs
+
+只在原来基础上修改了 SendMail 部分的objUser.LastName
+原来是objUser.givenname ,这个是没有的。
+
+另外脚本中变量名称有出入没有问题，取前四位相同。

@@ -1,0 +1,9 @@
+bin\Debug\Other.exe
+bin\Debug\Other.pdb
+bin\Debug\Other.xml
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\Other.Resources.resources
+obj\Debug\Other.vbproj.GenerateResource.Cache
+obj\Debug\Other.exe
+obj\Debug\Other.xml
+obj\Debug\Other.pdb

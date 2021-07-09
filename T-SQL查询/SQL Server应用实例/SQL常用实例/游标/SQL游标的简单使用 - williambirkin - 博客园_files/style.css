@@ -1,0 +1,285 @@
+body {
+	margin: 0px; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; word-wrap: break-word;
+}
+p {
+	line-height: 120%; font-size: 13px;
+}
+span {
+	line-height: 1.5;
+}
+td {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px;
+}
+a:visited {
+	color: navy; text-decoration: none;
+}
+a:active {
+	color: navy; text-decoration: none;
+}
+a:link {
+	color: navy; text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+h1 {
+	margin: 10px 0px 5px; font-size: 18px;
+}
+h1 a:visited {
+	color: rgb(0, 0, 0);
+}
+h1 a:active {
+	color: rgb(0, 0, 0);
+}
+h1 a:link {
+	color: rgb(0, 0, 0);
+}
+h1 a:hover {
+	color: rgb(68, 119, 255); text-decoration: none;
+}
+h2 {
+	font-size: 13px; margin-top: 10px; margin-bottom: 3px;
+}
+h3 {
+	font-size: 12px;
+}
+h5 {
+	margin: 0px; padding: 0px;
+}
+p {
+	margin: 10px 0px;
+}
+#authors ul {
+	list-style: none; margin: 0px 5px; padding: 0px;
+}
+div.News {
+	padding: 5px 5px 5px 10px; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+.HeaderTitle {
+	margin: 0px; font-size: 1.5em;
+}
+.HeaderTitles {
+	padding: 10px; width: 100%;
+}
+.HeaderTitles a:visited {
+	color: white; font-size: 18px; font-weight: normal; text-decoration: none;
+}
+.HeaderTitles a:active {
+	color: white; font-size: 18px; font-weight: normal; text-decoration: none;
+}
+.HeaderTitles a:link {
+	color: white; font-size: 18px; font-weight: normal; text-decoration: none;
+}
+.HeaderTitles a:hover {
+	color: white; font-size: 18px; font-weight: normal; text-decoration: none;
+}
+.HeaderBar {
+	font-weight: normal; border-collapse: collapse; background-image: url("images/BlueTabBack.gif"); background-repeat: repeat-x;
+}
+.HeaderBar a:visited {
+	color: whitesmoke; font-weight: normal; text-decoration: none;
+}
+.HeaderBar a:active {
+	color: whitesmoke; font-weight: normal; text-decoration: none;
+}
+.HeaderBar a:link {
+	color: whitesmoke; font-weight: normal; text-decoration: none;
+}
+.HeaderBarTab {
+	padding: 0px; border-collapse: collapse; background-image: url("images/BlueTabFace.gif"); background-repeat: repeat-x;
+}
+.BlogStatsBar {
+	text-align: right; color: silver; font-weight: normal; border-collapse: collapse;
+}
+p.date img {
+	vertical-align: middle;
+}
+p.date {
+	text-align: right; padding-top: 2px; padding-right: 0px; padding-bottom: 4px; font-weight: bold; margin-bottom: 0px;
+}
+blockquote {
+	
+}
+div.postTitle a:visited {
+	color: navy; text-decoration: none;
+}
+div.postTitle a:active {
+	color: navy; text-decoration: none;
+}
+div.postTitle a:link {
+	color: navy; text-decoration: none;
+}
+div.post {
+	border: 2px solid gainsboro;
+}
+div.postTitle {
+	padding-top: 3px; padding-bottom: 3px; padding-left: 3px; font-size: 13px; font-weight: bolder; border-bottom-color: gainsboro; border-bottom-width: 1px; border-bottom-style: solid; background-color: whitesmoke;
+}
+div.postText {
+	padding: 10px 10px 5px 3px; line-height: 1.5; font-size: 13px; margin-left: 5px;
+}
+div.postText p {
+	line-height: 1.4;
+}
+div.postFoot {
+	padding: 1px 3px; text-align: right; border-top-color: gainsboro; border-top-width: 1px; border-top-style: solid; background-color: whitesmoke;
+}
+#top {
+	margin: 0px; padding: 0px; color: whitesmoke; border-top-color: black; border-bottom-color: black; border-top-width: 4px; border-bottom-width: 4px; border-top-style: solid; border-bottom-style: solid; background-image: url("images/BlueTabBackground.gif"); background-repeat: repeat;
+}
+#tagline {
+	margin: 0px; color: white; font-size: 16px;
+}
+#leftmenu {
+	left: 0px; width: 200px; height: auto; padding-top: 0px; position: absolute; background-color: whitesmoke;
+}
+#leftmenu h3 {
+	margin: 10px 0px 0px; padding-top: 3px; padding-bottom: 2px; padding-left: 3px; border-top-color: gainsboro; border-top-width: 1px; border-top-style: solid;
+}
+#leftmenu ul {
+	list-style: none; margin: 0px 0px 10px 5px; padding-left: 5px;
+}
+#leftmenu a {
+	padding: 1px; text-decoration: none;
+}
+#leftmenu a:active {
+	
+}
+#leftmenu a:visited {
+	
+}
+#leftmenu a:link {
+	
+}
+#leftmenu a:hover {
+	font-style: italic;
+}
+#main {
+	padding: 10px; margin-left: 200px; border-bottom-color: black; border-left-color: rgb(85, 85, 85); border-bottom-width: 4px; border-left-width: 1px; border-bottom-style: solid; border-left-style: solid; background-color: white;
+}
+#footer {
+	margin: 0px; text-align: center; padding-top: 5px; font-size: 10px;
+}
+#CommentForm {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+input {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+textarea {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+.CommentForm {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+.Button {
+	border: 1px solid steelblue; background-color: gainsboro;
+}
+.Cal {
+	padding: 0px; border: 1px solid rgb(24, 106, 162); width: 100%; height: 180px; font-family: Arial; font-size: 12px; margin-top: 0px; margin-bottom: 10px; background-color: whitesmoke;
+}
+.CalTitle {
+	border-color: rgb(170, 221, 255); padding: 0px; height: 100%; color: rgb(0, 0, 0); font-family: Arial; font-size: 13px; font-weight: normal; margin-left: 0px; background-color: rgb(1, 78, 130);
+}
+.CalOtherMonthDay {
+	color: rgb(128, 128, 128);
+}
+.CalSelector {
+	
+}
+.CalNextPrev {
+	background-color: rgb(1, 78, 130);
+}
+.CalDayHeader {
+	color: rgb(0, 0, 0); background-color: rgb(24, 106, 162);
+}
+.CalSelectedDay {
+	
+}
+.CalWeekendDay {
+	
+}
+.CalTodayDay {
+	color: red;
+}
+h1 {
+	margin: 10px 0px 5px; line-height: 200%; font-size: 24px;
+}
+h2 {
+	font-size: 18px; margin-top: 10px; margin-bottom: 3px;
+}
+h3 {
+	font-size: 16px;
+}
+h4 {
+	font-size: 14px;
+}
+p {
+	margin: 10px 0px; line-height: 150%;
+}
+.CalTitle {
+	border-color: rgb(170, 221, 255); padding: 0px; height: 100%; color: white; font-family: Arial; font-size: 13px; font-weight: normal; margin-left: 0px; background-color: rgb(1, 78, 130);
+}
+.CalNextPrev {
+	color: white; background-color: rgb(1, 78, 130);
+}
+.CalDayHeader {
+	color: white; background-color: rgb(24, 106, 162);
+}
+div.News {
+	padding: 5px 5px 5px 10px; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11.5px;
+}
+.HeaderBar {
+	font-size: 11.5px; font-weight: normal; border-collapse: collapse; background-image: url("images/BlueTabBack.gif"); background-repeat: repeat-x;
+}
+.BlogStatsBar {
+	text-align: right; color: silver; font-size: 11.5px; font-weight: normal; border-collapse: collapse;
+}
+p.date {
+	text-align: right; padding-top: 2px; padding-right: 0px; padding-bottom: 4px; font-size: 11.5px; font-weight: bold; margin-bottom: 0px;
+}
+blockquote {
+	
+}
+div.postFoot {
+	padding: 1px 3px; text-align: right; font-size: 11.5px; border-top-color: gainsboro; border-top-width: 1px; border-top-style: solid; background-color: whitesmoke;
+}
+#leftmenu h3 {
+	margin: 10px 0px 0px; padding-bottom: 2px; padding-left: 3px; font-size: 11.5px; border-top-color: gainsboro; border-top-width: 1px; border-top-style: solid;
+}
+#leftmenu ul {
+	list-style: none; margin: 0px 0px 10px 5px; padding-left: 5px; font-size: 11.5px;
+}
+#leftmenu a {
+	padding: 1px; font-size: 11.5px; text-decoration: none;
+}
+#footer {
+	margin: 0px; text-align: center; padding-top: 5px; font-size: 11.5px;
+}
+#CommentForm {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11.5px;
+}
+input {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11.5px;
+}
+textarea {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11.5px;
+}
+.CommentForm {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11.5px;
+}
+#leftmenu {
+	left: 0px; width: 200px; height: auto; padding-top: 0px; position: absolute; background-color: whitesmoke;
+}
+#main {
+	padding: 10px; margin-left: 200px; border-bottom-color: black; border-left-color: rgb(85, 85, 85); border-bottom-width: 4px; border-left-width: 1px; border-bottom-style: solid; border-left-style: solid; background-color: white;
+}
+.div_my_zzk {
+	margin-left: 5px;
+}
+.commentOpt {
+	padding-bottom: 5px;
+}
+.blog_comment_body {
+	line-height: 1.8;
+}

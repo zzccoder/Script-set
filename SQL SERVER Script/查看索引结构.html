@@ -1,0 +1,58 @@
+﻿<p><br/></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">--===============================================</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">--查看索引结构</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">;WITH T1</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">AS (</span></p><p style=";;font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">SELECT
+IC.* ,</span></p><p style=";;font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">C.name
+AS ColumnName</span></p><p style=";;font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">FROM
+sys.index_columns IC</span></p><p style=";;font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">INNER
+JOIN sys.columns C</span></p><p style=";;font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ON
+IC.object_id = C.object_id</span></p><p style=";;font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">AND
+IC.column_id = C.column_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">)</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">SELECT</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">--DB_ID() AS
+DatabaseID,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">DB_NAME() AS
+DatabaseName ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">SCHEMA_NAME(TB.schema_id)
+AS SchemaName ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">TB.name AS TableName
+,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">--IX.index_id AS
+IndexId,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ISNULL(IX.name, &#39;&#39;)
+AS IndexName ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">IX.type_desc AS
+IndexType ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ISNULL(IXK.ix_index_column_name,
+&#39;&#39;) AS IndexKey ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ISNULL(IXK.ix_index_include_column_name,
+&#39;&#39;) AS IndexIncludeColumn ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ISNULL(IX.filter_definition,
+&#39;&#39;) AS FilerDefinition ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">IX.is_primary_key AS
+IsPrimaryKey ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">IX.is_unique AS
+IsUnique ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">IX.is_disabled AS
+IsDisabled ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">IX.fill_factor AS
+FileFactor ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">IX.has_filter AS
+HasFiler ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">IX.ignore_dup_key AS
+IgnoreDuplicateKey ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">DS.name AS DataSpace
+,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ISNULL(PS.name, &#39;&#39;)
+AS PartitionScheme ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ISNULL(IXC.ColumnName,
+&#39;&#39;) AS PartitionKey ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">IX.allow_page_locks
+AS AllowPageLocks ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">IX.allow_row_locks
+AS AllowRowLocks ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">IX.is_padded AS
+IsPadded</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">FROM sys.tables TB</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">INNER JOIN
+sys.indexes IX</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ON TB.object_id =
+IX.object_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">INNER JOIN
+sys.data_spaces DS</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ON DS.data_space_id
+= IX.data_space_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">LEFT JOIN
+sys.partition_schemes PS</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ON IX.data_space_id
+= PS.data_space_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">LEFT JOIN T1 AS IXC
+ON IX.object_id = IXC.object_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">AND IX.index_id =
+IXC.index_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">AND
+IXC.partition_ordinal = 1</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">OUTER APPLY (</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">SELECT
+ix_index_column_name =</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">STUFF(REPLACE(REPLACE((</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">SELECT CASE WHEN
+T1.is_descending_key = 1</span></p><p style=";;font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">THEN
+T1.ColumnName+ &#39; desc&#39;</span></p><p style=";;font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ELSE
+T1.ColumnName</span></p><p style=";;font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">END
+AS column_name</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">FROM T1</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">WHERE IX.object_id =
+T1.object_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">AND IX.index_id =
+T1.index_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">AND
+T1.is_included_column = 0</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ORDER BY
+index_column_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">FOR XML
+AUTO),&#39;&lt;T1 column_name=&quot;&#39;,&#39;,&#39;), &#39;&quot;/&gt;&#39;, &#39;&#39;),1, 1, &#39;&#39;) ,</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ix_index_include_column_name
+=</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">STUFF(REPLACE(REPLACE((
+SELECT</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">T1.ColumnName AS
+column_name</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">FROM T1</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">WHERE IX.object_id =
+T1.object_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">AND IX.index_id =
+T1.index_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">AND
+T1.is_included_column = 1</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ORDER BY
+index_column_id</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">FOR XML
+AUTO),&#39;&lt;T1 column_name=&quot;&#39;,&#39;,&#39;), &#39;&quot;/&gt;&#39;, &#39;&#39;),1, 1, &#39;&#39;)</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">) AS IXK</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">--WHERE
+TB.name=&#39;t_coupon&#39;</span></p><p style=";font-family:Calibri;font-size:10.5pt"><span style="font-size: 18px;">ORDER BY
+TableName,IndexKey,IndexIncludeColumn</span></p>

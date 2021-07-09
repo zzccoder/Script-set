@@ -1,0 +1,333 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0052)http://www.cnblogs.com/qiaojun/articles/1486365.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=9.0000" 
+http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type"><TITLE>SQL游标 
+- 月光小提琴 - 博客园</TITLE><LINK rel="stylesheet" type="text/css" href="SQL游标%20-%20月光小提琴%20-%20博客园_files/common.css">
+<LINK id="MainCss" rel="stylesheet" type="text/css" href="SQL游标%20-%20月光小提琴%20-%20博客园_files/style.css">
+<LINK rel="stylesheet" type="text/css" href="SQL游标%20-%20月光小提琴%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="SQL游标%20-%20月光小提琴%20-%20博客园_files/shStyle.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/qiaojun/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/qiaojun/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/qiaojun/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="SQL游标%20-%20月光小提琴%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'qiaojun';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标%20-%20月光小提琴%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标%20-%20月光小提琴%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="SQL游标%20-%20月光小提琴%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A><!--PageBeginHtml Block Begin--><!--PageBeginHtml Block End-->
+<DIV id="home">
+<DIV id="header">
+<DIV id="blogTitle"><!--done-->
+<DIV class="title"><A id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/qiaojun/">月光小提琴</A></DIV>
+<DIV class="subtitle">Asp.Net,MsSQL,MsSQL,Javascript,CSS讲友情，不讲交易！
+ 承接各类网站建设，桌面应用程序!</DIV></DIV><!--end: blogTitle 博客的标题和副标题 -->
+<DIV id="navigator">
+<UL id="navList">
+  <LI><A id="MyLinks1_HomeLink" class="menu" 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/qiaojun/">首页</A></LI>
+  <LI><A class="menu" href="http://q.cnblogs.com/">博问</A></LI>
+  <LI><A class="menu" href="http://home.cnblogs.com/ing/">闪存</A></LI>
+  <LI><A id="MyLinks1_NewPostLink" class="menu" href="http://www.cnblogs.com/qiaojun/admin/EditPosts.aspx?opt=1" 
+  rel="nofollow">新随笔</A></LI>
+  <LI><A id="MyLinks1_ContactLink" class="menu" href="http://space.cnblogs.com/msg/send/%e6%9c%88%e5%85%89%e5%b0%8f%e6%8f%90%e7%90%b4" 
+  rel="nofollow">联系</A></LI>
+  <LI><A id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/qiaojun/rss">订阅</A><!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/qiaojun/rss"><img src="/Skins/Custom/images/rss.gif" alt="订阅" /></a>--></LI>
+  <LI><A id="MyLinks1_Admin" class="menu" href="http://www.cnblogs.com/qiaojun/admin/EditPosts.aspx" 
+  rel="nofollow">管理</A></LI></UL>
+<DIV class="blogStats"><!--done-->随笔-8&nbsp;文章-47&nbsp;评论-41&nbsp;					</DIV><!--end: blogStats --></DIV><!--end: navigator 博客导航栏 -->
+</DIV><!--end: header 头部 -->
+<DIV id="main">
+<DIV id="mainContent">
+<DIV class="forFlow"><!--done-->
+<DIV id="topics">
+<DIV class="post">
+<H1 class="postTitle"><A id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/qiaojun/articles/1486365.html">SQL游标</A></H1>
+<DIV class="clear"></DIV>
+<DIV class="postBody">
+<DIV id="cnblogs_post_body">
+<P>转自<A 
+href="http://blog.csdn.net/a3676212/archive/2009/03/31/4038943.aspx">http://blog.csdn.net/a3676212/archive/2009/03/31/4038943.aspx</A>,太详细了，爽<IMG 
+alt="" src="SQL游标%20-%20月光小提琴%20-%20博客园_files/75_75.gif"></P>
+<P>&nbsp;</P>
+<P><SPAN style="font-family: Courier New;"><SPAN style="color: red;"><SPAN 
+style="font-family: Courier New;">1. 定义游标定义</SPAN></SPAN><BR>
+游标语句的核心是定义了一个游标标识名，并把游标标识名和一个查询语句关联起来。DECLARE语句用于声明游标，它通过SELECT查询定义游标存储的数据集合。语句格式为：<BR>
+DECLARE 游标名称 [INSENSITIVE] [SCROLL]<BR>CURSOR FOR select语句<BR>[FOR{READ 
+ONLY|UPDATE[OF 列名字表]}]<BR>参数说明：<BR>
+INSENSITIVE选项：说明所定义的游标使用SELECT语句查询结果的拷贝，对游标的操作都基于该拷贝进行。因此，这期间对游标基本表的数据修改不能反映到游标中。这种游标也不允许通过它修改基本表的数据。<BR>
+SCROLL选项：指定该游标可用所有的游标数据定位方法提取数据，游标定位方法包括PRIOR、FIRST、LAST、ABSOLUTE n 和RELATIVE n 
+选项。<BR>Select语句：为标准的SELECT查询语句，其查询结果为游标的数据集合，构成游标数据集合的一个或多个表称作游标的基表。<BR>
+在游标声明语句中，有下列条件之一时，系统自动把游标定义为INSENSITIVE游标：<BR>SELECT语句中使用了DISTINCT、UNION、 GROUP 
+BY或HAVING等关键字；<BR>任一个游标基表中不存在唯一索引。<BR>其他<BR>READ ONLY选项：说明定义只读游标。<BR>UPDATE [OF 
+列名字表]选项：定义游标可修改的列。如果使用OF 列名字表选项，说明只允许修改所指定的列，否则，所有列均可修改。 <BR>
+例如，查询教师名字和所教的课程名，定义游标TCURSOR的语句如下 ：<BR>DECLARE TCURSOR CURSOR FOR <BR>SELECT 
+tname, cname <BR>FROM teacher ,couse<BR>WHERE teacher.tno = couse.tno <BR><SPAN 
+style="color: red;">2. 打开游标</SPAN><BR>
+打开游标语句执行游标定义中的查询语句，查询结果存放在游标缓冲区中。并使游标指针指向游标区中的第一个元组，作为游标的缺省访问位置。查询结果的内容取决与查询语句的设置和查询条件。<BR>
+打开游标的语句格式：<BR>EXEC SQL OPEN 〈游标名〉<BR>
+如果打开的游标为INSENSITIVE游标，在打开时将产生一个临时表，将定义的游标数据集合从其基表中拷贝过来。 <BR>SQL 
+Server中,游标打开后，可以从全局变量@@CURSOR_ROWS中读取游标结果集合中的行数。<BR>
+例1：打开前面所创建的查询教师姓名和所教课名称的游标。<BR>OPEN tcursor<BR>例2：显示游标结果集合中数据行数<BR>SELECT 数据行数 = 
+@@CURSOR_ROWS<BR><BR><SPAN style="color: red;">3. 读游标区中的当前元组</SPAN><BR>
+读游标区数据语句是读取游标区中当前元组的值，并将各分量依次赋给指定的共享主变量。FETCH语句用于读取游标中的数据，语句格式为：<BR>FETCH 
+[[NEXT|PRIOR|FIRST|LAST| ABSOLUTE n| RELATIVE n] <BR>FROM ] 游标名<BR>[INTO @变量1, 
+@变量2, ….]<BR>其中：<BR>NEXT：说明读取游标中的下一行，第一次对游标实行读取操作时，NEXT返回结果集合中的第一行。<BR>
+PRIOR、FIRST、LAST、ABSOLUTE n 和RELATIVE n 
+选项只适用于SCROLL游标。它们分别说明读取游标中的上一行、第一行、最后一行、第n 行和相对于当前位置的第n 行。n 为负值时，ABSOLUTE n 
+和RELATIVE n 说明读取从游标结果集合中的最后一行或当前行倒数n行的数据。<BR>INTO子句 
+说明将读取的数据存放到指定的局部变量中，每一个变量的数据类型应与游标所返回的数据类型严格匹配，否则将产生错误。 <BR>
+如果游标区的元组已经读完，那么系统状态变量SQLSTATE的值被设为02000，意为"no tuple found"。<BR>
+例如，读取tcursor中当前位置后的第二行数据<BR>FETCH RELATIVE 2 FROM tcursor<BR><BR><SPAN style="color: red;">4. 
+利用游标修改数据</SPAN><BR><SPAN style="color: red;">SQL Server中的 UPDATE语句 和 
+DELETE语句也支持游标操作，它们可以通过游标修改或删除游标基表中的当前数据行。<BR>UPDATE语句的格式为：<BR>UPDATE 
+table_name<BR>SET 列名=表达式}[,…n]<BR>WHERE CURRENT OF cursor_name<BR>
+DELETE语句的格式为：<BR>DELETE FROM table_name<BR>WHERE CURRENT OF 
+cursor_name</SPAN><BR>说明:<BR><STRONG style="color: red; background-color: yellow;">CURRENT 
+OF cursor_name：<BR>表示当前游标指针所指的当前行数据。CURRENT OF 
+只能在UPDATE和DELETE语句中使用。</STRONG><BR>注意：<BR>o使用游标修改基表数据的前提是声明的游标是可更新的。 <BR>o 
+对相应的数据库对象（游标的基表）有修改和删除权限。 </SPAN></P><SPAN style="font-family: Courier New;">
+<P><BR><SPAN style="color: red;">5. 关闭游标</SPAN><BR>
+关闭游标后，游标区的数据不可再读。CLOSE语句关闭已打开的游标，之后不能对游标进行读取等操作，但可以使用OPEN语句再次打开该游标。<BR>
+CLOSE语句的格式为：<BR>CLOSE 游标名<BR>例如：关闭tcursor游标如下描述：<BR>CLOSE tcursor<BR><BR><SPAN 
+style="color: red;">6 删除游标语句</SPAN><BR>DEALLOCATE语句删除定义游标的数据结构，删除后不可再用。语句格式：<BR>
+DEALLOCATE 游标名<BR>例如，删除tcursor游标<BR>DEALLOCATE tcursor<BR><BR>
+例1,读JS2001班的学生的学号和姓名：<BR>#define MAX 30<BR>EXEC SQL BEGIN DECLARE SECTION;<BR>
+char TN[12], FU[20]； //定义主变量//<BR>EXEC SQL END DECLARE SECTION; <BR>char 
+tarn1[30][12],tarn2[30][20]； //定义 C 变量//<BR> . . . . . .<BR>EXEC SQL 
+//执行SQL语句，定义游标//<BR>DCLARE Scursor CURSOR FOR //声明游标Scursor//<BR>SELECT 
+sno,sname //查询sno,sname//<BR>FROM student //对student表chax 查询//<BR>WHERE sclass = 
+'JS2001'； //sclass＝'JS2001'的班级//<BR>EXEC SQL OPEN Scursor ； //打开游标//<BR>for 
+(i=0; i&lt;MAX; i++) <BR>{ EXEC SQL FETCH FROM Scursor<BR>INTO @TN, @FU； 
+//取到宿主变量//<BR>tarn1= TN; //赋值到C数组变量// <BR>tarn2= FU;<BR>}<BR>
+.................... <BR>EXEC SQL CLOSE Scursor ； //关闭游标//<BR>EXEC SQL 
+DEALLOCATE Scursor ； //删除游标//<BR><BR>例2，定义游标，使结果集包括 pubs 数据库的 authors 
+表中的所有行和列。因为没指定 SCROLL 选项，FETCH NEXT 是唯一可用的提取选项。<BR>DECLARE authors_cursor CURSOR 
+FOR //声明游标authors_cursor //<BR>SELECT * FROM authors <BR>OPEN authors_cursor 
+//打开游标authors_cursor //<BR>FETCH NEXT FROM authors_cursor 
+//读游标authors_cursor中的一行 //<BR>.................... <BR><BR>例3, 定义和使用滚动游标<BR>
+DECLARE tcursor SCROLL CURSOR FOR <BR>SELECT tname, cname FROM teacher 
+,couse<BR>WHERE teacher.tno = couse.tno;<BR>OPEN tcursor; <BR>
+取tcursor中当前位置向下的第二行数据<BR>FETCH RELATIVE 2 FROM tcursor<BR>取tcursor中最后一行数据<BR>
+FETCH LAST FROM tcursor<BR>取tcursor中当前位置向前的第4行数据<BR>FETCH RELATIVE -4 FROM 
+tcursor<BR><BR>例4 利用 @@FETCH_STATUS 控制一个 WHILE 循环中的游标活动。<BR>DECLARE S_Cursor 
+CURSOR FOR <BR>SELECT sname, sno FROM student <BR>OPEN S_Cursor <BR>FETCH NEXT 
+FROM S_Cursor <BR>WHILE @@FETCH_STATUS = '000000'<BR>BEGIN FETCH NEXT FROM 
+S_Cursor END<BR>CLOSE S_Cursor <BR>DEALLOCATE S_Cursor <BR><BR>
+例5，职工普调工资，从最低工资调起，每人工资长10%，但工资总额不能超过50万元。当调完某个职工工资后，如果工资总额达到或超过50万元，就不再调了，另外，如果职工全部调了一遍，工资总额还没到50万元，也到此为止。现有职工表emp，定义了一个游标cl,游标的查询语句取出职工号和工资值，并按增序排列。下面是程序代码： 
+<BR>void addsalary()<BR>{ EXEC SQL BEGIN DECLARE SECTION //声明SQL变量//<BR>char 
+empno[8], e_sno，SQLSTATE[6]；<BR>float s_sal, e_sal；<BR>EXEC SQL END DECLARE 
+SECTION; //声明SQL变量完//<BR>EXEC SQL DECLARE cl CURSOR FOR //定义游标 cl 
+,对emp表的eno,sal列可以作任何操作<BR>SELECT eno, sal <BR>FROM emp <BR>ORDER BY sal ASC;<BR>
+EXEC SQL OPEN cl; //打开游标/<BR>EXEC SQL SELECT SUM(sal) INTO @s_sal FROM emp; 
+//取工资总和到s_sal <BR>while(s_sal &lt; 500000.00)<BR>{<BR>EXEC SQL FETCH FROM cl<BR>
+INTO @e_sno , @e_sal; //从游标中读出的数据放入e_sno,e_sal变量<BR>If(SQLSTATE='02000') BREAK; 
+//读完记录，退出//<BR>EXEC SQL UPDATE emp <BR>SET sal=sal*1.1 
+//游标内容更新，将empno=e_sno相应的sal*1.1<BR>WHERE empno=@e_eno;<BR>s_sal = s_sal+ e_sal 
+*0.1; //计算工资总和到s_sal<BR>};<BR>EXEC SQL CLOSE cl; /关闭游标/} <BR><BR>　SQL 
+Server提供两种游标应用接口方法：第一种是符合ANSI标准的SQL游标语句，它们可以实现声明、打开、读取或关闭游标操作，这些语句可用在 
+Transact_SQL语句或存储过程内；第二种是库函数形式，客户端的DB_Library 或ODBC应用程序可以调用这些函数。<BR>
+　游标语句增强了Transact_SQL对集合数据的处理能力，在SQL Server中，通过游标还可以修改或删除基表中的数据。<BR><BR><SPAN 
+style="color: red;">7，使用游标时应注意的问题：</SPAN><BR>(1) 
+尽管使用游标比较灵活，可以实现对数据集中单行数据的直接操作，但游标会在下面几个方面影响系统的性能：<BR>-使用游标会导致页锁与表锁的增加<BR>
+-导致网络通信量的增加<BR>-增加了服务器处理相应指令的额外开销<BR>(2) 使用游标时的优化问题：<BR>-明确指出游标的用途：for read 
+only或for update<BR>-在for update后指定被修改的列</P>
+<P>&nbsp;</P>
+<P><STRONG style="color: red;">测试示例（原创）</STRONG></P>
+<P>&nbsp;</P>
+<DIV class="cnblogs_code"><IMG id="Code_Closed_Image_154358" onclick="this.style.display='none'; document.getElementById('Code_Closed_Text_154358').style.display='none'; document.getElementById('Code_Open_Image_154358').style.display='inline'; document.getElementById('Code_Open_Text_154358').style.display='inline';" 
+align="top" src="SQL游标%20-%20月光小提琴%20-%20博客园_files/ContractedBlock.gif" width="11" 
+height="16"><IMG style="display: none;" id="Code_Open_Image_154358" onclick="this.style.display='none'; document.getElementById('Code_Open_Text_154358').style.display='none'; getElementById('Code_Closed_Image_154358').style.display='inline'; getElementById('Code_Closed_Text_154358').style.display='inline';" 
+align="top" src="SQL游标%20-%20月光小提琴%20-%20博客园_files/ExpandedBlockStart.gif" 
+width="11" height="16"><SPAN id="Code_Closed_Text_154358" class="cnblogs_code_Collapse">Code</SPAN><SPAN 
+style="display: none;" id="Code_Open_Text_154358"><BR><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><SPAN 
+style="color: rgb(0, 0, 0);">drop&nbsp;table&nbsp;aa<BR>go<BR>
+create&nbsp;table&nbsp;aa<BR>(<BR>
+&nbsp;&nbsp;&nbsp;&nbsp; [name]&nbsp;nvarchar(</SPAN><SPAN style="color: rgb(128, 0, 128);">20</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">),<BR>[language]&nbsp;nvarchar(</SPAN><SPAN style="color: rgb(128, 0, 128);">20</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">)<BR>)<BR>go<BR><BR>
+insert&nbsp;into&nbsp;aa([name],[language])&nbsp;values&nbsp;(</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">张学友</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">,</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">zh</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">);<BR>
+insert&nbsp;into&nbsp;aa([name],[language])&nbsp;values&nbsp;(</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">张学友</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">,</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">en</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">);<BR>
+insert&nbsp;into&nbsp;aa([name],[language])&nbsp;values&nbsp;(</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">刘德华</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">,</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">zh</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">);<BR>
+insert&nbsp;into&nbsp;aa([name],[language])&nbsp;values&nbsp;(</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">黎明</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">,</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">jp</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">);<BR>
+insert&nbsp;into&nbsp;aa([name],[language])&nbsp;values&nbsp;(</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">刘德华</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">,</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">jp</SPAN><SPAN 
+style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">);<BR>
+go<BR><BR><BR><BR>declare&nbsp;&nbsp;curaa&nbsp;cursor<BR></SPAN><SPAN style="color: rgb(0, 0, 255);">for</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;select&nbsp;[name],[language]&nbsp;from&nbsp;aa&nbsp;order&nbsp;by&nbsp;name,[language]<BR>
+begin<BR>declare&nbsp;@name&nbsp;nvarchar(</SPAN><SPAN style="color: rgb(128, 0, 128);">20</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">);<BR>
+declare&nbsp;@language&nbsp;nvarchar(</SPAN><SPAN style="color: rgb(128, 0, 128);">20</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">);<BR>declare&nbsp;@num&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">decimal</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">(</SPAN><SPAN 
+style="color: rgb(128, 0, 128);">18</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">);<BR>
+create&nbsp;table&nbsp;#aa([name]&nbsp;nvarchar(</SPAN><SPAN style="color: rgb(128, 0, 128);">20</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">),[language]&nbsp;nvarchar(</SPAN><SPAN style="color: rgb(128, 0, 128);">20</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">),cc&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">decimal</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">(</SPAN><SPAN 
+style="color: rgb(128, 0, 128);">18</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">));<BR>OPEN&nbsp;curaa;<BR>
+fetch&nbsp;next&nbsp;from&nbsp;curaa&nbsp;into&nbsp;&nbsp;@name,@language;<BR>
+</SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN><SPAN style="color: rgb(0, 0, 0);">&nbsp;((@name&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">is</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;not&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">null</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">)&nbsp;and&nbsp;(@language&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">is</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;not&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">null</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">))<BR>
+insert&nbsp;into&nbsp;#aa(cc,[Name],[language])values(</SPAN><SPAN style="color: rgb(128, 0, 128);">1</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">,@name,@language);<BR>
+WHILE&nbsp;(@@FETCH_STATUS&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&lt;&gt;</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">-</SPAN><SPAN 
+style="color: rgb(128, 0, 128);">1</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">)<BR>begin<BR></SPAN><SPAN style="color: rgb(0, 0, 255);">set</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;@name&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 0);">=</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">null</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">;<BR></SPAN><SPAN 
+style="color: rgb(0, 0, 255);">set</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;@language&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 0);">=</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">null</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">;<BR>
+fetch&nbsp;next&nbsp;from&nbsp;curaa&nbsp;into&nbsp;&nbsp;@name,@language;<BR>
+</SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN><SPAN style="color: rgb(0, 0, 0);">&nbsp;((@name&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 255);">is</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;not&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">null</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">)&nbsp;and&nbsp;(@language&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">is</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;not&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">null</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">))<BR>begin<BR>select&nbsp;@num</SPAN><SPAN style="color: rgb(0, 0, 0);">=</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">Count(Name)</SPAN><SPAN style="color: rgb(0, 0, 0);">+</SPAN><SPAN 
+style="color: rgb(128, 0, 128);">1</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;from&nbsp;#aa&nbsp;</SPAN><SPAN style="color: rgb(0, 0, 255);">where</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;Name</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">=</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">@name<BR>
+insert&nbsp;into&nbsp;#aa(cc,[Name],[language])values(@num,@name,@language);<BR>
+end<BR>end<BR>select&nbsp;</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">*</SPAN><SPAN 
+style="color: rgb(0, 0, 0);">&nbsp;from&nbsp;#aa&nbsp;order&nbsp;by&nbsp;Name,[language];<BR>
+drop&nbsp;table&nbsp;#aa;<BR>CLOSE&nbsp;curaa;<BR>DEALLOCATE&nbsp;curaa;<BR>
+end<BR></SPAN></SPAN></DIV></SPAN></DIV>
+<DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 54392;
+var cb_entryId = 1486365;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "d23ae950-4318-de11-9510-001cf0cd104b";
+var cb_entryCreatedDate = '2009/5/21 15:44:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV id="blog_post_info_block">
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+</DIV>
+<DIV class="postDesc">posted @ <SPAN id="post-date">2009-05-21 15:44</SPAN> <A 
+href="http://www.cnblogs.com/qiaojun/">月光小提琴</A> 阅读(8730) 评论(<SPAN id="post-comment-count">4</SPAN>) 
+&nbsp;<A href="http://www.cnblogs.com/qiaojun/admin/EditArticles.aspx?postid=1486365" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(1486365);return false;" href="http://www.cnblogs.com/qiaojun/articles/1486365.html#">收藏</A></DIV></DIV><IMG 
+alt="" src="SQL游标%20-%20月光小提琴%20-%20博客园_files/1486365.jpg" width="1" 
+height="1"></DIV><!--end: topics 文章、评论容器-->
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+
+<DIV id="comment_form" class="commentform">
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/qiaojun/articles/1486365.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/qiaojun/articles/1486365.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="ad_under_post_holder"></DIV>
+<DIV id="HistoryToday" class="c_ad_block"></DIV>
+</DIV></DIV><!--end: forFlow --></DIV><!--end: mainContent 主体内容容器-->
+<DIV id="sideBar">
+<DIV id="sideBarMain"><!--done-->
+<DIV class="newsItem">
+<H3 class="catListTitle">公告</H3>
+<DIV id="blog-news"></DIV></DIV>
+<DIV id="calendar">
+<DIV style="displya: none;" id="blog-calendar"></DIV></DIV>
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV></DIV></DIV><!--end: sideBarMain --></DIV><!--end: sideBar 侧边栏容器 -->
+<DIV class="clear"></DIV></DIV><!--end: main -->
+<DIV class="clear"></DIV>
+<DIV id="footer"><!--done--> Copyright ©2012 月光小提琴	</DIV><!--end: footer -->
+</DIV><!--end: home 自定义的最大容器 -->
+<SCRIPT type="text/javascript" src="SQL游标%20-%20月光小提琴%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

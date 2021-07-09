@@ -1,0 +1,1 @@
+﻿<p></p><span style="font-size: 14px;">--查看各数据库缓存情况<br/>SELECT<br/>DB_NAME(DS.database_id) AS DatabaseName,<br/>CAST(COUNT(1) *8.0/1024.0 AS INT) UsedMB<br/>FROM sys.dm_os_buffer_descriptors DS<br/>GROUP BY database_id</span>

@@ -1,0 +1,203 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0061)http://www.cnblogs.com/zcttxs/archive/2012/05/05/2484707.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=9.0000" 
+http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type"><TITLE>Sql事务 
+- zhangchun - 博客园</TITLE><LINK rel="stylesheet" type="text/css" href="Sql事务%20-%20zhangchun%20-%20博客园_files/common.css">
+<LINK id="MainCss" rel="stylesheet" type="text/css" href="Sql事务%20-%20zhangchun%20-%20博客园_files/style.css">
+<LINK rel="stylesheet" type="text/css" href="Sql事务%20-%20zhangchun%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="Sql事务%20-%20zhangchun%20-%20博客园_files/shStyle.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/zcttxs/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/zcttxs/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/zcttxs/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="Sql事务%20-%20zhangchun%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'zcttxs';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="Sql事务%20-%20zhangchun%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="Sql事务%20-%20zhangchun%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="Sql事务%20-%20zhangchun%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A>
+<DIV id="home">
+<DIV id="header">
+<DIV id="blogTitle"><!--done-->
+<DIV class="title"><A id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/zcttxs/">zhangchun</A></DIV>
+<DIV class="subtitle"></DIV></DIV><!--end: blogTitle 博客的标题和副标题 -->
+<DIV id="navigator">
+<UL id="navList">
+  <LI><A id="MyLinks1_HomeLink" class="menu" 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/zcttxs/">首页</A></LI>
+  <LI><A class="menu" href="http://q.cnblogs.com/">博问</A></LI>
+  <LI><A class="menu" href="http://home.cnblogs.com/ing/">闪存</A></LI>
+  <LI><A id="MyLinks1_NewPostLink" class="menu" href="http://www.cnblogs.com/zcttxs/admin/EditPosts.aspx?opt=1" 
+  rel="nofollow">新随笔</A></LI>
+  <LI><A id="MyLinks1_ContactLink" class="menu" href="http://space.cnblogs.com/msg/send/zhangchun" 
+  rel="nofollow">联系</A></LI>
+  <LI><A id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/zcttxs/rss">订阅</A><!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/zcttxs/rss"><img src="/Skins/Custom/images/rss.gif" alt="订阅" /></a>--></LI>
+  <LI><A id="MyLinks1_Admin" class="menu" href="http://www.cnblogs.com/zcttxs/admin/EditPosts.aspx" 
+  rel="nofollow">管理</A></LI></UL>
+<DIV class="blogStats"><!--done-->随笔-105&nbsp;文章-0&nbsp;评论-1&nbsp;					</DIV><!--end: blogStats --></DIV><!--end: navigator 博客导航栏 -->
+</DIV><!--end: header 头部 -->
+<DIV id="main">
+<DIV id="mainContent">
+<DIV class="forFlow"><!--done-->
+<DIV id="topics">
+<DIV class="post">
+<H1 class="postTitle"><A id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/zcttxs/archive/2012/05/05/2484707.html">Sql事务</A></H1>
+<DIV class="clear"></DIV>
+<DIV class="postBody">
+<DIV id="cnblogs_post_body">
+<P>完整代码如下：</P>
+<DIV class="cnblogs_code" onclick="cnblogs_code_show('b0733aa8-dbd3-4213-a94a-a01cb4b3e2ea')"><IMG 
+id="code_img_closed_b0733aa8-dbd3-4213-a94a-a01cb4b3e2ea" class="code_img_closed" 
+alt="" src="Sql事务%20-%20zhangchun%20-%20博客园_files/ContractedBlock.gif"><IMG 
+style="display: none;" id="code_img_opened_b0733aa8-dbd3-4213-a94a-a01cb4b3e2ea" 
+class="code_img_opened" onclick="cnblogs_code_hide('b0733aa8-dbd3-4213-a94a-a01cb4b3e2ea',event)" 
+alt="" src="Sql事务%20-%20zhangchun%20-%20博客园_files/ExpandedBlockStart.gif"><SPAN 
+class="cnblogs_code_collapse">View Code </SPAN>
+<DIV id="cnblogs_code_open_b0733aa8-dbd3-4213-a94a-a01cb4b3e2ea" class="cnblogs_code_hide"><PRE><SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">创建表</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">create</SPAN> <SPAN style="color: rgb(0, 0, 255);">table</SPAN><SPAN style="color: rgb(0, 0, 0);"> t_money
+(
+userid </SPAN><SPAN style="color: rgb(0, 0, 255);">varchar</SPAN>(<SPAN style="color: rgb(128, 0, 0); font-weight: bold;">20</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+username </SPAN><SPAN style="color: rgb(0, 0, 255);">varchar</SPAN>(<SPAN style="color: rgb(128, 0, 0); font-weight: bold;">30</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+</SPAN><SPAN style="color: rgb(255, 0, 0);">[</SPAN><SPAN style="color: rgb(255, 0, 0);">money</SPAN><SPAN style="color: rgb(255, 0, 0);">]</SPAN> <SPAN style="color: rgb(0, 0, 255);">int</SPAN><SPAN style="color: rgb(0, 0, 0);">
+)
+</SPAN><SPAN style="color: rgb(0, 0, 255);">go</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">插入数据</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">insert</SPAN> <SPAN style="color: rgb(0, 0, 255);">into</SPAN> t_money <SPAN style="color: rgb(0, 0, 255);">values</SPAN>(<SPAN style="color: rgb(255, 0, 0);">'</SPAN><SPAN style="color: rgb(255, 0, 0);">1111</SPAN><SPAN style="color: rgb(255, 0, 0);">'</SPAN>,<SPAN style="color: rgb(255, 0, 0);">'</SPAN><SPAN style="color: rgb(255, 0, 0);">puter</SPAN><SPAN style="color: rgb(255, 0, 0);">'</SPAN>,<SPAN style="color: rgb(128, 0, 0); font-weight: bold;">1000</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+</SPAN><SPAN style="color: rgb(0, 0, 255);">insert</SPAN> <SPAN style="color: rgb(0, 0, 255);">into</SPAN> t_money <SPAN style="color: rgb(0, 0, 255);">values</SPAN>(<SPAN style="color: rgb(255, 0, 0);">'</SPAN><SPAN style="color: rgb(255, 0, 0);">2222</SPAN><SPAN style="color: rgb(255, 0, 0);">'</SPAN>,<SPAN style="color: rgb(255, 0, 0);">'</SPAN><SPAN style="color: rgb(255, 0, 0);">judy</SPAN><SPAN style="color: rgb(255, 0, 0);">'</SPAN>,<SPAN style="color: rgb(128, 0, 0); font-weight: bold;">1000</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+</SPAN><SPAN style="color: rgb(0, 0, 255);">go</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">创建转账存储过程</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">create</SPAN> <SPAN style="color: rgb(0, 0, 255);">proc</SPAN><SPAN style="color: rgb(0, 0, 0);"> proc_updatemoney
+</SPAN><SPAN style="color: rgb(0, 128, 0);">@adduserid</SPAN> <SPAN style="color: rgb(0, 0, 255);">varchar</SPAN>(<SPAN style="color: rgb(128, 0, 0); font-weight: bold;">30</SPAN>),          <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">转入的用户</SPAN>
+ <SPAN style="color: rgb(0, 128, 0);">@subtrationuserid</SPAN> <SPAN style="color: rgb(0, 0, 255);">varchar</SPAN>(<SPAN style="color: rgb(128, 0, 0); font-weight: bold;">30</SPAN>),   <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">转出的用户</SPAN>
+ <SPAN style="color: rgb(0, 128, 0);">@money</SPAN> <SPAN style="color: rgb(0, 0, 255);">int</SPAN>,                      <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">转出金额</SPAN>
+ <SPAN style="color: rgb(0, 128, 0);">@errormessage</SPAN> <SPAN style="color: rgb(0, 0, 255);">varchar</SPAN>(<SPAN style="color: rgb(128, 0, 0); font-weight: bold;">200</SPAN>) output<SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">输出参数</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">as</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">Declare</SPAN> <SPAN style="color: rgb(0, 128, 0);">@intErrorCode</SPAN> <SPAN style="color: rgb(0, 0, 255);">int</SPAN>    <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">错误数</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">set</SPAN> <SPAN style="color: rgb(0, 128, 0);">@intErrorCode</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(128, 0, 0); font-weight: bold;">0</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">Declare</SPAN> <SPAN style="color: rgb(0, 128, 0);">@courentmondy</SPAN> <SPAN style="color: rgb(0, 0, 255);">int</SPAN>    <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">当前余额</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">Declare</SPAN> <SPAN style="color: rgb(0, 128, 0);">@rownum</SPAN> <SPAN style="color: rgb(0, 0, 255);">int</SPAN>          <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">影响行数</SPAN>
+
+<SPAN style="color: rgb(0, 0, 255);">set</SPAN> <SPAN style="color: rgb(0, 128, 0);">@rownum</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(128, 0, 0); font-weight: bold;">0</SPAN>
+
+<SPAN style="color: rgb(0, 0, 255);">begin</SPAN> <SPAN style="color: rgb(0, 0, 255);">transaction</SPAN>            <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">开始事务</SPAN>
+
+<SPAN style="color: rgb(0, 0, 255);">select</SPAN> <SPAN style="color: rgb(0, 128, 0);">@courentmondy</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(0, 0, 255);">money</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN> t_money <SPAN style="color: rgb(0, 0, 255);">where</SPAN> userid<SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(0, 128, 0);">@subtrationuserid</SPAN> <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">转出账户当前余额</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">if</SPAN>(<SPAN style="color: rgb(0, 128, 0);">@money</SPAN><SPAN style="color: rgb(128, 128, 128);">&gt;</SPAN><SPAN style="color: rgb(0, 128, 0);">@courentmondy</SPAN>)   <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">转出金额是否大于余额</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">begin</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">select</SPAN> <SPAN style="color: rgb(128, 128, 128);">*</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> dbo.t_money
+</SPAN><SPAN style="color: rgb(0, 0, 255);">set</SPAN> <SPAN style="color: rgb(0, 128, 0);">@errormessage</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(255, 0, 0);">'</SPAN><SPAN style="color: rgb(255, 0, 0);">当前余额不足!</SPAN><SPAN style="color: rgb(255, 0, 0);">'</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">set</SPAN> <SPAN style="color: rgb(0, 128, 0);">@intErrorCode</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(128, 0, 0); font-weight: bold;">1</SPAN>         <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">记录错误</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">end</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">else</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">begin</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">update</SPAN> t_money <SPAN style="color: rgb(0, 0, 255);">set</SPAN> <SPAN style="color: rgb(255, 0, 0);">[</SPAN><SPAN style="color: rgb(255, 0, 0);">money</SPAN><SPAN style="color: rgb(255, 0, 0);">]</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(255, 0, 0);">[</SPAN><SPAN style="color: rgb(255, 0, 0);">money</SPAN><SPAN style="color: rgb(255, 0, 0);">]</SPAN><SPAN style="color: rgb(128, 128, 128);">+</SPAN><SPAN style="color: rgb(0, 128, 0);">@money</SPAN> <SPAN style="color: rgb(0, 0, 255);">where</SPAN> userid<SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(0, 128, 0);">@adduserid</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">Select</SPAN> <SPAN style="color: rgb(0, 128, 0);">@intErrorCode</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(0, 128, 0);">@intErrorCode</SPAN><SPAN style="color: rgb(128, 128, 128);">+</SPAN><SPAN style="color: rgb(0, 128, 0); font-weight: bold;">@@Error</SPAN>  <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">记录错误</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">Select</SPAN> <SPAN style="color: rgb(0, 128, 0);">@rownum</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(0, 128, 0);">@rownum</SPAN><SPAN style="color: rgb(128, 128, 128);">+</SPAN><SPAN style="color: rgb(0, 128, 0); font-weight: bold;">@@rowcount</SPAN>           <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">记录影响行数</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">update</SPAN> t_money <SPAN style="color: rgb(0, 0, 255);">set</SPAN> <SPAN style="color: rgb(255, 0, 0);">[</SPAN><SPAN style="color: rgb(255, 0, 0);">money</SPAN><SPAN style="color: rgb(255, 0, 0);">]</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(255, 0, 0);">[</SPAN><SPAN style="color: rgb(255, 0, 0);">money</SPAN><SPAN style="color: rgb(255, 0, 0);">]</SPAN><SPAN style="color: rgb(128, 128, 128);">-</SPAN><SPAN style="color: rgb(0, 128, 0);">@money</SPAN> <SPAN style="color: rgb(0, 0, 255);">where</SPAN> userid<SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(0, 128, 0);">@subtrationuserid</SPAN>  
+<SPAN style="color: rgb(0, 0, 255);">Select</SPAN> <SPAN style="color: rgb(0, 128, 0);">@intErrorCode</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(0, 128, 0);">@intErrorCode</SPAN><SPAN style="color: rgb(128, 128, 128);">+</SPAN><SPAN style="color: rgb(0, 128, 0); font-weight: bold;">@@Error</SPAN>   <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">记录错误</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">Select</SPAN> <SPAN style="color: rgb(0, 128, 0);">@rownum</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(0, 128, 0);">@rownum</SPAN><SPAN style="color: rgb(128, 128, 128);">+</SPAN><SPAN style="color: rgb(0, 128, 0); font-weight: bold;">@@rowcount</SPAN>            <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">记录影响行数</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">end</SPAN>
+
+<SPAN style="color: rgb(0, 0, 255);">if</SPAN>(<SPAN style="color: rgb(0, 128, 0);">@intErrorCode</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(128, 0, 0); font-weight: bold;">0</SPAN> <SPAN style="color: rgb(128, 128, 128);">and</SPAN> <SPAN style="color: rgb(0, 128, 0);">@rownum</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(128, 0, 0); font-weight: bold;">2</SPAN>)    <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">判断是否有错误</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">begin</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">commit</SPAN> <SPAN style="color: rgb(0, 0, 255);">transaction</SPAN>   <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">提交事务</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">select</SPAN> <SPAN style="color: rgb(128, 128, 128);">*</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> dbo.t_money
+</SPAN><SPAN style="color: rgb(0, 0, 255);">set</SPAN> <SPAN style="color: rgb(0, 128, 0);">@errormessage</SPAN><SPAN style="color: rgb(128, 128, 128);">=</SPAN><SPAN style="color: rgb(255, 0, 0);">'</SPAN><SPAN style="color: rgb(255, 0, 0);">操作成功!</SPAN><SPAN style="color: rgb(255, 0, 0);">'</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">return</SPAN> <SPAN style="color: rgb(0, 128, 0);">@rownum</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">end</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">else</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">begin</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">rollback</SPAN> <SPAN style="color: rgb(0, 0, 255);">transaction</SPAN>  <SPAN style="color: rgb(0, 128, 128);">--</SPAN><SPAN style="color: rgb(0, 128, 128);">回滚事务</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">return</SPAN> <SPAN style="color: rgb(0, 128, 0);">@rownum</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">end</SPAN></PRE>
+</DIV></DIV>
+<P>示例图：</P>
+<P><IMG alt="" 
+src="Sql事务%20-%20zhangchun%20-%20博客园_files/2012050513580978.png"></P>
+<P>&nbsp;</P></DIV>
+<DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 107531;
+var cb_entryId = 2484707;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "54fa1c20-75db-df11-ac81-842b2b196315";
+var cb_entryCreatedDate = '2012/5/5 13:56:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV id="blog_post_info_block">
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+</DIV>
+<DIV class="postDesc">posted @ <SPAN id="post-date">2012-05-05 13:56</SPAN> <A 
+href="http://www.cnblogs.com/zcttxs/">zhangchun</A> 阅读(19) 评论(<SPAN id="post-comment-count">0</SPAN>) 
+ <A href="http://www.cnblogs.com/zcttxs/admin/EditPosts.aspx?postid=2484707" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(2484707);return false;" href="http://www.cnblogs.com/zcttxs/archive/2012/05/05/2484707.html#">收藏</A></DIV></DIV><IMG 
+alt="" src="Sql事务%20-%20zhangchun%20-%20博客园_files/2484707.jpg" width="1" height="1"></DIV><!--end: topics 文章、评论容器-->
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+
+<DIV id="comment_form" class="commentform">
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/zcttxs/archive/2012/05/05/2484707.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/zcttxs/archive/2012/05/05/2484707.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="ad_under_post_holder"></DIV>
+<DIV id="HistoryToday" class="c_ad_block"></DIV>
+</DIV></DIV><!--end: forFlow --></DIV><!--end: mainContent 主体内容容器-->
+<DIV id="sideBar">
+<DIV id="sideBarMain"><!--done-->
+<DIV class="newsItem">
+<H3 class="catListTitle">公告</H3>
+<DIV id="blog-news"></DIV></DIV>
+<DIV id="calendar">
+<DIV style="displya: none;" id="blog-calendar"></DIV></DIV>
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV></DIV></DIV><!--end: sideBarMain --></DIV><!--end: sideBar 侧边栏容器 -->
+<DIV class="clear"></DIV></DIV><!--end: main -->
+<DIV class="clear"></DIV>
+<DIV id="footer"><!--done--> Copyright ©2012 zhangchun	</DIV><!--end: footer -->
+</DIV><!--end: home 自定义的最大容器 -->
+<SCRIPT type="text/javascript" src="Sql事务%20-%20zhangchun%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

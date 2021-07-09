@@ -1,0 +1,175 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0065)http://www.cnblogs.com/lf78995525/archive/2010/07/21/1781983.html -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><HTML 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><META content="IE=9.0000" 
+http-equiv="X-UA-Compatible">
+
+<META content="text/html; charset=utf-8" http-equiv="Content-Type"><TITLE>sql事务 
+- my_lf - 博客园</TITLE><LINK rel="stylesheet" type="text/css" href="sql事务%20-%20my_lf%20-%20博客园_files/common.css">
+<LINK id="MainCss" rel="stylesheet" type="text/css" href="sql事务%20-%20my_lf%20-%20博客园_files/style.css">
+<LINK rel="stylesheet" type="text/css" href="sql事务%20-%20my_lf%20-%20博客园_files/common2.css">
+<LINK rel="stylesheet" type="text/css" href="sql事务%20-%20my_lf%20-%20博客园_files/shStyle.css">
+<LINK title="RSS" rel="alternate" type="application/rss+xml" href="http://www.cnblogs.com/lf78995525/rss">
+<LINK title="RSD" rel="EditURI" type="application/rsd+xml" href="http://www.cnblogs.com/lf78995525/rsd.xml">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.cnblogs.com/lf78995525/wlwmanifest.xml">
+<SCRIPT type="text/javascript" src="sql事务%20-%20my_lf%20-%20博客园_files/jquery.js"></SCRIPT>
+
+<SCRIPT type="text/javascript">
+var currentBlogApp = 'lf78995525';
+</SCRIPT>
+
+<SCRIPT type="text/javascript" src="sql事务%20-%20my_lf%20-%20博客园_files/common.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="sql事务%20-%20my_lf%20-%20博客园_files/json2.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="sql事务%20-%20my_lf%20-%20博客园_files/syntaxHighlighter.js"></SCRIPT>
+
+<META name="GENERATOR" content="MSHTML 9.00.8112.16450"></HEAD>
+<BODY><A name="top"></A>
+<DIV id="home">
+<DIV id="header">
+<DIV id="blogTitle"><!--done-->
+<DIV class="title"><A id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/lf78995525/">my_lf</A></DIV>
+<DIV class="subtitle"></DIV></DIV><!--end: blogTitle 博客的标题和副标题 -->
+<DIV id="navigator">
+<UL id="navList">
+  <LI><A id="MyLinks1_HomeLink" class="menu" 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/lf78995525/">首页</A></LI>
+  <LI><A class="menu" href="http://q.cnblogs.com/">博问</A></LI>
+  <LI><A class="menu" href="http://home.cnblogs.com/ing/">闪存</A></LI>
+  <LI><A id="MyLinks1_NewPostLink" class="menu" href="http://www.cnblogs.com/lf78995525/admin/EditPosts.aspx?opt=1" 
+  rel="nofollow">新随笔</A></LI>
+  <LI><A id="MyLinks1_ContactLink" class="menu" href="http://space.cnblogs.com/msg/send/my_lf" 
+  rel="nofollow">联系</A></LI>
+  <LI><A id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/lf78995525/rss">订阅</A><!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/lf78995525/rss"><img src="/Skins/Custom/images/rss.gif" alt="订阅" /></a>--></LI>
+  <LI><A id="MyLinks1_Admin" class="menu" href="http://www.cnblogs.com/lf78995525/admin/EditPosts.aspx" 
+  rel="nofollow">管理</A></LI></UL>
+<DIV class="blogStats"><!--done-->随笔-24&nbsp;文章-1&nbsp;评论-9&nbsp;					</DIV><!--end: blogStats --></DIV><!--end: navigator 博客导航栏 -->
+</DIV><!--end: header 头部 -->
+<DIV id="main">
+<DIV id="mainContent">
+<DIV class="forFlow"><!--done-->
+<DIV id="topics">
+<DIV class="post">
+<H1 class="postTitle"><A id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/lf78995525/archive/2010/07/21/1781983.html">sql事务</A></H1>
+<DIV class="clear"></DIV>
+<DIV class="postBody">
+<DIV id="cnblogs_post_body">
+<P>SQL事务<BR>&nbsp;<BR>一、事务概念<BR>&nbsp;&nbsp;&nbsp; 
+事务是一种机制、是一种操作序列，它包含了一组数据库操作命令，这组命令要么全部执行，要么全部不执行。因此事务是一个不可分割的工作逻辑单元。在数据库系统上执行并发操作时事务是作为最小的控制单元来使用的。这特别适用于多用户同时操作的数据通信系统。例如：订票、银行、保险公司以及证券交易系统等。<BR>&nbsp;<BR>二、事务属性<BR>事务4大属性：<BR>1&nbsp;&nbsp; 
+原子性(Atomicity):事务是一个完整的操作。<BR>2&nbsp;&nbsp; 
+一致性（Consistency）：当事务完成时，数据必须处于一致状态。<BR>3&nbsp;&nbsp; 
+隔离性(Isolation):对数据进行修改的所有并发事务是彼此隔离的。<BR>4&nbsp;&nbsp; 
+持久性(Durability):事务完成后，它对于系统的影响是永久性的。<BR>&nbsp;<BR>三、创建事务<BR>T-SQL中管理事务的语句：<BR>1 
+开始事务: begin transaction<BR>2 提交事务：commit transaction<BR>3 回滚事务: rollback 
+transaction<BR>&nbsp;<BR>事务分类:<BR>1 显式事务:用begin transaction明确指定事务的开始。<BR>2 
+隐性事务：打开隐性事务：set implicit_transactions on，当以隐性事务模式操作时，SQL 
+Servler将在提交或回滚事务后自动启动新事务。无法描述事务的开始，只需要提交或回滚事务。<BR>3 自动提交事务：SQL 
+Server的默认模式，它将每条单独的T-SQL语句视为一个事务。如果成功执行，则自动提交，否则回滚。<BR>&nbsp;<BR>示例：张三转800元到李四帐户上。<BR>&nbsp; 
+use stuDB<BR>go<BR>--创建帐户表bank--<BR>if exists(select* from sysobjects where 
+name='bank')<BR>&nbsp;&nbsp;&nbsp; drop table bank<BR>create table 
+bank<BR>(<BR>&nbsp;&nbsp;&nbsp; customerName char(10),&nbsp;&nbsp;&nbsp; 
+--顾客姓名<BR>&nbsp;&nbsp;&nbsp; currentMoney 
+money&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+--当前余额<BR>)<BR>go<BR>/**//*--添加约束，帐户不能少于元--*/<BR>alter table bank 
+add<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; constraint CK_currentMoney 
+check(currentMoney&gt;=1)<BR>/**//*--插入测试数据--*/<BR>insert into 
+bank(customerName,currentMoney)<BR>select '张三',1000 union<BR>select '李四',1</P>
+<P>select * from bank<BR>go</P>
+<P>/**//*--使用事务--*/<BR>use stuDB<BR>go<BR>--恢复原来的数据<BR>--update bank set 
+currentMoney=currentMoney-1000 where customerName='李'<BR>set nocount 
+on&nbsp;&nbsp;&nbsp; --不显示受影响的行数<BR>print '查看转帐事务前的余额'<BR>select * from 
+bank<BR>go</P>
+<P>/**//*--开始事务--*/<BR>begin transaction<BR>declare @errorSum 
+int&nbsp;&nbsp;&nbsp; --定义变量，用于累计事务执行过程中的错误<BR>/**//*--转帐--*/<BR>update bank set 
+currentMoney=currentMoney-800 where customerName='张三'<BR>set 
+@errorSum=@errorSum+@@error&nbsp;&nbsp;&nbsp; --累计是否有错误<BR>update bank set 
+currentMoney=currentMoney+800 where customerName='李四'<BR>set 
+@errorSum=@errorSum+@@error --累计是否有错误</P>
+<P>print '查看转帐事务过程中的余额'<BR>select * from bank</P>
+<P>/**//*--根据是否有错误，确定事务是提交还是回滚--*/<BR>if @errorSum&gt;0<BR>&nbsp;&nbsp;&nbsp; 
+begin<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print 
+'交易失败，回滚事务.'<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rollback 
+transaction<BR>&nbsp;&nbsp;&nbsp; end<BR>else<BR>&nbsp;&nbsp;&nbsp; 
+begin<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print 
+'交易成功，提交事务，写入硬盘，永久保存！'<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; commit 
+transaction<BR>&nbsp;&nbsp;&nbsp; end<BR>go</P>
+<P>print '查看转帐后的余额'<BR>select * from bank<BR>go</P>
+<P>&nbsp;</P></DIV>
+<DIV id="MySignature"></DIV>
+<SCRIPT type="text/javascript">
+var isLogined = false;
+var cb_blogId = 59641;
+var cb_entryId = 1781983;
+var cb_blogApp = currentBlogApp;
+var cb_blogUserGuid = "3401ba7e-2587-de11-be36-001cf0cd104b";
+var cb_entryCreatedDate = '2010/7/21 10:26:00';
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+</SCRIPT>
+
+<DIV id="blog_post_info_block">
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV>
+<SCRIPT type="text/javascript">
+    //SyntaxHighlighter.config.strings.expandSource = '<span><img src="http://static.cnblogs.com/images/expand-code.gif" alt="" class="expand-code-icon"/>View Code</span>';
+    $(function () {             
+        fixPostBodyFormat();
+        loadAdUnderPost();
+        loadBlogSignature();
+        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);        
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);        
+    });
+</SCRIPT>
+</DIV>
+<DIV class="postDesc">posted @ <SPAN id="post-date">2010-07-21 10:26</SPAN> <A 
+href="http://www.cnblogs.com/lf78995525/">my_lf</A> 阅读(7394) 评论(<SPAN id="post-comment-count">6</SPAN>) 
+ <A href="http://www.cnblogs.com/lf78995525/admin/EditPosts.aspx?postid=1781983" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(1781983);return false;" href="http://www.cnblogs.com/lf78995525/archive/2010/07/21/1781983.html#">收藏</A></DIV></DIV><IMG 
+alt="" src="sql事务%20-%20my_lf%20-%20博客园_files/1781983.jpg" width="1" 
+height="1"></DIV><!--end: topics 文章、评论容器-->
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.loadComments();</SCRIPT>
+
+<DIV id="comment_form" class="commentform">
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);">刷新评论</A><A 
+onclick="return RefreshPage();" href="http://www.cnblogs.com/lf78995525/archive/2010/07/21/1781983.html#">刷新页面</A><A 
+href="http://www.cnblogs.com/lf78995525/archive/2010/07/21/1781983.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<SCRIPT type="text/javascript">if (typeof commentManager === 'undefined') {
+        commentManager = new blogCommentManager();
+    }
+    commentManager.loadCommentForm();   
+</SCRIPT>
+
+<DIV id="ad_text_under_commentbox" class="ad_text_commentbox"></DIV>
+<DIV id="site_nav_under"><A title="程序员的网上家园" href="http://www.cnblogs.com/" 
+target="_blank">博客园首页</A><A title="程序员问答社区" href="http://q.cnblogs.com/" target="_blank">博问</A><A 
+title="IT新闻" href="http://news.cnblogs.com/" target="_blank">新闻</A><A href="http://home.cnblogs.com/ing/" 
+target="_blank">闪存</A><A href="http://job.cnblogs.com/" 
+target="_blank">程序员招聘</A><A href="http://kb.cnblogs.com/" 
+target="_blank">知识库</A></DIV>
+<DIV id="ad_under_post_holder"></DIV>
+<DIV id="HistoryToday" class="c_ad_block"></DIV>
+</DIV></DIV><!--end: forFlow --></DIV><!--end: mainContent 主体内容容器-->
+<DIV id="sideBar">
+<DIV id="sideBarMain"><!--done-->
+<DIV class="newsItem">
+<H3 class="catListTitle">公告</H3>
+<DIV id="blog-news"></DIV></DIV>
+<DIV id="calendar">
+<DIV style="displya: none;" id="blog-calendar"></DIV></DIV>
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV></DIV></DIV><!--end: sideBarMain --></DIV><!--end: sideBar 侧边栏容器 -->
+<DIV class="clear"></DIV></DIV><!--end: main -->
+<DIV class="clear"></DIV>
+<DIV id="footer"><!--done-->Copyright ©2012 my_lf	</DIV><!--end: footer -->
+</DIV><!--end: home 自定义的最大容器 -->
+<SCRIPT type="text/javascript" src="sql事务%20-%20my_lf%20-%20博客园_files/google-analytics.js"></SCRIPT>
+</BODY></HTML>

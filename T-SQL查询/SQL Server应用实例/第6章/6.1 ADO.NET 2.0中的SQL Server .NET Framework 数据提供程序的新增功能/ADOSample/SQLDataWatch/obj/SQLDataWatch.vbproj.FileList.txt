@@ -1,0 +1,10 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\SQLDataWatch.Form1.resources
+obj\Debug\SQLDataWatch.Resources.resources
+obj\Debug\SQLDataWatch.vbproj.GenerateResource.Cache
+bin\Debug\SQLDataWatch.exe
+bin\Debug\SQLDataWatch.pdb
+bin\Debug\SQLDataWatch.xml
+obj\Debug\SQLDataWatch.exe
+obj\Debug\SQLDataWatch.xml
+obj\Debug\SQLDataWatch.pdb

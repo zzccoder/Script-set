@@ -1,0 +1,13 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\SMOBrowser.frmBrowser.resources
+obj\Debug\SMOBrowser.Resources.resources
+obj\Debug\SMOBrowser.vbproj.GenerateResource.Cache
+bin\Debug\SMOBrowser.exe
+bin\Debug\SMOBrowser.pdb
+bin\Debug\SMOBrowser.xml
+bin\Debug\Microsoft.SqlServer.Replication.dll
+bin\Debug\Microsoft.SqlServer.BatchParser.dll
+bin\Debug\zh-CHS\Microsoft.SqlServer.Replication.resources.dll
+obj\Debug\SMOBrowser.exe
+obj\Debug\SMOBrowser.xml
+obj\Debug\SMOBrowser.pdb

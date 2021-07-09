@@ -1,0 +1,222 @@
+body {
+	margin: 10px 30px; padding: 10px 30px; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 13px; word-wrap: break-word; background-color: rgb(217, 214, 203);
+}
+img {
+	border: 0px currentColor;
+}
+td {
+	font-size: 12px;
+}
+a {
+	color: rgb(34, 51, 85); text-decoration: none;
+}
+.postbody a {
+	color: rgb(29, 88, 209);
+}
+a:hover {
+	text-decoration: underline;
+}
+h1 {
+	margin: 0px; padding-top: 10px; padding-left: 10px; font-size: 1.8em;
+}
+h2 a {
+	color: rgb(34, 51, 85);
+}
+.postfoot a {
+	color: rgb(34, 51, 85);
+}
+h1 a:visited {
+	color: rgb(255, 255, 255); text-decoration: none; margin-top: 10px;
+}
+h1 a:active {
+	color: rgb(255, 255, 255); text-decoration: none; margin-top: 10px;
+}
+h1 a:link {
+	color: rgb(255, 255, 255); text-decoration: none; margin-top: 10px;
+}
+h1 a:hover {
+	color: rgb(255, 255, 255); text-decoration: none; margin-top: 10px;
+}
+h2 {
+	font-size: 1em; margin-top: 10px;
+}
+h5 {
+	margin: 0px; padding: 0px;
+}
+#top {
+	height: 75px; vertical-align: middle; background-image: url("images/HeaderBg.gif"); background-color: rgb(32, 55, 95);
+}
+#top td {
+	text-align: left; color: white; filter: shadow(color=#002244,direction=120,enabled=1,strength=3) glow(color=#2B446F,enabled=1,strength=1);
+}
+#top h1 {
+	font-weight: normal;
+}
+#sub {
+	padding: 4px; text-align: right; color: rgb(204, 204, 204); font-size: 0.8em; background-image: url("images/SubHeaderBg.gif"); background-color: black;
+}
+.headermaintitle {
+	font-family: "Trebuchet MS";
+}
+#tagline {
+	margin: 0px; padding: 5px; color: rgb(255, 255, 255); font-size: 1em; background-color: rgb(0, 0, 255);
+}
+p.date img {
+	vertical-align: middle;
+}
+p.date {
+	padding: 2px 0px; text-align: right; color: rgb(170, 170, 170); font-size: 1.2em; font-weight: bold; margin-bottom: 0px;
+}
+p.date span {
+	background-color: rgb(255, 255, 255);
+}
+p.date a {
+	color: rgb(136, 136, 136);
+}
+blockquote {
+	margin: 0px; padding: 4px; font-style: italic;
+}
+#leftmenu {
+	padding: 0px 0px 5px; left: 0px; width: 180px;
+}
+#leftmenu h3 {
+	margin: 0px; padding: 4px; color: rgb(102, 102, 102); font-size: 1em; background-image: url("images/ColumnHeaderBg.gif"); background-repeat: repeat-x;
+}
+#leftmenu ul {
+	list-style: none; margin: 0px 0px 10px 8px; padding: 0px; font-size: 13px;
+}
+#leftmenu li {
+	margin-top: 6px;
+}
+#leftmenu a:active {
+	padding: 2px; color: rgb(0, 0, 0); text-decoration: none; margin-right: 0px;
+}
+#leftmenu a:visited {
+	padding: 2px; color: rgb(0, 0, 0); text-decoration: none; margin-right: 0px;
+}
+#leftmenu a:link {
+	padding: 2px; color: rgb(0, 0, 0); text-decoration: none; margin-right: 0px;
+}
+#leftmenu a:hover {
+	color: rgb(29, 88, 209); text-decoration: underline;
+}
+#main {
+	
+}
+#footer {
+	margin: 0px; text-align: center; padding-top: 5px; font-size: 0.7em;
+}
+input.text {
+	width: 300px;
+}
+textarea {
+	width: 300px; height: 200px;
+}
+#comments h4 span {
+	color: rgb(153, 153, 153);
+}
+#comments h4 {
+	margin: 0px; font-size: 0.9em;
+}
+p {
+	margin: 0px 0px 14px;
+}
+h3 {
+	font-size: 1.2em;
+}
+#relatedlinks ul {
+	list-style: none; padding: 0px; margin-left: 10px;
+}
+.post {
+	border-width: 1px 2px 2px 1px; border-style: solid; border-color: rgb(204, 204, 204); padding: 0px; margin-bottom: 28px;
+}
+.posthead {
+	background-position: bottom; padding: 4px; color: rgb(68, 68, 68); font-size: 9px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: solid; background-image: url("images/PostHeaderBg.gif"); background-repeat: repeat-x; background-color: rgb(238, 238, 238);
+}
+.postbody {
+	padding: 4px; line-height: 1.5; font-size: 13px; margin-bottom: 14px;
+}
+.posthead h2 {
+	margin: 0px; font-size: 13px;
+}
+.post h5 {
+	margin: 0px 0px 4px; font-size: 14px;
+}
+.postfoot {
+	margin: 0px; padding: 4px; color: rgb(170, 170, 170); font-size: 0.8em; border-top-color: rgb(221, 221, 221); border-top-width: 1px; border-top-style: solid;
+}
+pre {
+	margin: 0px 0px 0px 22px; font-size: 1em;
+}
+.Textbox {
+	border: 1px solid rgb(170, 170, 170); width: 160px; font-size: 12px;
+}
+textarea {
+	border: 1px solid rgb(170, 170, 170); width: 160px; font-size: 12px;
+}
+.button {
+	border: 1px solid rgb(170, 170, 170); background-color: rgb(204, 212, 224);
+}
+input {
+	font-family: Verdana, Geneva, Arial, Sans-Serif; font-size: 10px;
+}
+textarea {
+	font-family: Verdana, Geneva, Arial, Sans-Serif; font-size: 10px;
+}
+.Framework {
+	border: 1px solid black; background-color: rgb(238, 238, 238);
+}
+.MainCell {
+	padding: 10px; vertical-align: top; border-bottom-color: rgb(221, 221, 221); border-left-color: rgb(221, 221, 221); border-bottom-width: 1px; border-left-width: 1px; border-bottom-style: solid; border-left-style: solid; background-color: white;
+}
+.LeftCell {
+	width: 200px; overflow: hidden; vertical-align: top;
+}
+.FooterCell {
+	height: 30px; vertical-align: top;
+}
+.SectionHead {
+	text-align: right;
+}
+.Cal {
+	margin: 5px; border: 1px solid rgb(153, 153, 153); width: 95%; height: 170px; font-size: 15px; font-style: normal; font-weight: normal; background-color: rgb(238, 238, 238);
+}
+.CalTitle {
+	padding: 0px; height: 12px; font-family: Arial; font-size: 14px; margin-left: 0px;
+}
+.CalOtherMonthDay {
+	color: rgb(128, 128, 128);
+}
+.CalSelector {
+	
+}
+.CalNextPrev {
+	
+}
+.CalDayHeader {
+	background-color: rgb(204, 204, 204);
+}
+.CalSelectedDay {
+	
+}
+.CalWeekendDay {
+	
+}
+.CalTodayDay {
+	font-weight: bold;
+}
+.CalTodayDay a {
+	color: red; font-weight: bold;
+}
+span {
+	font-size: 13px; line-heigth: 150%;
+}
+#news {
+	padding: 5px 5px 5px 10px;
+}
+.div_my_zzk {
+	margin-left: 8px;
+}
+.RecentComment {
+	padding-right: 3px;
+}

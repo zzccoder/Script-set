@@ -1,0 +1,28 @@
+-- 1. 拼音排序
+DECLARE @t TABLE(
+	col nvarchar(10))
+INSERT @t(
+	col)
+SELECT N'排序规则' UNION ALL
+SELECT N'在' UNION ALL
+SELECT N'中文字符' UNION ALL
+SELECT N'排序' UNION ALL
+SELECT N'中的应用'
+
+SELECT * 
+FROM @t 
+ORDER BY col COLLATE Chinese_PRC_90_CS_AS_KS_WS
+GO
+
+-- 2. 笔画排序
+DECLARE @t TABLE(
+	col nvarchar(10))
+INSERT @t(
+	col)
+SELECT N'笔' UNION ALL
+SELECT N'画' UNION ALL
+SELECT N'排序'
+
+SELECT * 
+FROM @t 
+ORDER BY col COLLATE Chinese_PRC_Stroke_90_CS_AS_KS_WS

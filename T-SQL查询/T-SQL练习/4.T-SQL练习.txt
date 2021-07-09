@@ -1,0 +1,84 @@
+sql常用语句总结 
+1.   增,删,改字段
+-----------------------------------------------------
+增加字段
+alter table 表名 add 字段名 字段类型 是否可为空
+示例: alter table student add sid int not null
+ 
+更新字段
+alter table 表名 alter column 字段名 字段类型 是否为空
+示例: alter table student alter column sid varchar(20) null
+ 
+删除字段
+alter table 表名 drop column 字段名
+示例: alter table student drop column sid
+ 
+---------------------------------------------------------------
+ 
+2. 判断是否有某个表或存储过程或字段，然后删除之
+-----------------------------------------------------------
+表：
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[表名]') AND OBJECTPROPERTY(id, N'IsUserTable') = 1)
+DROP TABLE [dbo].[表名]
+ 
+存储过程：
+IF EXISTS (SELECT * FROM DBO.SYSOBJECTS WHERE ID = OBJECT_ID(N'[dbo].[存储过程名]') and OBJECTPROPERTY(ID, N'IsProcedure') = 1)
+DROP PROCEDURE [dbo].[存储过程名]
+ 
+字段：
+if Exists(select * from syscolumns where id=object_id('表名') and name='字段名')
+alter table 表名 drop column 字段名
+------------------------------------------------------------
+ 
+3.  多条件语句，类似swich语句
+示例：
+declare @sumdays [int]
+declare @grade [int]
+select @grade = 
+case 
+when @sumdays=40 then 1
+when @sumdays>40 then 2
+end
+ 
+4. 备份还原语句
+下面俩个例子，分别说明了备份和还原
+备份：
+BACKUP DATABASE [QPShopDB] TO  DISK = N'D:\数据库备份\100209\QPShopDB.bak' WITH NOFORMAT, NOINIT,  NAME = N'QPShopDB-完整 数据库 备份', SKIP, NOREWIND, NOUNLOAD,  STATS = 10
+还原：
+RESTORE DATABASE [News] FROM  DISK = N'D:\数据库备份\100209\QPShopDB.bak' WITH  FILE = 1,  NOUNLOAD,  STATS = 10 
+,replace,move 'test' to 'D:\database\test.mdf',move 'test_log' to 'D:\database\test.ldf'
+注意：with后面跟相关参数要用逗号隔开，可以设置是覆盖还原，以及还原路径等参数，具体参数查看msdn
+ 
+ 
+ 
+5. 给表建立索引
+ 
+如下：给ErrReport表的Version列建立Version_Indexf索引：
+CREATE NONCLUSTERED INDEX [Version_Index] ON [dbo].[ErrReport] ([Version] ASC )
+如果是聚集索引将NONCLUSTERED改成CLUSTERED即可
+ 
+6. 查询最大连接数
+1、获取SQL Server允许同时用户连接的最大数
+SELECT @@MAX_CONNECTIONS
+2、获取当前指定数据库的连接信息
+SELECT * FROM master.dbo.sysprocesses WHERE dbid IN (   SELECT dbid FROM master.dbo.sysdatabases   WHERE NAME='YourDataBaseName')--根据需要更改YourDataBaseName
+SELECT * FROM master.dbo.sysprocesses WHERE DB_NAME(dbid) = 'YourDataBaseName'
+3、获取当前SQL服务器所有的连接详细信息
+SELECT * FROM sysprocesses
+以上查询结果包含了：系统进程和用户进程。
+如果只是想查用户进程的话则需采用下面的方法
+4、获取自上次启动SQL Server服务 以来连接或试图连接的次数
+SELECT @@CONNECTIONS
+这个刚开始会有点误解，认为是当前SQL Server服务器当前所有的SQL Server连接数。需要重点注意。
+ 
+7.子查询
+ 
+[sql] view plaincopyprint?
+1.	select * from Employee e1where e1.salary>(select AVG(salary) from Employee e2where e1.depId=e2.depIdgroup by e2.depId)  
+
+ 
+[sql] view plaincopyprint?
+1.	select e1.* from Employee e1,(select depId,avg(salary) avgsalary from Employee group by depName) e2where e1.depId=e2.depId and e1.salary>e2.avgsalary  
+
+ 
+
