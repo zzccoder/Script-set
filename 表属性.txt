@@ -7,3 +7,6 @@ Select Name From SysObjects Where XType=��U�� order By Name XType=��
 
 3.��ȡ�����ֶ��� Select Name From SysColumns Where id=Object_Id(��TableName��)
 111、
+
+
+2222
