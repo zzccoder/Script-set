@@ -1,0 +1,20 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Office\14.0\Outlook\Preferences]
+"MaximumAttachmentSize"=dword:00000000
+
+
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Office\14.0\Outlook\Preferences]
+"MaximumAttachmentSize"=dword:00000000
+
+
+
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Office\15.0\Outlook\Preferences]
+"MaximumAttachmentSize"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Office\15.0\Outlook\Preferences]
+"MaximumAttachmentSize"=dword:00000000
+
+
