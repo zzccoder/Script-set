@@ -1,0 +1,20 @@
+//数据库连接字符串
+"StmpDbConnection": "Server=tcp:tushare.database.chinacloudapi.cn,1433;Initial Catalog=tushare;Persist Security Info=False;User ID=gapan;Password=123456Abcdefg;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+//审批应用请求脚本位置
+"SccmScriptPath": "D:\\Temp\\create_approved_application_request.ps1",
+//消息队列连接配置
+"RocketMq": {
+"Topic": "T0265-itsr-to-stmp-topic",
+"NameServerAddress": "10.203.109.104:9876;10.203.109.105:9876",
+"ConsumerGroup": "T0265-itsr-to-stmp-topic-C01",
+"AccessKey": "RocketMQ",
+"SecretKey": "12345678"
+
+
+// 数据库连接字符串
+"StmpDbConnection": "Server=tcp:tushare.database.chinacloudapi.cn,1433;Initial Catalog=tushare;Persist Security Info=False;User ID=gapan;Password=123456Abcdefg;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+//邮件通知配置
+"NotificationEmail": {
+"Host": "smtp.saic-gm.com",
+"From": "STMPAdmin@saic-gm.com",
+"To": "qin_huang@saic-gm.com"
