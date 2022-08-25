@@ -1,0 +1,1 @@
+﻿Get-WmiObject -Class Win32_ComputerSystem -ComputerName  (Get-Content D:\scripts\3.txt) |Select-Object Manufacturer,Model,Name,PrimaryOwnerName,@{l='Memory(GB)';expression={$_.TotalPhysicalMemory/1GB -as [int]}}|Export-Csv d:\3.csv -NoClobber -Encoding UTF8

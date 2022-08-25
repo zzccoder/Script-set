@@ -1,0 +1,1 @@
+﻿Get-GPO -Domain global.cnooc.corp -all | select DisplayName,Owner,CreationTime,ModificationTime |Export-Csv -Path D:\201810gpo.csv -NoTypeInformation -Encoding utf8
